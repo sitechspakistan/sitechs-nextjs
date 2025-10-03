@@ -16,7 +16,7 @@ export default function CaseStudies() {
                         </div>
                         <div className="tm-hero-text tp_title_anim">
                             <p>
-                                We're a diverse team that works as fancies attention to
+                                We are a diverse team that works as fancies attention to
                                 details, enjoys beers on Friday nights and aspires to design
                                 the dent in the universe.
                             </p>
