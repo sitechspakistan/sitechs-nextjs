@@ -24,10 +24,10 @@ export default function Footer() {
                             <h4 className="tp-footer-2-widget-title">Sitemap</h4>
                             <ul>
                                 <li><Link href="/">Home</Link></li>
-                                <li><a href="about-us.html">About</a></li>
-                                <li><a href="contact.html">Contact</a></li>
-                                <li><a href="blog-details.html">Blog</a></li>
-                                <li><a href="portfolio-details-1.html">Portfolio</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><Link href="/case-studies">Portfolio</Link></li>
                             </ul>
                         </div>
                         </div>
@@ -36,13 +36,13 @@ export default function Footer() {
                         <div className="tp-footer-2-widget footer-col-2-3">
                         <h4 className="tp-footer-2-widget-title">Office</h4>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="https://www.google.com/maps/@23.8223596,90.3656686,15z?entry=ttu" target="_blank">740 NEW SOUTH HEAD RD, TRIPLE BAY SWFW 3108, NEW YORK</a></span>
+                            <span><a href="https://www.google.com/maps/" target="_blank">B-238, Block 6 Gulshan-e-Iqbal, Karachi</a></span>
                         </div>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="tel:+725214456">P: + 725 214 456</a></span>
+                            <span><a href="tel:+923423543100">P: +92 342 3543100</a></span>
                         </div>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="mailto:contact@liko.com">E: contact@sitechs.com</a></span>
+                            <span><a href="mailto:info@sitechs.co">E: info@sitechs.co</a></span>
                         </div>
                         </div>
                     </div>                     
@@ -60,9 +60,9 @@ export default function Footer() {
                     </div>
                     <div className="col-xl-8 col-lg-7">
                         <div className="tp-copyright-2-social text-center text-lg-end">
-                        <a className="mb-10" href="#">Linkedin</a>
-                        <a className="mb-10" href="#">Twitter</a>
-                        <a className="mb-10" href="#">Instagram</a>
+                        <a className="mb-10" href="https://www.linkedin.com/company/sitechsofficial" target="_blank">Linkedin</a>
+                        <a className="mb-10" href="https://www.facebook.com/Sitechsofficial/" target="_blank">Facebook</a>
+                        <a className="mb-10" href="https://www.instagram.com/sitechs.official/" target="_blank">Instagram</a>
                         </div>
                     </div>
                 </div>
