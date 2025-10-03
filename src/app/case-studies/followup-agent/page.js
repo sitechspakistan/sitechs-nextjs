@@ -36,7 +36,7 @@ export default function FollowupAgent() {
                                 </div>
                                 <div className="project-details-1-info">
                                     <span>Date</span>
-                                    <h4>August '2025</h4>
+                                    <h4>August 2025</h4>
                                 </div>
                                 <div className="project-details-1-info">
                                     <span>Services</span>
