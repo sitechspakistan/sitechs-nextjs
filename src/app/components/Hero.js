@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import useGsapReveal from "../hooks/useGsapReveal";
 
 export default function Hero() {
@@ -25,9 +26,9 @@ export default function Hero() {
                         {/* <span className="tp-reveal-line">digital agency</span> */}
                     </h4>
                     <span className="tp-hero-3-category tp_reveal_anim">Where Your Search Ends, Innovation Begins</span>
-                    <a className="sitechs-btn-1" href="contact.html">
+                    <Link className="sitechs-btn-1" href="/chat-with-us">
                         Let's Talk                     
-                    </a>
+                    </Link>
                 </div>
                 </div>
             </div>
