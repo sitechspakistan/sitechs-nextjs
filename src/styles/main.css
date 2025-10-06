@@ -27819,7 +27819,7 @@ h2.clients-title {
   align-items: center;
   gap: 20px;
   position: fixed;
-  bottom: 0px;
+  bottom: -33px;
   left: 50%;
   transform: translate(-50%, -50%);
 }

@@ -1,4 +1,5 @@
-export default function FollowupAgent() {
+export default function CaseStudyDetail({ params }) {
+    const { slug } = params;
     return (
         <>
         <div className="project-details-1-area project-details-1-pt pb-100">
@@ -86,8 +87,8 @@ export default function FollowupAgent() {
                                     <a href="#">
                                     <span>
                                         <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10.3638 7.55567C11.6357 9.75857 10.8832 12.5668 8.68032 13.8386C6.47742 15.1105 3.66922 14.358 2.39738 12.1551C1.12553 9.95221 1.87799 7.144 4.08089 5.87216" stroke="#19191A" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-                                            <path d="M7.94268 8.95524C6.61884 6.66229 7.40643 3.72296 9.69938 2.39912C11.9923 1.07528 14.9317 1.86287 16.2555 4.15583C17.5793 6.44878 16.7917 9.38811 14.4988 10.7119" stroke="#19191A" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                            <path d="M10.3638 7.55567C11.6357 9.75857 10.8832 12.5668 8.68032 13.8386C6.47742 15.1105 3.66922 14.358 2.39738 12.1551C1.12553 9.95221 1.87799 7.144 4.08089 5.87216" stroke="#19191A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M7.94268 8.95524C6.61884 6.66229 7.40643 3.72296 9.69938 2.39912C11.9923 1.07528 14.9317 1.86287 16.2555 4.15583C17.5793 6.44878 16.7917 9.38811 14.4988 10.7119" stroke="#19191A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                     </span>
                                     </a>
@@ -96,11 +97,11 @@ export default function FollowupAgent() {
                                     <a className="share-icon" href=" javascript:void(0)">
                                     <span>
                                         <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12.8516 5.80003C14.1611 5.80003 15.2227 4.7255 15.2227 3.40001C15.2227 2.07452 14.1611 1 12.8516 1C11.542 1 10.4805 2.07452 10.4805 3.40001C10.4805 4.7255 11.542 5.80003 12.8516 5.80003Z" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-                                            <path d="M3.3711 11.4006C4.68063 11.4006 5.74221 10.3261 5.74221 9.0006C5.74221 7.67511 4.68063 6.60059 3.3711 6.60059C2.06158 6.60059 1 7.67511 1 9.0006C1 10.3261 2.06158 11.4006 3.3711 11.4006Z" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-                                            <path d="M12.8516 17.0002C14.1611 17.0002 15.2227 15.9257 15.2227 14.6002C15.2227 13.2747 14.1611 12.2002 12.8516 12.2002C11.542 12.2002 10.4805 13.2747 10.4805 14.6002C10.4805 15.9257 11.542 17.0002 12.8516 17.0002Z" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-                                            <path d="M5.41406 10.208L10.8123 13.392" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-                                            <path d="M10.8044 4.6084L5.41406 7.79242" stroke="black" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                            <path d="M12.8516 5.80003C14.1611 5.80003 15.2227 4.7255 15.2227 3.40001C15.2227 2.07452 14.1611 1 12.8516 1C11.542 1 10.4805 2.07452 10.4805 3.40001C10.4805 4.7255 11.542 5.80003 12.8516 5.80003Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M3.3711 11.4006C4.68063 11.4006 5.74221 10.3261 5.74221 9.0006C5.74221 7.67511 4.68063 6.60059 3.3711 6.60059C2.06158 6.60059 1 7.67511 1 9.0006C1 10.3261 2.06158 11.4006 3.3711 11.4006Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M12.8516 17.0002C14.1611 17.0002 15.2227 15.9257 15.2227 14.6002C15.2227 13.2747 14.1611 12.2002 12.8516 12.2002C11.542 12.2002 10.4805 13.2747 10.4805 14.6002C10.4805 15.9257 11.542 17.0002 12.8516 17.0002Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M5.41406 10.208L10.8123 13.392" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M10.8044 4.6084L5.41406 7.79242" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                     </span>
                                     </a>
