@@ -16019,7 +16019,7 @@ body.tp-magic-cursor #magic-cursor {
 .project-details-1-info {
   margin-bottom: 32px;
 }
-.project-details-1-info-list {
+.project-details-1-info ul {
   padding-left: 20px;
   margin-top: 10px;
   list-style: disc;
