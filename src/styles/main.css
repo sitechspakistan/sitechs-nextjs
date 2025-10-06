@@ -3159,7 +3159,7 @@ div.demo img {
   padding-left: 0;
 }
 .tp-offcanvas-top {
-  margin-bottom: 90px;
+  margin-bottom: 40px;
 }
 .tp-offcanvas-close-btn {
   color: black;
@@ -27851,4 +27851,15 @@ h2.clients-title {
   background-color: transparent;
   color: #fff;
   border-color: #fff;
+}
+@media (max-width: 768px) {
+  .chat-cta {
+    display: none;
+  }
+  .floating-logo {
+    display: none;
+  }
+  .service-details__right-category {
+     margin-bottom: 90px;
+  }
 }

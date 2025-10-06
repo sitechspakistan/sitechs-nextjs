@@ -83,7 +83,7 @@ export default function LogoBranding() {
                                 line with your activity will allow you to
                                 differentiate yourself and mark
                                 your audience.</p>
-                            <a className="tp-btn-white background-black" href="contact.html">Let’s Talk</a>
+                            <Link className="tp-btn-white background-black" href="/chat-with-us">Let’s Talk</Link>
                         </div>
                     </div>
                 </div>

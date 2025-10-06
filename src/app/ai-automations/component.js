@@ -105,10 +105,9 @@ export default function Component() {
                   with you.
                 </p>
                 <Link
-                  href="/contact"
+                  href="/chat-with-us"
                   className="tp-btn-white background-black"
-                >
-                  Let’s Talk
+                >Let’s Talk
                 </Link>
               </div>
             </div>

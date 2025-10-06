@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePathname } from "next/navigation";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function ParallaxImage({ src, alt = "", speed = 0.4, className = "" }) {
   const imgRef = useRef(null);
@@ -15,28 +11,28 @@ export default function ParallaxImage({ src, alt = "", speed = 0.4, className = 
     const el = imgRef.current;
     if (!el) return;
 
-    // Kill old ScrollTriggers when route changes
-    ScrollTrigger.getAll().forEach((st) => st.kill());
+    let ticking = false;
 
-    const ctx = gsap.context(() => {
-      gsap.to(el, {
-        y: () => (1 - speed) * window.innerHeight,
-        ease: "none",
-        scrollTrigger: {
-          trigger: el,
-          scrub: true,
-        },
-      });
-    }, el);
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const rect = el.getBoundingClientRect();
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          const yPos = (scrollTop - rect.top) * speed * 0.5;
+          el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
-    // Force refresh after setup
-    ScrollTrigger.refresh();
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // initial call to set position
 
     return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [pathname, speed]); // re-run on every route change
+  }, [pathname, speed]);
 
   return (
     <img
@@ -44,6 +40,13 @@ export default function ParallaxImage({ src, alt = "", speed = 0.4, className = 
       src={src}
       alt={alt}
       className={className}
+      style={{
+        display: "block",
+        width: "100%",
+        height: "auto",
+        transition: "transform 0.1s linear",
+        willChange: "transform",
+      }}
       data-speed={speed}
     />
   );
