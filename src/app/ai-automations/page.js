@@ -1,8 +1,8 @@
 import Component from "./component";
 
 export const metadata = {
-    title: "AI Automation Services | Sitechs",
-    description: "Automate workflows with Sitechs. Custom AI automation solutions to boost efficiency and scale your business.",
+    title: "AI Automation & Intelligent Agent Development Company | Sitechs",
+    description: "Accelerate your business with Sitechs AI automation solutions. We build custom AI agents and workflows that streamline operations, enhance customer experiences, and boost productivity for startups and enterprises.",
 };
 
 export default function AiAutomations() {

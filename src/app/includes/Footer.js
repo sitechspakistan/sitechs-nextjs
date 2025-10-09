@@ -13,7 +13,7 @@ export default function Footer() {
                             <Link href="/"><img src="/assets/images/logo-white.png" alt="Sitechs" /></Link>
                         </div>
                         <div className="tp-footer-2-widget-text">
-                            <p>Sitechs is a full-service software company specializing in AI automations, web, and mobile development. We partner with startups and enterprises to design, build, and scale digital solutions.
+                            <p>Sitechs is a full-service software company specializing in AI automations, web, and branding. We partner with startups and enterprises to design, build, and scale digital solutions.
                             </p>                         
                         </div>
                         </div>
@@ -24,9 +24,9 @@ export default function Footer() {
                             <h4 className="tp-footer-2-widget-title">Sitemap</h4>
                             <ul>
                                 <li><Link href="/">Home</Link></li>
-                                <li><a href="#">About</a></li>
+                                {/* <li><a href="#">About</a></li> */}
                                 <li><a href="#">Contact</a></li>
-                                <li><a href="#">Blog</a></li>
+                                <li><Link href="/blog">Blog</Link></li>
                                 <li><Link href="/case-studies">Portfolio</Link></li>
                             </ul>
                         </div>

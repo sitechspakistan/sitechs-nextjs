@@ -1,5 +1,19 @@
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  const res = await fetch(`https://cms.sitechs.co/case-studies?slug=${slug}`);
+  const data = await res.json();
+  const caseStudy = data?.[0];
+
+  return {
+    title: caseStudy
+      ? `${caseStudy.title} | Case Study | Sitechs`
+      : "Case Study | Sitechs",
+  };
+}
+
 export default async function CaseStudyDetail({ params }) {
-    const { slug } = params;
+    const { slug } = await params;
   
     const res = await fetch(`https://cms.sitechs.co/case-studies?slug=${slug}`);
     const data = await res.json();
