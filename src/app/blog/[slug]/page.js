@@ -92,9 +92,9 @@ export default async function BlogDetail({ params }) {
                   <span className="blog-details-meta text-black">
                     {formatDate(blog.published_at)}
                   </span>
-                  <h4 className="blog-details-title tp-text-black tp-char-animation">
+                  <h1 className="blog-details-title tp-text-black tp-char-animation">
                     {blog.Title}
-                  </h4>
+                  </h1>
                 </div>
               </div>
             </div>

@@ -9260,10 +9260,11 @@ body.tp-magic-cursor #magic-cursor {
   display: inline-block;
 }
 .tp-blog-title-sm {
-  font-size: 31px;
-  font-weight: 600;
-  line-height: 0.8;
   letter-spacing: -0.62px;
+  color: var(--tp-common-black);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
   color: var(--tp-common-black);
 }
 @media only screen and (min-width: 1200px) and (max-width: 1399px) {
@@ -9285,6 +9286,7 @@ body.tp-magic-cursor #magic-cursor {
 }
 .tp-blog-title-sm:hover a {
   background-size: 0% 1px, 100% 1px;
+  background:none;
 }
 .tp-blog-thumb {
   margin-bottom: 25px;
@@ -27862,4 +27864,16 @@ h2.clients-title {
   .service-details__right-category {
      margin-bottom: 90px;
   }
+}
+.blog-content ul {
+  padding-left: 20px;
+}
+
+.blog-content a {
+  color: var(--tp-common-black);
+  text-decoration: underline;
+}
+.blog-content a:hover {
+  color: var(--tp-common-black);
+  text-decoration: underline;
 }
