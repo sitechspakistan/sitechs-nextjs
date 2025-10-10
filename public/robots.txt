@@ -4,10 +4,7 @@ Disallow: /wp-admin/
 Disallow: /wp-content/
 Disallow: /wp-includes/
 Disallow: /wp-json/
-Disallow: /category/
 Disallow: /tag/
-Disallow: /blog/
-Disallow: /blogs/
 Disallow: /shopdetail/
 Disallow: /author/
 Disallow: /feed/
