@@ -1,0 +1,21 @@
+User-agent: *
+# Block all old WordPress directories
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /wp-json/
+Disallow: /category/
+Disallow: /tag/
+Disallow: /blog/
+Disallow: /blogs/
+Disallow: /shopdetail/
+Disallow: /author/
+Disallow: /feed/
+Disallow: /xmlrpc.php
+Disallow: /?s=
+Disallow: /old/
+
+Allow: /
+
+# Sitemap location
+Sitemap: https://sitechs.co/sitemap.xml
