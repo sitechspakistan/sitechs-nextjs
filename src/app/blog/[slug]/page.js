@@ -80,8 +80,45 @@ export default async function BlogDetail({ params }) {
     });
   };
 
+  // ✅ Schema.org JSON-LD for BlogPosting
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://sitechs.co/blog/${slug}`,
+    },
+    "headline": blog.Title,
+    "description":
+      blog.meta_description ||
+      blog.Description?.slice(0, 155).replace(/\n/g, " ") ||
+      "",
+    "image": `https://cms.sitechs.co${blog.Image?.url}`,
+    "author": {
+      "@type": "Organization",
+      "name": "Sitechs",
+      "url": "https://sitechs.co",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sitechs",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://sitechs.co/assets/images/logo.png",
+      },
+    },
+    "datePublished": blog.published_at,
+    "dateModified": blog.updatedAt || blog.published_at,
+  };
+
   return (
     <>
+      {/* ✅ Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
+
       {/* Hero Section */}
       <div className="blog-details-area blog-details-without-sidebar">
         <div className="blog-details-without-sidebar p-relative d-flex align-items-end pt-170 pb-70">
@@ -125,33 +162,33 @@ export default async function BlogDetail({ params }) {
           <div className="row justify-content-center">
             <div className="col-12">
               <div className="postbox__wrapper prose prose-lg max-w-none">
-              <article className="blog-content">
+                <article className="blog-content">
                   <ReactMarkdown
-                     remarkPlugins={[remarkGfm]}
-                     rehypePlugins={[rehypeRaw]}
-                     components={{
-                     img: ({ node, ...props }) => (
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw]}
+                    components={{
+                      img: ({ node, ...props }) => (
                         <img
-                           {...props}
-                           className="my-6 rounded-xl"
-                           src={`https://cms.sitechs.co${props.src}`}
-                           alt={props.alt || ""}
+                          {...props}
+                          className="my-6 rounded-xl"
+                          src={`https://cms.sitechs.co${props.src}`}
+                          alt={props.alt || ""}
                         />
-                     ),
-                     h1: ({ node, ...props }) => (
+                      ),
+                      h1: ({ node, ...props }) => (
                         <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />
-                     ),
-                     h2: ({ node, ...props }) => (
+                      ),
+                      h2: ({ node, ...props }) => (
                         <h2 className="text-2xl font-semibold mt-6 mb-3" {...props} />
-                     ),
-                     p: ({ node, ...props }) => (
+                      ),
+                      p: ({ node, ...props }) => (
                         <p className="leading-relaxed mb-4" {...props} />
-                     ),
-                     }}
+                      ),
+                    }}
                   >
-                     {blog.Description}
+                    {blog.Description}
                   </ReactMarkdown>
-               </article>
+                </article>
               </div>
             </div>
           </div>
@@ -174,7 +211,9 @@ export default async function BlogDetail({ params }) {
                 <div className="tp-blog-item">
                   <div className="tp-blog-thumb fix p-relative">
                     <img
-                      src={`https://cms.sitechs.co${item.Image?.formats?.medium?.url || item.Image?.url}`}
+                      src={`https://cms.sitechs.co${
+                        item.Image?.formats?.medium?.url || item.Image?.url
+                      }`}
                       alt={item.Title}
                     />
                     <div className="tp-blog-meta">

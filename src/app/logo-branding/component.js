@@ -73,6 +73,7 @@ export default function Component() {
                             <span>Full list of services</span>
                         </div>
                         <div className="service-details__right-category">
+                            <Link href="/ai-automations">AI Automation</Link>
                             <Link href="/web-development">Web Development</Link>
                             <Link href="/logo-branding" className="active">Logo / Branding</Link>
                         </div>
