@@ -42,7 +42,7 @@ export default function Footer() {
                             <span><a href="tel:+923423543100"><i className="fa fa-phone"></i> +92 342 3543100</a></span>
                         </div>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="mailto:info@sitechs.co"><i className="fa fa-envelope"></i> Email: info@sitechs.co</a></span>
+                            <span><a href="mailto:info@sitechs.co"><i className="fa fa-envelope"></i> info@sitechs.co</a></span>
                         </div>
                         </div>
                     </div>                     
