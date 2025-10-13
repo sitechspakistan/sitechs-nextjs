@@ -36,13 +36,13 @@ export default function Footer() {
                         <div className="tp-footer-2-widget footer-col-2-3">
                         <h4 className="tp-footer-2-widget-title">Office</h4>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="https://www.google.com/maps/" target="_blank">B-238, Block 6 Gulshan-e-Iqbal, Karachi</a></span>
+                            <span><a href="https://www.google.com/maps/" target="_blank"><i className="fa fa-location-arrow"></i> B-238, Block 6 Gulshan-e-Iqbal, Karachi.</a></span>
                         </div>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="tel:+923423543100">P: +92 342 3543100</a></span>
+                            <span><a href="tel:+923423543100"><i className="fa fa-phone"></i> +92 342 3543100</a></span>
                         </div>
                         <div className="tp-footer-2-contact-item">
-                            <span><a href="mailto:info@sitechs.co">E: info@sitechs.co</a></span>
+                            <span><a href="mailto:info@sitechs.co"><i className="fa fa-envelope"></i> Email: info@sitechs.co</a></span>
                         </div>
                         </div>
                     </div>                     

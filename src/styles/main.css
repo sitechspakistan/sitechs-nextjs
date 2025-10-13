@@ -10509,7 +10509,7 @@ body.tp-magic-cursor #magic-cursor {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   display: inline-block;
   margin-bottom: 4px;
 }
@@ -27876,4 +27876,32 @@ h2.clients-title {
 .blog-content a:hover {
   color: var(--tp-common-black);
   text-decoration: underline;
+}
+.tp-hero-3-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ul.hero-socials {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul.hero-socials li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 10px;
+}
+ul.hero-socials li a {
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+ul.hero-socials li a img {
+  display: block;
+  width: 35px;
+}
+ul.hero-socials li:hover a img {
+  transform: scale(1.1);
 }

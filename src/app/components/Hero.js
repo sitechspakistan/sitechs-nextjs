@@ -26,9 +26,17 @@ export default function Hero() {
                         {/* <span className="tp-reveal-line">digital agency</span> */}
                     </h4>
                     <span className="tp-hero-3-category tp_reveal_anim">Where Your Search Ends, Innovation Begins</span>
-                    <Link className="sitechs-btn-1" href="/chat-with-us">
-                        Let's Talk                     
-                    </Link>
+                    <div className="tp-hero-3-buttons">
+                        <Link className="sitechs-btn-1" href="/chat-with-us">
+                            Let's Talk                     
+                        </Link>
+                        <ul className="hero-socials">
+                            <li><a href="https://www.facebook.com/Sitechsofficial/" target="_blank"><img src="/assets/images/fb.png" alt="Facebook" /></a></li>
+                            <li><a href="https://www.instagram.com/sitechs.official/" target="_blank"><img src="/assets/images/instagram.png" alt="Instagram" /></a></li>
+                            <li><a href="https://www.linkedin.com/company/sitechsofficial" target="_blank"><img src="/assets/images/linkedin.png" alt="Linkedin" /></a></li>
+                            <li><a href="https://x.com/officialsitechs" target="_blank"><img src="/assets/images/x.png" alt="X" /></a></li>
+                        </ul>
+                    </div>
                 </div>
                 </div>
             </div>
