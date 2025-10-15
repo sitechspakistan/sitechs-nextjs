@@ -21,6 +21,9 @@ const poppins = Poppins({
 export const metadata = {
   title: "AI Automation, SaaS Development & Web Design Agency | Sitechs",
   description: "Sitechs is a full-service digital agency helping startups and enterprises build AI automations, SaaS platforms, and high-performing websites. We also craft logos and branding that power business growth.",
+  alternates: {
+    canonical: "https://sitechs.co",
+  },
   icons: {
     icon: "/assets/images/favicon.png",
   },

@@ -31,6 +31,9 @@ export async function generateMetadata({ params }) {
     return {
       title: "Blog | Sitechs",
       description: "Explore insights, AI automation, and web development trends from Sitechs.",
+      alternates: {
+        canonical: "https://sitechs.co/blog/${params.slug}",
+      },
     };
   }
 
