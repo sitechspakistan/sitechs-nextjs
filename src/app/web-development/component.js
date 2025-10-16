@@ -35,7 +35,7 @@ export default function Component() {
                 <div className="col-xl-12">
                     <div className="service-details__tab-wrapper text-center mb-120">
                     <div className="service-details__tab-thumb">
-                        <ParallaxImage src="/assets/images/web.jpg" alt="Web Development" speed={0.4} />
+                        <ParallaxImage src="/assets/images/web-img.jpg" alt="Web Development" speed={0.4} />
                     </div>
                     </div>
                 </div>

@@ -4,10 +4,10 @@ export default function Footer() {
   return (
     <>    
     <footer className="">
-        <div className="tp-footer-2-area black-bg pt-100 pb-20">
+        <div className="tp-footer-2-area black-bg pt-50 pb-20">
             <div className="container container-1740">
                 <div className="row">
-                    <div className="col-xl-5 col-lg-4 col-md-6 mb-50">
+                    <div className="col-xl-5 col-lg-4 col-md-6">
                         <div className="tp-footer-2-widget footer-col-2-1">
                         <div className="tp-footer-2-widget-logo">
                             <Link href="/"><img src="/assets/images/logo-white.png" alt="Sitechs" /></Link>
@@ -18,7 +18,7 @@ export default function Footer() {
                         </div>
                         </div>
                     </div>
-                    <div className="col-xl-3 col-lg-3 col-md-6 mb-50">
+                    <div className="col-xl-3 col-lg-3 col-md-6">
                         <div className="tp-footer-2-widget footer-col-2-2">
                         <div className="tp-footer-2-widget-menu">
                             <h4 className="tp-footer-2-widget-title">Sitemap</h4>
@@ -32,7 +32,7 @@ export default function Footer() {
                         </div>
                         </div>
                     </div>
-                    <div className="col-xl-3 col-lg-5 col-md-6 mb-50">
+                    <div className="col-xl-3 col-lg-5 col-md-6">
                         <div className="tp-footer-2-widget footer-col-2-3">
                         <h4 className="tp-footer-2-widget-title">Office</h4>
                         <div className="tp-footer-2-contact-item">
@@ -53,18 +53,18 @@ export default function Footer() {
         <div className="tp-copyright-2-area tp-copyright-2-bdr-top black-bg">
             <div className="container container-1740">
                 <div className="row align-items-center">
-                    <div className="col-xl-4 col-lg-5">
-                        <div className="tp-copyright-2-left text-center text-lg-start">
-                        <p>All rights reserved — Sitechs © 2025</p>
+                    <div className="col-xl-12 col-lg-12">
+                        <div className="text-center">
+                        <p className="text-white">&copy; Sitechs 2025. All rights reserved.</p>
                         </div>
                     </div>
-                    <div className="col-xl-8 col-lg-7">
+                    {/* <div className="col-xl-8 col-lg-7">
                         <div className="tp-copyright-2-social text-center text-lg-end">
                         <a className="mb-10" href="https://www.linkedin.com/company/sitechsofficial" target="_blank">Linkedin</a>
                         <a className="mb-10" href="https://www.facebook.com/Sitechsofficial/" target="_blank">Facebook</a>
                         <a className="mb-10" href="https://www.instagram.com/sitechs.official/" target="_blank">Instagram</a>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

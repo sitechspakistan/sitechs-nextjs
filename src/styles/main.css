@@ -13478,7 +13478,7 @@ body.tp-magic-cursor #magic-cursor {
   }
 }
 .service-details__right-category {
-  margin-bottom: 200px;
+  margin-bottom: 50px;
 }
 .service-details__right-category a {
   font-weight: 500;
@@ -27904,4 +27904,18 @@ ul.hero-socials li a img {
 }
 ul.hero-socials li:hover a img {
   transform: scale(1.1);
+}
+.upwork-btn {
+  background-color: #000;
+  margin-left: 10px;
+}
+.upwork-btn img {
+  width: 80px;
+  filter: brightness(0) invert(1);
+}
+.upwork-btn:hover img {
+  filter: brightness(1) invert(0);
+}
+.upwork-btn:hover {
+  border-color: #000;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 // Reusable counter component
@@ -103,7 +104,6 @@ export default function Counter() {
 
       {/* Counter Section */}
       <div className="slide-funfact-wrap">
-        <div>
           <div className="container">
             <div className="row">
               <div className="col-xl-4 col-lg-4 col-md-4 mb-30">
@@ -131,8 +131,14 @@ export default function Counter() {
                 </div>
               </div>
             </div>
+            <div className="row">
+              <div className="col-xl-12">
+                <div className="text-center">
+                  <Link href="/case-studies" className="tp-btn-border-lg text-white border-white mt-5">View Our Case Studies</Link>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );

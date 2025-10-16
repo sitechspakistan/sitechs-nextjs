@@ -29,6 +29,9 @@ export default function Hero() {
                         <Link className="sitechs-btn-1" href="/chat-with-us">
                             Let's Talk                     
                         </Link>   
+                        <a className="sitechs-btn-1 upwork-btn" href="https://www.upwork.com/agencies/1863602840810539543/" target="_blank">
+                            Hire Us on <img src="/assets/images/upwork.png" alt="Sitechs - Upwork" />
+                        </a>   
                         <ul className="hero-socials">
                             <li><a href="https://www.facebook.com/Sitechsofficial/" target="_blank"><img src="/assets/images/fb.png" alt="Facebook" /></a></li>
                             <li><a href="https://www.instagram.com/sitechs.official/" target="_blank"><img src="/assets/images/instagram.png" alt="Instagram" /></a></li>

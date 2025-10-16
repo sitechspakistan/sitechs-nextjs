@@ -57,16 +57,8 @@ export default function ServicesArea() {
                   </div>
                   <div className="sv-service-space-wrap">
                     <div className="sv-service-text">
-                      <p>
-                        We create your graphic designs according to your budget
-                        and your needs. Reveal your brand image and capture your
-                        audience.
-                      </p>
-                      <p>
-                        We create your graphic designs according to your budget
-                        and your needs. Reveal your brand image and capture your
-                        audience.
-                      </p>
+                      <p>Automate repetitive tasks and streamline workflows with smart AI solutions tailored to your business needs.</p>
+                      <p>Save time, cut costs, and boost productivity using AI-driven automation that learns, adapts, and scales with you.</p>
                     </div>
                     <div className="sv-service-btn">
                       <Link className="sitechs-btn-1" href="/ai-automations">
@@ -99,16 +91,8 @@ export default function ServicesArea() {
                   </div>
                   <div className="sv-service-space-wrap">
                     <div className="sv-service-text">
-                      <p>
-                        We create your graphic designs according to your budget
-                        and your needs. Reveal your brand image and capture your
-                        audience.
-                      </p>
-                      <p>
-                        We create your graphic designs according to your budget
-                        and your needs. Reveal your brand image and capture your
-                        audience.
-                      </p>
+                      <p>We build fast, responsive, and conversion-driven websites that bring your digital presence to life beautifully.</p>
+                      <p>From landing pages to full-scale platforms, we craft seamless web experiences that engage and convert visitors.</p>
                     </div>
                     <div className="sv-service-btn">
                       <Link className="sitechs-btn-1" href="/web-development">
@@ -141,16 +125,8 @@ export default function ServicesArea() {
                   </div>
                   <div className="sv-service-space-wrap">
                     <div className="sv-service-text">
-                      <p>
-                        We create your graphic designs according to your budget
-                        and your needs. Reveal your brand image and capture your
-                        audience.
-                      </p>
-                      <p>
-                        We create your graphic designs according to your budget
-                        and your needs. Reveal your brand image and capture your
-                        audience.
-                      </p>
+                      <p>Your brand deserves to stand out. We design unique logos that tell your story and leave a lasting impression.</p>
+                      <p>Build a strong visual identity with modern, memorable branding that connects with your audience instantly.</p>
                     </div>
                     <div className="sv-service-btn">
                       <Link className="sitechs-btn-1" href="/logo-branding">
