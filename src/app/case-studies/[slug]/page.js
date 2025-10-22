@@ -1,3 +1,7 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
@@ -72,32 +76,28 @@ export default async function CaseStudyDetail({ params }) {
                       </div>
   
                       <div className="project-details-1-info">
-                        <span>Our Solution</span>
-
-                        {(() => {
-                            const lines = caseStudy.our_solution.split("\n").filter(l => l.trim() !== "");
-                            const headingLine = lines.find(line => line.startsWith("####"));
-                            const heading = headingLine ? headingLine.replace(/^####\s*/, "") : "";
-                            const listItems = lines
-                            .filter(line => line.startsWith("-"))
-                            .map(line => line.replace(/^-+\s*/, ""));
-
-                            return (
-                            <>
-                                {heading && <h4>{heading}</h4>}
-                                {listItems.length > 0 && (
-                                <ul>
-                                    {listItems.map((item, idx) => (
-                                    <li key={idx}>{item}</li>
-                                    ))}
-                                </ul>
-                                )}
-                            </>
-                            );
-                        })()}
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeRaw]}
+                            components={{
+                              img: ({ node, ...props }) => (
+                                <img
+                                  {...props}
+                                  className="my-6 rounded-xl"
+                                  src={`https://cms.sitechs.co${props.src}`}
+                                  alt={props.alt || ""}
+                                />
+                              ),
+                              blockquote: ({ node, ...props }) => (
+                                <blockquote className="text-dark ml-20" {...props} />
+                              )                          
+                            }}
+                          >
+                            {caseStudy.our_solution}
+                          </ReactMarkdown>
                         </div>
   
-                      <p>{caseStudy.result}</p>
+                      {/* <p>{caseStudy.result}</p> */}
                     </div>
                   </div>
   
