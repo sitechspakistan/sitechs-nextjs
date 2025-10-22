@@ -13,6 +13,19 @@ export async function generateMetadata({ params }) {
     title: caseStudy
       ? `${caseStudy.title} | Case Study | Sitechs`
       : "Case Study | Sitechs",
+    description: caseStudy?.short_description || "Case Study | Sitechs",
+    alternates: {
+      canonical: `https://sitechs.co/case-studies/${slug}`,
+    },
+    openGraph: {
+      title: caseStudy?.title || "Case Study | Sitechs",
+      description: caseStudy?.short_description || "Case Study | Sitechs",
+      images: [
+        {
+          url: `https://cms.sitechs.co${caseStudy?.gallery?.[0]?.url}`,
+        },
+      ],
+    }
   };
 }
 
