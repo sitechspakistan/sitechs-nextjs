@@ -27813,7 +27813,7 @@ h2.clients-title {
   background-color: #000;
   border-radius: 50px;
   width: 850px;
-  padding: 10px;
+  padding: 10px 18px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -27830,24 +27830,24 @@ h2.clients-title {
   margin: 0 auto;
 }
 .chat-cta-image {
-  width: 70px;
-  height: 70px;
+  width: auto;
+  height: 50px;
   object-fit: cover;
   border-radius: 100%;
 }
 .chat-cta-button {
-  font-size: 16px;
-  line-height: 1;
-  font-weight: 500;
   text-align: center;
-  padding: 20px 20px;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.3s;
-  background-color: #8A83BE;
   color: #fff;
-  border: 2px solid transparent;
-  width: 150px;
+  background-color: #8a83be;
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-radius: 50px;
+  width: 145px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: all .3s;
 }
 .chat-cta-button:hover {
   background-color: transparent;
@@ -27918,4 +27918,109 @@ ul.hero-socials li:hover a img {
 }
 .upwork-btn:hover {
   border-color: #000;
+}
+
+/* tech section css */
+
+#tech-sec {
+  /* background-color: rgb(238 238 238); */
+  overflow: hidden;
+}
+
+
+#tech-sec .btn-tech {
+  color: #202020;
+  background-color: transparent;
+  border: 1px solid #040404;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+#tech-sec .btn-tech:hover, #tech-sec .btn-tech.active {
+  color: #fff;
+  background-color: #8a83be;
+  border: 1px solid #8a83be;
+}
+
+#tech-sec .btn-tech:focus {
+  outline: none;
+}
+
+#tech-sec .tech-card {
+  height: 200px;
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid #aeaaaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 0.3s;
+  margin: 30px 0 0px 20px;
+  width: 15%;
+}
+
+#tech-sec .tech-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border: 2px solid #8a83be;
+}
+
+#tech-sec .tech-card img {
+  width: 55px;
+  margin-bottom: 12px;
+}
+
+#tech-sec .detail-tech-card {
+  display: none;
+  min-height: 460px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#tech-sec .detail-tech-card.active {
+  display: flex;
+}
+
+#tech-sec h1 {
+  padding-bottom: 20px;
+  font-weight: 600;
+}
+
+#tech-sec .category-buttons .btn-tech {
+
+  text-align: center;
+}
+
+#tech-sec .category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Desktop: show all buttons in one row */
+@media (max-width: 768px) {
+  #tech-sec .category-buttons .btn-tech {
+      flex: 0 0 auto;
+      /* normal size */
+      flex-wrap: wrap;
+      flex: 1 1 calc(50% - 12px);
+  }
+
+  #tech-sec .detail-tech-card {
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-around;
+      /* gap: 15px; */
+      margin: 30px 0;
+  }
+
+  #tech-sec .detail-tech-card .tech-card {
+      width: 27%;
+      margin: 0;
+      height: 150px;
+  }
+
 }

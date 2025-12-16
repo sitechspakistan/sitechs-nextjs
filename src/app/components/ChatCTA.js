@@ -28,7 +28,7 @@ export default function ChatCTA() {
   return (
     <div className="chat-cta">
       <img
-        src="/assets/images/chat-cta.jpg"
+        src="/assets/images/chatbot.png"
         className="chat-cta-image"
         alt="John | Sitechs"
       />
