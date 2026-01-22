@@ -20,10 +20,38 @@ const poppins = Poppins({
 
 export const metadata = {
   title: "AI Automation, SaaS Development & Web Design Agency | Sitechs",
-  description: "Sitechs is a full-service digital agency helping startups and enterprises build AI automations, SaaS platforms, and high-performing websites. We also craft logos and branding that power business growth.",
+  description:
+    "Sitechs is a full-service digital agency helping startups and enterprises build AI automations, SaaS platforms, and high-performing websites. We also craft logos and branding that power business growth.",
+
   alternates: {
     canonical: "https://sitechs.co",
   },
+
+  openGraph: {
+    title: "AI Automation, SaaS Development & Web Design Agency | Sitechs",
+    description:
+      "Sitechs helps startups & enterprises build AI automations, SaaS platforms, and high-performing websites.",
+    url: "https://sitechs.co",
+    siteName: "Sitechs",
+    images: [
+      {
+        url: "/assets/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Sitechs – AI Automation & SaaS Agency",
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Automation, SaaS Development & Web Design Agency | Sitechs",
+    description:
+      "AI automation, SaaS platforms & modern web solutions for growing businesses.",
+    images: ["/assets/images/logo.png"],
+  },
+
   icons: {
     icon: "/assets/images/favicon.png",
   },
