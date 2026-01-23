@@ -48,7 +48,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "AI Automation, SaaS Development & Web Design Agency | Sitechs",
     description:
-      "AI automation, SaaS platforms & modern web solutions for growing businesses.",
+      "AI automation, SaaS platforms & modern web solutions for growing businesses",
     images: ["/assets/images/logo.png"],
   },
 
