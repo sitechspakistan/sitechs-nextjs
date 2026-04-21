@@ -1,0 +1,122 @@
+html {
+    scroll-behavior: smooth;
+    transition: all 4s;
+}
+
+.tp-project-5-2-thumb {
+    position: relative;
+    overflow: hidden;
+}
+
+/* overlay hidden by default */
+.project-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2;
+    color: #fff;
+    /* background: #ffffff4f; */
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+/* dark gradient (hidden by default) */
+.tp-project-5-2-thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.418),
+            transparent);
+    opacity: 0;
+    transition: 0.4s ease;
+    z-index: 1;
+}
+
+/* HOVER EFFECT */
+.tp-project-5-2-thumb:hover .project-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tp-project-5-2-thumb:hover::after {
+    opacity: 1;
+}
+
+/* text styles */
+.project-service {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.project-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+}
+
+.portfolio-filter button {
+
+    margin: 0 20px 0px;
+}
+
+.sv-service-area h2 {
+    font-size: 42px;
+}
+
+.services_box {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    border: 1px solid #545454;
+    border-radius: 18px;
+    color: #fff;
+    padding: 10px 10px;
+    height: 450px;
+    width: 100%;
+    margin: 10px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.services_box:hover {
+    background-color: #ffffff !important;
+    color: #000 !important;
+    opacity: 1;
+    /* 0.3 tha, ab theek hai */
+}
+
+/* Hover pe andar ke text ka color black */
+.services_box:hover .services_content h3,
+.services_box:hover .services_content p {
+    color: #000 !important;
+}
+
+.services_image {
+    margin-bottom: 20px;
+    float: right;
+}
+
+.services_box img {
+    display: block;
+    float: right;
+}
+
+.services_content h3,
+.services_content p {
+    color: #fff;
+    transition: color 0.3s ease;
+    padding-left: 20px;
+}
+
+.services_content a {
+    float: right;
+    border: 1px solid transparent;
+    padding: 5px 10px;
+    border-radius: 25px;
+    background-color: rgb(185, 250, 89);
+    color: #000;
+}

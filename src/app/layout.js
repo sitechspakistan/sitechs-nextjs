@@ -9,8 +9,8 @@ import "../styles/font-awesome-pro.css";
 import '../styles/main.css'
 import Header from "./includes/Header";
 import Footer from "./includes/Footer";
-import SmoothWrapper from "./components/SmoothWrapper";
 import ChatCTA from "./components/ChatCTA";
+import "../styles/custom.css"
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -76,16 +76,14 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-          <Header />
-        <SmoothWrapper> 
-            {children} 
-          <Footer />          
-        </SmoothWrapper>
-        
+        <Header />
+        {children}
+        <Footer />
+
         <Script src="/assets/js/gsap-split-text.js" strategy="beforeInteractive" />
         <Script async src="/assets/js/vendor/jquery.js"></Script>
         <Script async src="/assets/js/bootstrap-bundle.js"></Script>
-        
+
         <ChatCTA />
 
       </body>

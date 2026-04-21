@@ -1,44 +1,183 @@
 "use client";
 import { useEffect } from "react";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+// import { gsap } from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 
 export default function ServicesArea() {
-  useEffect(() => {
-    const mm = gsap.matchMedia();
+  //   useEffect(() => {
+  //     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 991px)", () => {
-      const sections = gsap.utils.toArray(".project-panel-2");
+  //     mm.add("(min-width: 991px)", () => {
+  //       const sections = gsap.utils.toArray(".project-panel-2");
 
-      sections.forEach((section) => {
-        gsap.to(section, {
-          scrollTrigger: {
-            trigger: section,
-            pin: true,
-            scrub: 1,
-            start: "top top",
-            end: "bottom 100%",
-            endTrigger: ".project-panel-area-2",
-            pinSpacing: false,
-            markers: false,
-          },
-        });
-      });
-    });
+  //       sections.forEach((section) => {
+  //         gsap.to(section, {
+  //           scrollTrigger: {
+  //             trigger: section,
+  //             pin: true,
+  //             scrub: 1,
+  //             start: "top top",
+  //             end: "bottom 100%",
+  //             endTrigger: ".project-panel-area-2",
+  //             pinSpacing: false,
+  //             markers: false,
+  //           },
+  //         });
+  //       });
+  //     });
 
-    return () => {
-      mm.revert(); // cleanup on unmount or route change
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
-  }, []);
+  //     return () => {
+  //       mm.revert();
+  //       ScrollTrigger.getAll().forEach((st) => st.kill());
+  //     };
+  //   }, []);
 
   return (
-    <div className="sv-service-area project-panel-area-2">
+    <div className="sv-service-area project-panel-area-2 bg-black pt-50 pb-50">
+      <div className="container ">
+        <h2 className="text-white">What We do</h2>
+      </div>
       <div className="container-fluid p-0">
-        {/* Service Item 1 */}
+        <div className="row mx-2 py-2">
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/ai.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="#">View Services ↗</Link>
+              </div>
+
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/web.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="#">View Services ↗</Link>
+              </div>
+
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/web.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="#">View Services ↗</Link>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/web.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="#">View Services ↗</Link>
+              </div>
+
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/web.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="#">View Services ↗</Link>
+              </div>
+
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/web.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="#">View Services ↗</Link>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        {/* Service Item 1
         <div className="sv-service-item project-panel-2">
           <div className="row g-0">
             <div className="col-xl-6 col-lg-6">
@@ -72,7 +211,7 @@ export default function ServicesArea() {
           </div>
         </div>
 
-        {/* Service Item 2 */}
+        Service Item 2
         <div className="sv-service-item project-panel-2">
           <div className="row g-0">
             <div className="col-xl-6 col-lg-6">
@@ -106,7 +245,7 @@ export default function ServicesArea() {
           </div>
         </div>
 
-        {/* Service Item 3 */}
+        Service Item 3
         <div className="sv-service-item project-panel-2">
           <div className="row g-0">
             <div className="col-xl-6 col-lg-6">
@@ -138,7 +277,7 @@ export default function ServicesArea() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
