@@ -1,16 +1,17 @@
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import '../styles/bootstrap.css'
-import '../styles/animate.css'
-import '../styles/custom-animation.css'
-import '../styles/spacing.css'
+import "../styles/bootstrap.css";
+import "../styles/animate.css";
+import "../styles/custom-animation.css";
+import "../styles/spacing.css";
 import "../styles/font-awesome-pro.css";
-import '../styles/main.css'
+import "../styles/main.css";
 import Header from "./includes/Header";
 import Footer from "./includes/Footer";
 import ChatCTA from "./components/ChatCTA";
-import "../styles/custom.css"
+import "../styles/custom.css";
+import "../styles/custom2.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -58,7 +59,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
       <body className={poppins.variable}>
@@ -80,12 +80,14 @@ export default function RootLayout({ children }) {
         {children}
         <Footer />
 
-        <Script src="/assets/js/gsap-split-text.js" strategy="beforeInteractive" />
+        <Script
+          src="/assets/js/gsap-split-text.js"
+          strategy="beforeInteractive"
+        />
         <Script async src="/assets/js/vendor/jquery.js"></Script>
         <Script async src="/assets/js/bootstrap-bundle.js"></Script>
 
-        <ChatCTA />
-
+        {/* <ChatCTA /> */}
       </body>
     </html>
   );

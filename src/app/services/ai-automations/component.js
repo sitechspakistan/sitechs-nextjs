@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import useGsapReveal from "../hooks/useGsapReveal";
-import ParallaxImage from "../components/ParallaxImage";
+import useGsapReveal from "../../hooks/useGsapReveal";
+import ParallaxImage from "../../components/ParallaxImage";
 
 export default function Component() {
   useGsapReveal();
@@ -107,7 +107,8 @@ export default function Component() {
                 <Link
                   href="/chat-with-us"
                   className="tp-btn-white background-black"
-                >Let’s Talk
+                >
+                  Let’s Talk
                 </Link>
               </div>
             </div>

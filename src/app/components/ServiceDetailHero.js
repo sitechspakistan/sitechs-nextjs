@@ -1,18 +1,18 @@
 import ServicesForm from "./ServicesForm";
 
-export default function ServiceDetailHero() {
-    return (
-        <div className="tp-hero-3-area tp-hero-3-ptb service_hero fix">
-            <div className="container container-1480">
-                <div className="row">
-                    <div className="col-lg-7">
-                        <h1>Web Development</h1>
-                        <p>We build fast, secure, and scalable web apps<br /> using frameworks like React, Next.js, Nest.js, Vue.js, and Angular.<br /> From websites to SaaS platforms, we focus on performance<br /> and clean, maintainable code.</p>
-                    </div>
-                    <div className="col-lg-5">
-                        <ServicesForm />
-                    </div>
-                    {/* <div className="col-xl-12">
+export default function ServiceDetailHero({ heading, description }) {
+  return (
+    <div className="tp-hero-3-area tp-hero-3-ptb service_hero fix">
+      <div className="container container-1480">
+        <div className="row">
+          <div className="col-lg-7">
+            <h1>{heading}</h1>
+            <p>{description}</p>
+          </div>
+          <div className="col-lg-5">
+            <ServicesForm />
+          </div>
+          {/* <div className="col-xl-12">
                         <div className="tp-hero-3-content-box text-center p-relative">
                             <div className="floating-logo">
                                 <img className="i-1" src="assets/images/i-1.png" alt="*" />
@@ -28,7 +28,7 @@ export default function ServiceDetailHero() {
                                 <span className="tp-reveal-line">Convert more, Work less
                                     Scale smarter</span>
                                 {/* <span className="tp-reveal-line">digital agency</span> */}
-                    {/* </h4>
+          {/* </h4>
                             <span className="tp-hero-3-category tp_reveal_anim">Where Your Search Ends, Innovation Begins</span>
                             <LinK className="sitechs-btn-1" href="/chat-with-us">
                                 Let's Talk
@@ -44,8 +44,8 @@ export default function ServiceDetailHero() {
                             </ul>
                         </div>
                     </div> */}
-                </div>
-            </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

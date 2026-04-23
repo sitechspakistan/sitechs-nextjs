@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Header() {
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
@@ -9,14 +9,34 @@ export default function Header() {
   const openOffcanvas = () => setIsOffcanvasOpen(true);
   const closeOffcanvas = () => setIsOffcanvasOpen(false);
 
+  const [scrolled, setScrolled] = useState(false);
+  const lastScrollY = useRef(0);
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY >= 20);
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY.current) {
+        setScrolled(true); // scroll down
+      } else {
+        setScrolled(false); // scroll up
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsSticky(window.scrollY >= 20);
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <>
@@ -26,12 +46,23 @@ export default function Header() {
           <div className="tp-offcanvas-top d-flex align-items-center justify-content-between">
             <div className="tp-offcanvas-logo">
               <Link href="/" onClick={closeOffcanvas}>
-                <img src="/assets/images/logo.png" alt="Sitechs" className="logo-1" />
-                <img src="/assets/images/logo.png" alt="Sitechs" className="logo-2" />
+                <img
+                  src="/assets/images/logo.png"
+                  alt="Sitechs"
+                  className="logo-1"
+                />
+                <img
+                  src="/assets/images/logo.png"
+                  alt="Sitechs"
+                  className="logo-2"
+                />
               </Link>
             </div>
             <div className="tp-offcanvas-close">
-              <button className="tp-offcanvas-close-btn" onClick={closeOffcanvas}>
+              <button
+                className="tp-offcanvas-close-btn"
+                onClick={closeOffcanvas}
+              >
                 <svg
                   width="37"
                   height="38"
@@ -176,71 +207,66 @@ export default function Header() {
       ></div>
 
       {/* Header */}
-      <header>
-        <div
-          id="header-sticky"
-          className={`tp-header-3-area mt-35 z-index-5 ${
-            isSticky ? "header-sticky" : ""
-          }`}
-        >
-          <div className="container container-1740">
-            <div className="row align-items-center">
-              <div className="col-xl-3 col-lg-6 col-md-6 col-6">
-                <div className="tp-header-logo tp-header-3-logo">
-                  <Link className="logo-1" href="/">
-                    <img src="/assets/images/logo.png" alt="Sitechs" />
-                  </Link>
-                  <Link className="logo-2" href="/">
-                    <img src="/assets/images/logo.png" alt="Sitechs" />
-                  </Link>
-                </div>
-              </div>
+      <header className={`tf-header header2 ${scrolled && "header-scrolled"}`}>
+        <div className="header-inner">
+          {/* Header Logo */}
+          <Link href="/" className="logo-site">
+            <img src="/assets/images/logo.png" alt="Sitechs" />{" "}
+          </Link>
 
-              <div className="col-xl-6 col-lg-6 d-none d-xl-block">
-                <div className="tp-header-3-menu-wrap text-center">
-                  <div className="tp-header-3-menu-box d-inline-flex align-items-center justify-content-between">
-                    <div className="tp-header-3-menu header-main-menu">
-                      <nav className="tp-main-menu-content">
-                        <ul>
-                          <li>
-                            <Link href="/ai-automations">AI Automation</Link>
-                          </li>
-                          <li>
-                            <Link href="/web-development">Web Development</Link>
-                          </li>
-                          <li>
-                            <Link href="/logo-branding">Logo / Branding</Link>
-                          </li>
-                          <li>
-                            <Link href="/case-studies">Case Studies</Link>
-                          </li>
-                        </ul>
-                      </nav>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          {/* Navigation */}
+          <div
+            className={`box-navigation ${scrolled ? "nav-hide" : "nav-show"}`}
+          >
+            <ul className="nav-menu-main">
+              <li className="menu-item">
+                <Link href="/blog" className="item-link link1">
+                  Blog
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link href="/services" className="item-link link1">
+                  Services
+                </Link>
+              </li>
 
-              <div className="col-xl-3 col-lg-6 col-md-6 col-6">
-                <div className="tp-header-3-right d-flex align-items-center justify-content-end">
-                  <div className="tp-header-3-btn d-flex align-items-center ml-30">
-                    <a
-                      className="tp-btn-border-sm d-none tp-btn-black-2 d-sm-block"
-                      href="https://calendar.app.google/Mog659g7KdYzSkga7"
-                      target="_blank"
-                    >
-                      Book a Call
-                    </a>
-                    <button
-                      className="ml-20 d-xl-none tp-header-3-bar tp-offcanvas-open-btn"
-                      onClick={openOffcanvas}
-                    >
-                      <i className="fa-solid fa-bars"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <li className="menu-item">
+                <Link href="/case-studies" className="item-link link1">
+                  Case Studies
+                </Link>
+              </li>
+
+              {/* <li className="menu-item">
+              <Link href="/blog" className="item-link link1">
+                Blog
+              </Link>
+            </li> */}
+            </ul>
+          </div>
+
+          {/* Buttons */}
+          <div className="header-actions">
+            <Link
+              href="#"
+              className={`tf-btn tp-btn-border-sm ${scrolled ? "btn-hide" : "btn-show"}`}
+            >
+              Contact Us
+            </Link>
+
+            <Link
+              href="#"
+              className={`tf-btn tp-btn-border-sm ${scrolled ? "btn-show" : "btn-hide"}`}
+            >
+              Contact Us
+            </Link>
+
+            <Link
+              href="https://calendar.app.google/Mog659g7KdYzSkga7"
+              target="_blank"
+              className={`tf-btn tp-btn-border-sm ${scrolled ? "btn-show" : "btn-hide"}`}
+            >
+              Book a Call
+            </Link>
           </div>
         </div>
       </header>

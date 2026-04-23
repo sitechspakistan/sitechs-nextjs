@@ -1,0 +1,118 @@
+/* Header default */
+
+.tf-header {
+  position: fixed;
+  z-index: 999;
+  transition: all 0.7s ease;
+}
+
+.tf-header.header2 {
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 32px;
+  transition: all 0.7s ease;
+}
+
+.tf-header.header2 .header-inner {
+  width: 807px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  transform: none;
+  transition: all 0.7s ease;
+}
+
+.tf-header .header-inner {
+  backdrop-filter: blur(44px);
+  background-color: #f2f2f1;
+  border-radius: 14px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  display: flex;
+  transition: all 0.7s ease;
+}
+
+.tf-header.header-scrolled .header-inner {
+  width: 550px;
+  transition: all 0.7s ease;
+}
+
+.logo-site img {
+  flex-shrink: 0;
+  height: 30px;
+  transition: all 0.3s ease;
+}
+
+.scrolled-nav .item-link {
+  font-size: 14px;
+}
+
+.nav-menu-main {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  color: #000;
+}
+.box-navigation {
+  transition: all 0.7s ease;
+}
+
+.nav-hide {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  visibility: hidden;
+  width: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.nav-show {
+  opacity: 1;
+  transform: translateX(0);
+  width: auto;
+  overflow: visible;
+}
+
+/* button animation */
+
+.tf-btn {
+  transition: all 0.5s ease;
+  padding: 0 20px;
+  font-size: 14px;
+  white-space: nowrap;
+  transform-origin: top;
+}
+.tf-btn:focus {
+  color: #fff;
+}
+
+.btn-hide {
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transform: translateX(-10px);
+}
+
+.btn-show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.tp-btn-border-sm {
+  border: none;
+}
+.btn-show + .btn-show {
+  margin-left: 5px;
+}

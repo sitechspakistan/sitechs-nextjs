@@ -11,9 +11,8 @@
 // export default function SmoothWrapper({ children }) {
 //   useEffect(() => {
 //     (async () => {
-//       const smootherModule = await import(
-//         "../../../public/assets/js/gsap-scroll-smoother.js"
-//       );
+//       const smootherModule =
+//         await import("../../../public/assets/js/gsap-scroll-smoother.js");
 
 //       ScrollSmoother = smootherModule.default || smootherModule;
 //       gsap.registerPlugin(ScrollSmoother);
