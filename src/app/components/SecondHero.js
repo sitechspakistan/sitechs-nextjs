@@ -1,6 +1,6 @@
 export default function SecondHero() {
     return (
-        <div className="tp-hero-3-area tp-hero-3-ptb service_hero fix text-center">
+        <div className="tp-hero-3-area tp-hero-3-ptb fix text-center">
             <div className="container container-1480">
                 <div className="row">
                     <div className="col-lg-12">

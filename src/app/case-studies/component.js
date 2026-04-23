@@ -106,7 +106,7 @@ export default function Component() {
   return (
     <>
       {/* HERO SECTION */}
-      <div className="tm-hero-area pt-50 pb-50">
+      <div className="tm-hero-area pt-180 pb-50">
         <div className="container">
           <div className="row">
             <div className="col-xl-12 text-center">

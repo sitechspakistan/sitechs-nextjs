@@ -256,12 +256,12 @@ html {
     padding-bottom: 5px !important;
 }
 
-.service_hero h1 {
-    font-size: 92px;
-    font-weight: 400;
+.service_detail_heading {
+    font-size: 92px !important;
+    font-weight: 400 !important;
 }
 
-.service_hero p {
+.service_detail_para {
     padding-top: 20px;
     font-size: 15px;
 }
