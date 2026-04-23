@@ -6,11 +6,11 @@ import Process from "@/app/components/Process";
 import Faqs from "@/app/components/Faqs";
 
 export const metadata = {
-  title: "Custom Website Design & Development Agency | Sitechs",
+  title: "Web Development Services | Sitechs",
   description:
     "Sitechs crafts high-converting websites tailored for startups and businesses. From sleek designs to scalable web platforms, we deliver performance-driven digital experiences that grow your brand.",
   alternates: {
-    canonical: "https://sitechs.co/web-development",
+    canonical: "https://sitechs.co/services/web-development",
   },
 };
 

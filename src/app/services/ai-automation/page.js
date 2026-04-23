@@ -6,11 +6,11 @@ import Process from "@/app/components/Process";
 import Faqs from "@/app/components/Faqs";
 
 export const metadata = {
-  title: "AI Automation & Intelligent Agent Development Company | Sitechs",
+  title: "AI Automation Services | Sitechs",
   description:
     "Accelerate your business with Sitechs AI automation solutions. We build custom AI agents and workflows that streamline operations, enhance customer experiences, and boost productivity for startups and enterprises.",
   alternates: {
-    canonical: "https://sitechs.co/ai-automations",
+    canonical: "https://sitechs.co/services/ai-automation",
   },
 };
 
@@ -27,7 +27,7 @@ const aiTechnologies = [
     title: "FastAPI",
     description:
       "Delivers high-performance AI backends with speed, clarity, and precision.",
-    image: "/assets/images/fastapi.png",
+    image: "/assets/images/FastApi.png",
     link: "#",
     categories: [],
   },
@@ -35,7 +35,7 @@ const aiTechnologies = [
     title: "LangChain",
     description:
       "Connects AI models with data and logic to make smarter, context-aware decisions.",
-    image: "/assets/images/langchain.png",
+    image: "/assets/images/langchain.jpeg",
     link: "#",
     categories: [],
   },
@@ -43,7 +43,7 @@ const aiTechnologies = [
     title: "Pinecone",
     description:
       "Enables lightning-fast vector search for personalization and intelligent recommendations.",
-    image: "/assets/images/.png",
+    image: "/assets/images/pinecone.png",
     link: "#",
     categories: [],
   },
@@ -61,7 +61,7 @@ export default function AiAutomations() {
   return (
     <>
       <ServiceDetailHero
-        heading="AI Automations"
+        heading="AI Automation"
         description={
           <>
             We create smart AI systems that automate tasks
