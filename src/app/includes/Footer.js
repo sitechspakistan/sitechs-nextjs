@@ -55,7 +55,7 @@ export default function Footer() {
                 <div className="row align-items-center">
                     <div className="col-xl-12 col-lg-12">
                         <div className="text-center">
-                        <p className="text-white">&copy; Sitechs 2025. All rights reserved.</p>
+                        <p className="text-white">&copy; Sitechs 2026. All rights reserved.</p>
                         </div>
                     </div>
                     {/* <div className="col-xl-8 col-lg-7">
