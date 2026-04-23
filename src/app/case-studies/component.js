@@ -106,21 +106,21 @@ export default function Component() {
   return (
     <>
       {/* HERO SECTION */}
-      <div className="tm-hero-area tm-hero-ptb">
+      <div className="tm-hero-area pt-50 pb-50">
         <div className="container">
           <div className="row">
-            <div className="col-xl-12">
+            <div className="col-xl-12 text-center">
 
               <div className="tm-hero-content">
-                <span className="tm-hero-subtitle">Our Work</span>
+                {/* <span className="tm-hero-subtitle">Our Work</span> */}
                 <h4 className="tm-hero-title tp-char-animation">
                   Case Studies
                 </h4>
               </div>
 
-              <div className="tm-hero-text tp_title_anim">
+              <div className="tm-hero-text tp_title_anim ">
                 <p>
-                  We are a diverse team that works as fancies attention to details,
+                  We are a diverse team that works as fancies attention to details,<br />
                   enjoys beers on Friday nights and aspires to design the dent in the universe.
                 </p>
               </div>
@@ -132,7 +132,7 @@ export default function Component() {
 
       {/* CASE STUDIES SECTION */}
       <div className="tp-project-5-2-area tp-project-5-2-pt pb-130">
-        <div className="container container-1530">
+        <div className="container">
 
           {/* FILTER BUTTONS */}
           <div className="row justify-content-center">
@@ -165,45 +165,32 @@ export default function Component() {
           </div>
 
           {/* GRID */}
-          <div className="row">
+          <div className="row justify-content-between align-items-center pt-50">
 
-            {filteredData.map((item) => (
-              <div
-                className="col-xl-6 col-lg-6 col-md-6 mb-4"
-                key={item.id}
-              >
+            {/* GRID */}
+            <div className="col-lg-12 case-masonry-grid">
+              {filteredData.map((item) => (
+                <div className="case-masonry-item" key={item.id}>
 
-                <div className="tp-project-5-2-thumb anim-zoomin-wrap p-relative">
+                  <Link href={`/case-studies/${item.slug}`} className="case-card">
 
-                  <Link href={`/case-studies/${item.slug}`}>
-
-                    {/* IMAGE */}
-                    <div style={{ overflow: "hidden" }}>
+                    <div className="case-card-image-wrapper">
                       <img
-                        className="anim-zoomin w-100"
-                        src={`/assets/images/case-studies/${item.image}`}
+                        src={`/assets/images/thumbnail/${item.thumb}`}
                         alt={item.title}
                       />
                     </div>
 
-                    <div className="project-overlay">
-
-                      <span className="project-service">
-                        {item.service}
-                      </span>
-
-                      <h4 className="project-title">
-                        {item.title}
-                      </h4>
-
+                    <div className="case-card-info">
+                      <h4 className="case-card-title">{item.title}</h4>
+                      <span className="case-card-service">{item.service}</span>
                     </div>
 
                   </Link>
 
                 </div>
-
-              </div>
-            ))}
+              ))}
+            </div>
 
           </div>
 

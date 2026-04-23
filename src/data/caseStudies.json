@@ -15,10 +15,12 @@
         "images": [
             "3.png",
             "2.png"
-        ]
+        ],
+        "thumb": "2.jpg"
     },
     {
         "id": 2,
+        "thumb": "4.jpg",
         "title": "Hiller Media Group",
         "slug": "hiller-media-group",
         "category": "Web Development",
@@ -33,6 +35,7 @@
     },
     {
         "id": 3,
+        "thumb": "5.jpg",
         "title": "Smart Office Management System",
         "slug": "smart-office-management-system",
         "category": "Web Development",
@@ -47,6 +50,7 @@
     },
     {
         "id": 4,
+        "thumb": "1.jpg",
         "title": "Upfeeds",
         "slug": "upfeeds",
         "category": "Web Development",
@@ -71,6 +75,7 @@
         "date": "June 2025",
         "deliverables": "WhatsApp AI Bot, CRM Integration",
         "our_solution": "We built Zoop, a WhatsApp-based AI Agent that connects directly with the client’s CRM. Customers can now interact naturally using simple messages like:\n\n   Hey Zoop, create an invoice for order #1204 Hey Zoop, show my pending tickets\n\n Zoop understands each command, processes it in real time, and responds instantly all without requiring users to log in. From creating invoices to checking payments or adding notes, Zoop handles it all through a smooth conversational flow.",
-        "results": "\n\n- 70% faster response times \n\n- Improved customer satisfaction \n\n- Zero repetitive work for internal teams \n\nZoop transformed the client’s CRM into a conversational platform, making automation feel as natural as chatting with a friend."
+        "results": "\n\n- 70% faster response times \n\n- Improved customer satisfaction \n\n- Zero repetitive work for internal teams \n\nZoop transformed the client’s CRM into a conversational platform, making automation feel as natural as chatting with a friend.",
+        "thumb": "3.jpg"
     }
 ]

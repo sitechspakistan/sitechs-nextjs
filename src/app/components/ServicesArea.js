@@ -37,12 +37,34 @@ export default function ServicesArea() {
   //   }, []);
 
   return (
-    <div className="sv-service-area project-panel-area-2 bg-black pt-50 pb-50">
+    <div className="sv-service-area project-panel-area-2 bg-black pt-80 pb-80">
       <div className="container ">
-        <h2 className="text-white">What We do</h2>
+        <h2 className="text-white text-center">What We do</h2>
       </div>
       <div className="container-fluid p-0">
         <div className="row mx-2 py-2">
+          <div className="col-lg-4">
+            <div className="services_box">
+
+              <div className="services_image">
+                <Image
+                  src="/assets/images/services/web.png"
+                  width={219}
+                  height={219}
+                  alt="web-development"
+                />
+              </div>
+
+              <div className="services_content">
+                <h3>Web Development</h3>
+                <p>
+                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                </p>
+                <Link href="/services/web-development">View Details ↗</Link>
+              </div>
+
+            </div>
+          </div>
           <div className="col-lg-4">
             <div className="services_box">
 
@@ -56,11 +78,11 @@ export default function ServicesArea() {
               </div>
 
               <div className="services_content">
-                <h3>Web Development</h3>
+                <h3>AI</h3>
                 <p>
-                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                  We create smart AI systems that automate tasks and improve decision...
                 </p>
-                <Link href="#">View Services ↗</Link>
+                <Link href="#">View Details ↗</Link>
               </div>
 
             </div>
@@ -70,7 +92,7 @@ export default function ServicesArea() {
 
               <div className="services_image">
                 <Image
-                  src="/assets/images/services/web.png"
+                  src="/assets/images/services/tools.png"
                   width={219}
                   height={219}
                   alt="web-development"
@@ -78,33 +100,11 @@ export default function ServicesArea() {
               </div>
 
               <div className="services_content">
-                <h3>Web Development</h3>
+                <h3>Automation Tools</h3>
                 <p>
-                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                  We develop automation tools that simplify workflows and eliminate...
                 </p>
-                <Link href="#">View Services ↗</Link>
-              </div>
-
-            </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="services_box">
-
-              <div className="services_image">
-                <Image
-                  src="/assets/images/services/web.png"
-                  width={219}
-                  height={219}
-                  alt="web-development"
-                />
-              </div>
-
-              <div className="services_content">
-                <h3>Web Development</h3>
-                <p>
-                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
-                </p>
-                <Link href="#">View Services ↗</Link>
+                <Link href="#">View Details ↗</Link>
               </div>
 
             </div>
@@ -115,7 +115,7 @@ export default function ServicesArea() {
 
               <div className="services_image">
                 <Image
-                  src="/assets/images/services/web.png"
+                  src="/assets/images/services/app.png"
                   width={219}
                   height={219}
                   alt="web-development"
@@ -123,11 +123,11 @@ export default function ServicesArea() {
               </div>
 
               <div className="services_content">
-                <h3>Web Development</h3>
+                <h3>App Development</h3>
                 <p>
-                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                  We develop mobile apps that are fast, scalable, and visually polished. From...
                 </p>
-                <Link href="#">View Services ↗</Link>
+                <Link href="#">View Details ↗</Link>
               </div>
 
             </div>
@@ -137,7 +137,7 @@ export default function ServicesArea() {
 
               <div className="services_image">
                 <Image
-                  src="/assets/images/services/web.png"
+                  src="/assets/images/services/ex.png"
                   width={219}
                   height={219}
                   alt="web-development"
@@ -145,11 +145,11 @@ export default function ServicesArea() {
               </div>
 
               <div className="services_content">
-                <h3>Web Development</h3>
+                <h3>Chrome Extensions</h3>
                 <p>
-                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                  We build lightweight, intuitive Chrome extensions that boost productivity and f...
                 </p>
-                <Link href="#">View Services ↗</Link>
+                <Link href="#">View Details ↗</Link>
               </div>
 
             </div>
@@ -159,7 +159,7 @@ export default function ServicesArea() {
 
               <div className="services_image">
                 <Image
-                  src="/assets/images/services/web.png"
+                  src="/assets/images/services/aim.png"
                   width={219}
                   height={219}
                   alt="web-development"
@@ -167,11 +167,11 @@ export default function ServicesArea() {
               </div>
 
               <div className="services_content">
-                <h3>Web Development</h3>
+                <h3>UI/UX</h3>
                 <p>
-                  We build fast, secure, and scalable web apps using frameworks like React, Next.js...
+                  We design experiences that blend creativity and purpose. Using Figma,...
                 </p>
-                <Link href="#">View Services ↗</Link>
+                <Link href="#">View Details ↗</Link>
               </div>
 
             </div>

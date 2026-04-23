@@ -1,14 +1,18 @@
-"use client";
-import Link from "next/link";
-import useGsapReveal from "../hooks/useGsapReveal";
+import ServicesForm from "./ServicesForm";
 
-export default function Hero() {
-    useGsapReveal();
+export default function ServiceDetailHero() {
     return (
-        <div className="tp-hero-3-area tp-hero-3-ptb hero-bg fix">
-            <div className="container">
+        <div className="tp-hero-3-area tp-hero-3-ptb service_hero fix">
+            <div className="container container-1480">
                 <div className="row">
-                    <div className="col-xl-12">
+                    <div className="col-lg-7">
+                        <h1>Web Development</h1>
+                        <p>We build fast, secure, and scalable web apps<br /> using frameworks like React, Next.js, Nest.js, Vue.js, and Angular.<br /> From websites to SaaS platforms, we focus on performance<br /> and clean, maintainable code.</p>
+                    </div>
+                    <div className="col-lg-5">
+                        <ServicesForm />
+                    </div>
+                    {/* <div className="col-xl-12">
                         <div className="tp-hero-3-content-box text-center p-relative">
                             <div className="floating-logo">
                                 <img className="i-1" src="assets/images/i-1.png" alt="*" />
@@ -24,9 +28,9 @@ export default function Hero() {
                                 <span className="tp-reveal-line">Convert more, Work less
                                     Scale smarter</span>
                                 {/* <span className="tp-reveal-line">digital agency</span> */}
-                            </h4>
+                    {/* </h4>
                             <span className="tp-hero-3-category tp_reveal_anim">Where Your Search Ends, Innovation Begins</span>
-                            <Link className="sitechs-btn-1" href="/chat-with-us">
+                            <LinK className="sitechs-btn-1" href="/chat-with-us">
                                 Let's Talk
                             </Link>
                             <a className="sitechs-btn-1 upwork-btn" href="https://www.upwork.com/agencies/1863602840810539543/" target="_blank">
@@ -39,7 +43,7 @@ export default function Hero() {
                                 <li><a href="https://x.com/officialsitechs" target="_blank"><img src="/assets/images/x.png" alt="X" /></a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
