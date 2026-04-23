@@ -41,7 +41,7 @@ export default function ServicesArea() {
       <div className="container ">
         <h2 className="text-white text-center">What We do</h2>
       </div>
-      <div className="container-fluid p-0">
+      <div className="container container-1480 p-0">
         <div className="row mx-2 py-2">
           <div className="col-lg-4">
             <div className="services_box">
@@ -49,8 +49,8 @@ export default function ServicesArea() {
               <div className="services_image">
                 <Image
                   src="/assets/images/services/web.png"
-                  width={219}
-                  height={219}
+                  width={180}
+                  height={180}
                   alt="web-development"
                 />
               </div>
@@ -71,8 +71,8 @@ export default function ServicesArea() {
               <div className="services_image">
                 <Image
                   src="/assets/images/services/ai.png"
-                  width={219}
-                  height={219}
+                  width={180}
+                  height={180}
                   alt="web-development"
                 />
               </div>
@@ -93,8 +93,8 @@ export default function ServicesArea() {
               <div className="services_image">
                 <Image
                   src="/assets/images/services/tools.png"
-                  width={219}
-                  height={219}
+                  width={180}
+                  height={180}
                   alt="web-development"
                 />
               </div>
@@ -116,8 +116,8 @@ export default function ServicesArea() {
               <div className="services_image">
                 <Image
                   src="/assets/images/services/app.png"
-                  width={219}
-                  height={219}
+                  width={180}
+                  height={180}
                   alt="web-development"
                 />
               </div>
@@ -138,8 +138,8 @@ export default function ServicesArea() {
               <div className="services_image">
                 <Image
                   src="/assets/images/services/ex.png"
-                  width={219}
-                  height={219}
+                  width={180}
+                  height={180}
                   alt="web-development"
                 />
               </div>
@@ -160,8 +160,8 @@ export default function ServicesArea() {
               <div className="services_image">
                 <Image
                   src="/assets/images/services/aim.png"
-                  width={219}
-                  height={219}
+                  width={180}
+                  height={180}
                   alt="web-development"
                 />
               </div>
