@@ -3,6 +3,60 @@ html {
     transition: all 4s;
 }
 
+.tp-hero-3-title {
+    letter-spacing: -4.2px;
+    font-size: 94px;
+    font-weight: 500;
+    font-family: var(--tp-ff-heading);
+}
+
+.bg-hero {
+    /* background: #6B5CE7 */
+    /* background: linear-gradient(135deg, #6B5CE7 0%, #9333ea 100%); */
+    /* background: linear-gradient(135deg, #6b5ce7 0%, #a06bcf 100%); */
+    /* background: linear-gradient(135deg, #7b6af8 0%, #a86edf 100%); */
+    /* background: radial-gradient(at 100% 100%, #color3 0%, transparent 50%); */
+    /* background:
+        radial-gradient(at 0% 0%, #ede9fe 0%, transparent 50%),
+        radial-gradient(at 100% 0%, #ddd6fe 0%, transparent 50%),
+        radial-gradient(at 100% 100%, #fce7f3 0%, transparent 50%),
+        radial-gradient(at 0% 100%, #e0e7ff 0%, transparent 50%);
+    background-color: #f5f3ff; */
+
+    background:
+        radial-gradient(at 0% 0%, #fef9c3 0%, transparent 50%),
+        radial-gradient(at 100% 0%, #bfdbfe 0%, transparent 50%),
+        radial-gradient(at 100% 100%, #fce7f3 0%, transparent 50%),
+        radial-gradient(at 0% 100%, #d1fae5 0%, transparent 50%);
+    background-color: #fff;
+}
+
+
+.floating-logo .i-1,
+.floating-logo .i-2 {
+    top: -80px;
+}
+
+.floating-logo .i-3,
+.floating-logo .i-4 {
+    top: 40px;
+}
+
+.floating-logo .i-5,
+.floating-logo .i-6 {
+    top: 168px;
+}
+
+.floating-logo .i-7,
+.floating-logo .i-8 {
+    top: 300px;
+}
+
+.floating-logo img {
+    background: transparent;
+    filter: drop-shadow(0px 4px 14px rgba(255, 255, 255, 0.6));
+}
+
 .case-masonry-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -11,7 +65,10 @@ html {
 }
 
 .case-masonry-item {
-    margin-bottom: 0px;
+    break-inside: avoid;
+    margin-bottom: 0;
+    display: inline-block;
+    width: 100%;
 }
 
 .case-masonry-item:nth-child(even) {
@@ -42,7 +99,6 @@ html {
 
 .case-masonry-item:nth-child(even) .case-card-image-wrapper {
     height: auto;
-    margin-top: 0;
 }
 
 .case-card-image-wrapper img {
@@ -339,4 +395,137 @@ html {
     text-align: center;
     margin-top: auto;
     margin-bottom: 10px;
+}
+
+.desktop-filters {
+    display: flex;
+}
+
+.mobile-filter-dropdown {
+    display: none;
+}
+
+.fs-1 {
+    font-size: 3rem !important;
+    font-weight: 500 !important;
+}
+
+.fq-faq-wrapper .tp-service-2-accordion-box .accordion-header .accordion-buttons {
+    font-weight: 500;
+}
+
+.tp-footer-3-social a {
+    border: 1px solid rgb(255 255 255 / 43%);
+}
+
+.fq-faq-area .row {
+    justify-content: center;
+}
+
+.fq-faq-area .col-xl-12 {
+    flex: none;
+    width: 807px !important;
+}
+
+@media (max-width: 767px) {
+    .services_box {
+        height: auto;
+    }
+
+
+    .services_content {
+        width: 100%;
+    }
+
+    .services_box .services_image img {
+        width: 80%;
+        height: auto;
+    }
+
+    .services_box_changes {
+        height: auto;
+    }
+
+    .services_box_changes .services_image img {
+        width: 80%;
+        height: auto;
+    }
+
+    .services_box_changes .services_content {
+        width: 80%;
+    }
+
+    .service_h1 {
+        font-size: 30px !important;
+    }
+
+    .sv-service-area h2 {
+        font-size: 40px;
+    }
+
+    .case-masonry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .case-card-image-wrapper {
+        width: 100%;
+        height: auto;
+
+    }
+
+    .desktop-filters {
+        display: none !important;
+    }
+
+    .mobile-filter-dropdown {
+        display: flex;
+        justify-content: center;
+    }
+
+    .case-masonry-item:nth-child(even) {
+        margin-top: 20px;
+    }
+
+    .case-masonry-item:nth-child(odd) {
+        margin-top: 20px;
+    }
+
+    .mobile-filter-dropdown select {
+        width: 100%;
+        max-width: 320px;
+        padding: 10px 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        background-color: #fff;
+        cursor: pointer;
+        appearance: auto;
+        color: #000;
+        /* browser default arrow */
+    }
+}
+
+
+
+/* Mac books */
+@media (max-width: 1280px) {
+    .services_content {
+
+        width: 80%;
+    }
+
+    .services_box img {
+        width: 120px;
+        height: auto;
+    }
+
+    .services_box_changes .services_content {
+
+        width: 80%;
+    }
+
+    .services_box_changes .services_image img {
+        width: 120px;
+        height: auto;
+    }
 }

@@ -1,8 +1,8 @@
 export default function Faqs() {
     return (
-        <div className="fq-faq-area fq-faq-bdr pt-40 pb-60">
+        <div className="fq-faq-area fq-faq-bdr pt-80 pb-60">
             <div className="container container-1480">
-                <h2 className="mb-40 fw-normal fs-1">Frequently Asked Questions</h2>
+                <h2 className="mb-40 fw-normal fs-1 text-center">FAQs</h2>
                 <div className="row">
                     <div className="col-xl-12">
                         <div className="fq-faq-wrapper">

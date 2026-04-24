@@ -53,7 +53,10 @@ export default function WebDevelopment() {
   return (
     <>
       <ServiceDetailHero
-        heading="Web Development"
+        heading={<>
+          Web<br /> Development
+        </>
+        }
         description={
           <>
             We build fast, secure, and scalable web apps

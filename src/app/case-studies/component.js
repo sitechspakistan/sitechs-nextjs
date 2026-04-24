@@ -138,34 +138,42 @@ export default function Component() {
           <div className="row justify-content-center">
             <div className="col-xl-8">
 
-              <div className="portfolio-filter masonary-menu d-flex justify-content-center mb-40">
-
+              {/* FILTER BUTTONS - Desktop */}
+              <div className="portfolio-filter masonary-menu d-flex justify-content-center mb-40 desktop-filters">
                 {categories.map((cat, index) => (
                   <div key={cat} className="d-flex align-items-center">
-
-                    {/* FILTER BUTTON */}
                     <button
                       onClick={() => setActiveFilter(cat)}
                       className={activeFilter === cat ? "active" : ""}
                     >
                       {cat}
                     </button>
-
-                    {/* separator */}
                     {index < categories.length - 1 && (
                       <span className="filter-separator mx-2">/</span>
                     )}
-
                   </div>
                 ))}
+              </div>
 
+              {/* FILTER DROPDOWN - Mobile */}
+              <div className="mobile-filter-dropdown mb-40">
+                <select
+                  value={activeFilter}
+                  onChange={(e) => setActiveFilter(e.target.value)}
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
               </div>
 
             </div>
           </div>
 
+
+
           {/* GRID */}
-          <div className="row justify-content-between align-items-center pt-50">
+          <div className="row justify-content-between align-items-center pt-lg-50">
 
             {/* GRID */}
             <div className="col-lg-12 case-masonry-grid">

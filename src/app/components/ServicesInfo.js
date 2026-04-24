@@ -73,9 +73,8 @@ function ServiceCard({ image, title, description, href }) {
 
 function ServicesInfo() {
     return (
-        <div className="sv-service-area project-panel-area-2 bg-white pt-80 pb-80">
+        <div className="sv-service-area project-panel-area-2 bg-white pt-0 pt-lg-80 pb-lg-80">
             <div className="container">
-                <h2 className="text-center">What We do</h2>
             </div>
             <div className="container container-1480 p-0">
                 <div className="row mx-2 py-2">

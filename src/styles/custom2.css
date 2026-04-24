@@ -58,6 +58,7 @@
   font-size: 15px;
   font-weight: 500;
 }
+
 .box-navigation {
   transition: all 0.7s ease;
 }
@@ -84,7 +85,8 @@
 .tf-btn {
   transition: all 0.5s ease;
   padding: 0 20px;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
   white-space: nowrap;
   transform-origin: top;
   /* border: none; */
@@ -131,7 +133,7 @@
   align-items: center;
 }
 
-.btn-show + .btn-show {
+.btn-show+.btn-show {
   margin-left: 5px;
 }
 
@@ -145,6 +147,7 @@
   height: 100vh;
   transform: translateY(100%);
 }
+
 .tp-offcanvas-main {
   text-align: right;
 }
@@ -162,9 +165,11 @@
 .tp-offcanvas-social ul {
   justify-content: flex-end;
 }
+
 .tp-offcanvas-social .hero-socials .fa-brands {
   font-size: 18px;
 }
+
 ul.hero-socials li a {
   display: flex;
   justify-content: center;

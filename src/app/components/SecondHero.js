@@ -4,7 +4,7 @@ export default function SecondHero() {
             <div className="container container-1480">
                 <div className="row">
                     <div className="col-lg-12">
-                        <span className="fs-5">Services</span>
+                        <span className="fs-5">What We Do</span>
                         <h1 className="service_h1 pt-3">To Redefine the Global Standard of Engineering Excellence</h1>
                         <p>by addressing hard challenges and helping new ideas become practical solutions.</p>
                     </div>

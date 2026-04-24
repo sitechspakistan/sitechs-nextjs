@@ -2,12 +2,12 @@ import ServicesForm from "./ServicesForm";
 
 export default function ServiceDetailHero({ heading, description }) {
   return (
-    <div className="tp-hero-3-area tp-hero-3-ptb fix">
+    <div className="tp-hero-3-area tp-hero-3-ptb fix bg-hero">
       <div className="container container-1480">
         <div className="row">
           <div className="col-lg-7">
-            <h1 className="service_detail_heading">{heading}</h1>
-            <p className="service_detail_para">{description}</p>
+            <h1 className="service_detail_heading text-white">{heading}</h1>
+            <p className="service_detail_para text-white">{description}</p>
           </div>
           <div className="col-lg-5">
             <ServicesForm />
