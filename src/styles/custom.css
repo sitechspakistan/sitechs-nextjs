@@ -428,6 +428,7 @@ html {
     width: 807px !important;
 }
 
+
 @media (max-width: 767px) {
     /* .services_box {
         height: auto;
@@ -566,13 +567,22 @@ html {
         padding-bottom: 0px;
     }
 
-    .tp-hero-3-ptb {
-        /* padding-top: 210px; */
-        padding-bottom: 0px;
+    .pb-sm-0 {
+        padding-bottom: 0;
     }
+
+    .tp-servicehero {
+        padding-top: 120px !important;
+        padding-bottom: 0 !important;
+    }
+
 }
 
 
+.tp-servicehero {
+    padding-top: 210px;
+    padding-bottom: 40px;
+}
 
 /* Mac books */
 /* @media (max-width: 1280px) {

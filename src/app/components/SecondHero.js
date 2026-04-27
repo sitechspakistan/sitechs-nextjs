@@ -4,7 +4,7 @@ import useGsapReveal from "../hooks/useGsapReveal";
 export default function SecondHero() {
     useGsapReveal();
     return (
-        <div className="tp-hero-3-area tp-hero-3-ptb fix text-center">
+        <div className="tp-hero-3-area tp-servicehero fix text-center ">
             <div className="container container-1480">
                 <div className="row">
                     <div className="col-lg-12">
