@@ -27,7 +27,7 @@ const aiTechnologies = [
     title: "FastAPI",
     description:
       "Delivers high-performance AI backends with speed, clarity, and precision.",
-    image: "/assets/images/fastApi.png",
+    image: "/assets/images/techs/fastapi.svg",
     link: "#",
     categories: [],
   },
