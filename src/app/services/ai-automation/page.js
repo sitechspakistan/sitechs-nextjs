@@ -61,7 +61,11 @@ export default function AiAutomations() {
   return (
     <>
       <ServiceDetailHero
-        heading="AI Automation"
+        heading={
+          <>
+            AI <br /> Automation
+          </>
+        }
         description={
           <>
             We create smart AI systems that automate tasks

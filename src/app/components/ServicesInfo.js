@@ -51,8 +51,8 @@ const servicesData = [
 // Re-usable Service Card Component
 function ServiceCard({ image, title, description, href }) {
     return (
-        <div className="col-lg-4">
-            <div className="services_box_changes">
+        <div className="col-lg-4 d-flex mb-3">
+            <div className="services_box_changes h-100 w-100">
                 <div className="services_image">
                     <Image
                         src={image}
@@ -76,7 +76,7 @@ function ServicesInfo() {
         <div className="sv-service-area project-panel-area-2 bg-white pt-0 pt-lg-80 pb-lg-80">
             <div className="container">
             </div>
-            <div className="container container-1480 p-0">
+            <div className="container container-1320 p-0">
                 <div className="row mx-2 py-2">
                     {servicesData.map((service) => (
                         <ServiceCard

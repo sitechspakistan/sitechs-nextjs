@@ -8,9 +8,9 @@ export default function TechSec() {
     setActiveCategory(category);
   };
   return (
-    <section id="tech-sec" className="pt-100">
+    <section id="tech-sec" className="pt-80">
       <div className="bg-grey">
-        <div className="container">
+        <div className="container ">
           {/* <h1 className="text-center">Technologies We Work With</h1> */}
           <h4 className="tp-section-title-40 font-style-2 pb-20 text-center">
             Technologies We Work With

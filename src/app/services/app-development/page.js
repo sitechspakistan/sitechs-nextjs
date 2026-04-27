@@ -53,7 +53,12 @@ export default function AppDevlopment() {
     return (
         <>
             <ServiceDetailHero
-                heading="App Development"
+                heading={
+
+                    <>
+                        App <br /> Development
+                    </>
+                }
                 description={
                     <>
                         We develop mobile apps that are fast, scalable, and visually

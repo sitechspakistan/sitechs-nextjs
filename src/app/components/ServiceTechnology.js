@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ServiceTechnology({ data }) {
   return (
-    <div className="tp-service-3-area pt-130 pb-130">
+    <div className="tp-service-3-area pt-80 pb-80">
       <div className="container">
         {data.map((item, index) => (
           <div

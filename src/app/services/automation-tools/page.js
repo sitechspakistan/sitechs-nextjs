@@ -52,7 +52,11 @@ export default function AutomationTool() {
     return (
         <>
             <ServiceDetailHero
-                heading="Automations Tools"
+                heading={
+                    <>
+                        Automations<br /> Tools
+                    </>
+                }
                 description={
                     <>
                         We develop automation tools that simplify workflows and

@@ -84,6 +84,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import caseStudies from "@/data/caseStudies.json";
+import useGsapReveal from "../hooks/useGsapReveal";
 
 export default function Component() {
 
@@ -102,7 +103,7 @@ export default function Component() {
     activeFilter === "All"
       ? caseStudies
       : caseStudies.filter((item) => item.category === activeFilter);
-
+  useGsapReveal();
   return (
     <>
       {/* HERO SECTION */}
@@ -113,15 +114,15 @@ export default function Component() {
 
               <div className="tm-hero-content">
                 {/* <span className="tm-hero-subtitle">Our Work</span> */}
-                <h4 className="tm-hero-title tp-char-animation">
+                <h4 className="tm-hero-title tp_title_anim">
                   Case Studies
                 </h4>
               </div>
 
-              <div className="tm-hero-text tp_title_anim ">
+              <div className="tm-hero-text tp_reveal_anim ">
                 <p>
-                  We are a diverse team that works as fancies attention to details,<br />
-                  enjoys beers on Friday nights and aspires to design the dent in the universe.
+                  We are a diverse team that works as fancies attention to details, enjoys
+                  beers on Friday nights and aspires to design the dent in the universe.
                 </p>
               </div>
 

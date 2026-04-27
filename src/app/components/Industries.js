@@ -1,6 +1,6 @@
 export default function Industries() {
     return (
-        <div className="ab-about-area ab-about-mt pt-50 pb-0 z-index-5 ">
+        <div className="ab-about-area ab-about-mt pt-80 pb-0 z-index-5 ">
             <div className="container container-1480">
                 <div className="ab-about-thumb-wrap mb-40">
                     <div id="about-info" className="row">

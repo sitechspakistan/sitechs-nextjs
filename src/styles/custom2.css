@@ -97,16 +97,16 @@
 }
 
 .btn-dark {
-  background-color: black;
+  background-color: #ffc107;
   color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   /* border-color: black; */
 }
 
 .btn-dark:hover {
-  background-color: transparent;
-  color: black;
-  border: 1px solid #8a83be;
+  background-color: #000;
+  color: #ffc107;
+  /* border: 1px solid #ffc107; */
 }
 
 .tf-btn:focus {

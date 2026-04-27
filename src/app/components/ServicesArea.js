@@ -49,8 +49,8 @@ const servicesData = [
 
 function ServiceCard({ image, title, description, href }) {
   return (
-    <div className="col-lg-4">
-      <div className="services_box">
+    <div className="col-lg-4 d-flex mb-3">
+      <div className="services_box h-100 w-100">
         <div className="services_image">
           <Image
             src={image}
@@ -75,7 +75,7 @@ export default function ServicesArea() {
       <div className="container">
         <h2 className="text-white text-center">What We do</h2>
       </div>
-      <div className="container container-1480 p-0">
+      <div className="container container-1320 p-0">
         <div className="row mx-2 py-2">
           {servicesData.map((service) => (
             <ServiceCard
