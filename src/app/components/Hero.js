@@ -87,7 +87,7 @@ export default function Hero() {
                                 <img className="i-8" src="assets/images/i-8.png" alt="*" />
                             </div> */}
                             <h4 className="tp-hero-3-title ">
-                                Convert more, Work<br className="d-sm-none" />  less.
+                                Convert more, Work<br className="d-none d-md-block" />  less.
                                 <span className="text-warning"> Scale smarter</span>
                                 {/* <span className="tp-reveal-line">digital agency</span> */}
                             </h4>

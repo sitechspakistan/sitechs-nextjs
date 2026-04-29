@@ -110,6 +110,12 @@ export default function Header() {
                       Case Studies
                     </Link>
                   </li>
+
+                  <li>
+                    <Link href="/contact-us" onClick={closeOffcanvas}>
+                      Contact Us
+                    </Link>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -219,14 +225,14 @@ export default function Header() {
           {/* Buttons */}
           <div className="header-actions d-none d-lg-flex">
             <Link
-              href="#"
+              href="/contact-us"
               className={`tf-btn tp-btn-border-sm  ${scrolled ? "btn-hide" : "btn-show"}`}
             >
               Contact Us
             </Link>
 
             <Link
-              href="#"
+              href="/contact-us"
               className={`tf-btn tp-btn-border-sm  ${scrolled ? "btn-show" : "btn-hide"}`}
             >
               Contact Us

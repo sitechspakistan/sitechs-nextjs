@@ -164,6 +164,8 @@ html {
     float: right;
     filter: brightness(0) invert(0.4);
     transition: filter 0.4s ease, opacity 0.4s ease;
+    width: 140px;
+    height: auto;
 }
 
 .services_box:hover img {
@@ -193,12 +195,13 @@ html {
     border: 1px solid transparent;
     padding: 5px 10px;
     border-radius: 25px;
-    background-color: rgb(185, 250, 89);
-    color: #000;
+    background-color: #ffc107;
+    color: #fff;
     width: 50%;
     text-align: center;
     margin-top: auto;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .case-card-service {
@@ -271,12 +274,13 @@ html {
 }
 
 .service_form {
-    background: #f2f2f12e;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    background: rgb(255 255 249 / 22%);
     border-radius: 14px;
-    padding: 20px;
     min-height: 430px;
-    box-shadow: 0 1px 8px rgb(214 214 214 / 73%);
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(214, 214, 214, .73);
 }
 
 .service_form input,
@@ -404,18 +408,14 @@ html {
     font-weight: 500 !important;
 }
 
-.fq-faq-wrapper .tp-service-2-accordion-box .accordion-header .accordion-buttons {
-    font-weight: 500;
-}
-
 .tp-footer-3-social a {
     color: #000;
     border: 1px solid #000;
 }
 
 .tp-footer-3-social a:hover {
-    border: 1px solid var(--color_primary);
-    color: var(--color_primary);
+    border: 1px solid var(--color_btn_golden);
+    color: var(--color_btn_golden);
     background: transparent;
 }
 
@@ -428,12 +428,184 @@ html {
     width: 807px !important;
 }
 
+.tp-servicehero {
+    padding-top: 210px;
+    padding-bottom: 40px;
+}
+
+.tp-contact-form .col-lg-4 {
+    position: sticky;
+    top: 40px;
+    align-self: flex-start;
+    height: fit-content;
+}
+
+.tp-contact-form .row {
+    align-items: flex-start;
+}
+
+.tp-contact-form .tp-footer-2-contact-item {
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0);
+    padding: 10px 10px;
+    border-radius: 10px;
+    /* background-color: #f4f4f5; */
+    /* box-shadow: inset 0 -8px #0000000d, inset 0 4px #fff9, 0 3.77px 2px #0000000f, 0 3px 3px #0000001a; */
+}
+
+
+.tp-contact-form .tp-footer-2-contact-item span {
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.tp-contact-form i {
+    font-size: 20px;
+    padding: 10px 10px;
+    border-radius: 50px;
+    color: #fff;
+    background-color: var(--color_btn_golden);
+    margin-top: 0 !important;
+}
+
+.tp-contact-form h1 {
+    font-family: var(--tp-ff-gallery);
+    font-weight: 600;
+}
+
+.tp-contact-form p {
+    font-size: 14px;
+    color: #000;
+    padding-top: 20px;
+}
+
+.tp-contact-form form {
+    /* padding-bottom: 50px; */
+    padding: 20px 50px;
+    padding-top: 0;
+}
+
+.tp-contact-form input {
+    border: unset;
+    border-bottom: 1px solid rgb(224, 226, 227);
+    margin-bottom: 30px;
+    height: 30px;
+    padding-left: 0;
+}
+
+.tp-contact-form textarea {
+    border: unset;
+    border-bottom: 1px solid rgb(224, 226, 227);
+    margin-bottom: 20px;
+    margin-top: 40px;
+    /* min-height: 40px !important; */
+    height: 50px !important;
+    padding-left: 0;
+    padding-bottom: 0;
+    resize: none;
+    overflow-y: hidden;
+    padding-top: 25px;
+}
+
+.tp-contact-form .budget {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    gap: 10px;
+}
+
+.tp-contact-form input[type="radio"] {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.tp-contact-form label {
+    cursor: pointer;
+    padding: 2px 4px;
+    margin: 0 0 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    background-color: #e2e1e1;
+    font-size: 12px;
+
+}
+
+.tp-contact-form input[type="radio"]:checked+label {
+    background: black;
+    color: white;
+    border-color: black;
+}
+
+.submitbtn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.react-tel-input .form-control {
+    width: 100% !important;
+    border: none !important;
+    border-bottom: 1px solid #e0e2e3 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding-left: none !important;
+    padding: 15px 40px;
+    height: 0 !important;
+}
+
+.react-tel-input .form-control::placeholder {
+    color: #999;
+    font-size: 14px;
+    padding: 20px 10px;
+    font-family: var(--tp-ff-heading);
+}
+
+.react-tel-input .flag-dropdown {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.react-tel-input .flag-dropdown.open {
+    background: transparent !important;
+}
+
+.react-tel-input .form-control:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid black !important;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+    background-color: unset;
+}
+
+.tp-brand-4-area {
+    z-index: 1;
+
+}
+
+.fq-faq-wrapper .tp-service-2-accordion-box .accordion-header .accordion-buttons {
+    padding: 20px 15px 20px 0px;
+    font-size: 22px;
+    font-weight: 500;
+
+}
+
+.tp-service-2-accordion-box .accordion-body p {
+    margin-bottom: 20px;
+}
+
+.tp-service-2-accordion-box .accordion-header .accordion-buttons .accordion-icon {
+    top: 32px;
+}
 
 @media (max-width: 767px) {
-    /* .services_box {
-        height: auto;
-    } */
-
 
     .services_box .services_content,
     .services_box_changes .services_content {
@@ -448,36 +620,17 @@ html {
         right: 10px;
     }
 
-    /* .services_box .services_image img {
-        width: 80%;
-        height: auto;
-    } */
-
     .services_content a,
     .services_box_changes a {
         width: 100%;
 
     }
 
-    /* .services_box_changes {
-        height: auto;
-    } */
-
     .services_box .services_image img,
     .services_box_changes .services_image img {
-        width: 60%;
+        width: 90%;
         height: auto;
     }
-
-    /* .services_box_changes .services_content {
-        width: 80%;
-        padding-top: 40px;
-    } */
-
-    /* .services_box_changes .services_image {
-        top: 10px;
-        right: 10px;
-    } */
 
     .service_h1 {
         font-size: 30px !important;
@@ -576,14 +729,68 @@ html {
         padding-bottom: 0 !important;
     }
 
+    .tp-footer-2-widget-title {
+        margin-bottom: 15px;
+        margin-top: 30px;
+    }
+
+    .tp-contact-form {
+        padding-top: 100px;
+    }
+
+    .tp-contact-form form {
+        padding: 10px 15px 20px;
+    }
+
+    .tp-contact-form label {
+        margin-bottom: 10px;
+    }
+
+    .tp-contact-form .budget {
+        align-items: start;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .fq-faq-wrapper .tp-service-2-accordion-box .accordion-header .accordion-buttons {
+        font-size: 16px;
+        padding-bottom: 0px;
+    }
+
+    .tp-service-2-accordion-box .accordion-header .accordion-buttons .accordion-icon:before {
+        height: 15px;
+
+    }
+
+    .tp-service-2-accordion-box .accordion-header .accordion-buttons .accordion-icon:after {
+
+        width: 15px;
+
+    }
+
+    .tp-service-2-accordion-box .accordion-body p {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .tp-contact-form input,
+    .tp-contact-form textarea {
+        padding-left: 0;
+    }
+
+    .tp-contact-form form {
+        padding: 40px 5px;
+    }
+
+    .fq-faq-area h2 {
+        margin-bottom: 10px;
+    }
 }
 
 
-.tp-servicehero {
-    padding-top: 210px;
-    padding-bottom: 40px;
-}
 
+/* .tp-contact-form */
 /* Mac books */
 /* @media (max-width: 1280px) {
     .services_content {
