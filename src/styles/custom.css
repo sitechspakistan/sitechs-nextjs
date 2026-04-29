@@ -387,7 +387,7 @@ html {
     border: 1px solid transparent;
     padding: 5px 10px;
     border-radius: 25px;
-    background-color: rgb(185, 250, 89);
+    background-color: var(--color_btn_golden);
     color: #000;
     width: 50%;
     text-align: center;
