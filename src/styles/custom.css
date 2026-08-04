@@ -837,12 +837,7 @@ html {
     box-shadow: 0 7.77px 16px rgba(0, 0, 0, 0), 0 3px 3px rgba(0, 0, 0, .16), inset 0 -8px rgb(255 193 7), inset 0 8px #ffc107;
 }
 
-#product-form #form input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="number"],
-input[type="password"],
-input[type="url"] {
+#product-form #form input {
     height: 40px;
 }
 
