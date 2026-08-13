@@ -3,6 +3,7 @@ import Link from "next/link";
 import useGsapReveal from "../hooks/useGsapReveal";
 
 export default function Hero() {
+    const clients = [8, 6, 5, 3, 7, 1, 4, 2];
     // <div className="tp-hero-3-area tp-hero-3-ptb hero-bg fix">
     //     <div className="container">
     //         <div className="row">
@@ -103,14 +104,31 @@ export default function Hero() {
                                 <li><a href="https://www.instagram.com/sitechs.official/" target="_blank"><img src="/assets/images/instagram.png" alt="Instagram" /></a></li>
                                 <li><a href="https://www.linkedin.com/company/sitechsofficial" target="_blank"><img src="/assets/images/linkedin.png" alt="Linkedin" /></a></li>
                                 <li><a href="https://x.com/officialsitechs" target="_blank"><img src="/assets/images/x.png" alt="X" /></a></li> */}
-                                <div className="tp-footer-3-social pt-10 justify-content-center">
+                                {/* <div className="tp-footer-3-social pt-10 justify-content-center">
                                     <li> <Link href="https://x.com/officialsitechs" target="_blank"><i className="fa-brands fa-twitter"></i></Link></li>
                                     <li> <Link href="https://www.facebook.com/Sitechsofficial/" target="_blank"><i className="fa-brands fa-facebook-f"></i></Link></li>
                                     <li><Link href="https://www.instagram.com/sitechs.official/" target="_blank"><i className="fa-brands fa-instagram"></i></Link></li>
                                     <li><Link href="https://www.linkedin.com/company/sitechsofficial" target="_blank"><i className="fa-brands fa-linkedin-in"></i></Link></li>
-                                </div>
+                                </div> */}
 
                             </ul>
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="partner-wrap">
+                                            <div className="infinite-slider-wrapper">
+                                                <div className="infinite-slider-track">
+                                                    {[...clients, ...clients].map((n, i) => (
+                                                        <div className="slide-item" key={i}>
+                                                            <img src={`/assets/images/clients/${n}.png`} alt="" />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
