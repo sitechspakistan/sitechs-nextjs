@@ -7,52 +7,54 @@ const heroFeatures = [
     { id: 3, iconClass: ChartNoAxesColumn, spanText: "Scale Effortlessly" },
 ];
 
+
 export default function AiAutoHero() {
     return (
-        <div className="tp-hero-3-area tp-hero-3-ptb fix bg-hero">
+        <div className="tp-hero-3-area tp-hero-3-ptb bg-hero">
             <div className="container container-1480">
                 <div className="row">
-                    <div className="col-lg-6">
-                        <span className="tp-section-subtitle-3">
-                            <span>
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd"
-                                        d="M12 0C12 3.0432 9.53292 5.5102 6.48975 5.5102C6.48975 2.46701 8.95677 0 12 0Z"
-                                        fill="currentcolor" />
-                                    <path fillRule="evenodd" clipRule="evenodd"
-                                        d="M0.0231934 0.0231209C3.06639 0.0231209 5.5334 2.49015 5.5334 5.53333C2.4902 5.53333 0.0231934 3.0663 0.0231934 0.0231209Z"
-                                        fill="currentcolor" />
-                                    <path fillRule="evenodd" clipRule="evenodd"
-                                        d="M6.48975 6.4898C9.53294 6.4898 12 8.95682 12 12C8.95675 12 6.48975 9.53297 6.48975 6.4898Z"
-                                        fill="currentcolor" />
-                                    <path fillRule="evenodd" clipRule="evenodd"
-                                        d="M5.5102 6.48981C5.5102 9.533 3.04318 12 0 12C0 8.95681 2.46703 6.48981 5.5102 6.48981Z"
-                                        fill="currentcolor" />
-                                </svg>
+                    <div className="col-lg-6 p-relative ">
+                        <div className="left-sticky">
+                            <span className="tp-section-subtitle-3">
+                                <span>
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" clipRule="evenodd"
+                                            d="M12 0C12 3.0432 9.53292 5.5102 6.48975 5.5102C6.48975 2.46701 8.95677 0 12 0Z"
+                                            fill="currentcolor" />
+                                        <path fillRule="evenodd" clipRule="evenodd"
+                                            d="M0.0231934 0.0231209C3.06639 0.0231209 5.5334 2.49015 5.5334 5.53333C2.4902 5.53333 0.0231934 3.0663 0.0231934 0.0231209Z"
+                                            fill="currentcolor" />
+                                        <path fillRule="evenodd" clipRule="evenodd"
+                                            d="M6.48975 6.4898C9.53294 6.4898 12 8.95682 12 12C8.95675 12 6.48975 9.53297 6.48975 6.4898Z"
+                                            fill="currentcolor" />
+                                        <path fillRule="evenodd" clipRule="evenodd"
+                                            d="M5.5102 6.48981C5.5102 9.533 3.04318 12 0 12C0 8.95681 2.46703 6.48981 5.5102 6.48981Z"
+                                            fill="currentcolor" />
+                                    </svg>
+                                </span>
+                                AI Automation
                             </span>
-                            AI Automation
-                        </span>
-                        <h1 className="service_detail_heading ">Work Smarter. <br /> Scale Faster.</h1>
-                        <p className="service_detail_para">We build AI-powered systems that automate repetitive tasks, reduce manual work, and help your business grow 24/7 so you can focus on what truly matters.</p>
+                            <h1 className="service_detail_heading ">Work Smarter. <br /> Scale Faster.</h1>
+                            <p className="service_detail_para">We build AI-powered systems that automate repetitive tasks, reduce manual work, and help your business grow 24/7 so you can focus on what truly matters.</p>
 
 
-                        <div>
-                            <Link href="#calculator" className="tf-btn tp-btn-border-sm">
-                                See How It Works
-                            </Link>
+                            <div>
+                                <Link href="#calculator" className="tf-btn tp-btn-border-sm">
+                                    See How It Works
+                                </Link>
+                            </div>
+
+
+                            <div className="d-flex gap-3 py-3 city-icons">
+                                {heroFeatures.map((item) => (
+                                    <div className="d-flex align-items-center gap-2" key={item.id}>
+                                        <item.iconClass id="city-icon" />
+                                        <span className="whitespace-nowrap">{item.spanText}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-
-
-                        <div className="d-flex gap-3 py-3 city-icons">
-                            {heroFeatures.map((item) => (
-                                <div className="d-flex align-items-center gap-2" key={item.id}>
-                                    <item.iconClass id="city-icon" />
-                                    <span className="whitespace-nowrap">{item.spanText}</span>
-                                </div>
-                            ))}
-                        </div>
-
                     </div>
                     <div className="col-lg-6">
                         <div className="service_form">

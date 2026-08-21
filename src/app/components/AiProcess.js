@@ -13,7 +13,7 @@ const defaultSteps = [
 const AiProcess = ({ steps = defaultSteps }) => {
     return (
         <section className='bg-white ai_process'>
-            <div className="container container-1320 pt-5 pb-3">
+            <div className="container container-1320 pt-50 pb-50">
                 <div className="text-center mb-lg-5 mb-0">
                     <span>The Process</span>
                     <h2 >How It Works</h2>

@@ -53,7 +53,7 @@ const aiSolutionsData = [
 
 const AiSolutions = () => {
     return (
-        <section className='ai_solution bg-white pt-20 pb-50'>
+        <section className='ai_solution bg-white pt-50 pb-50'>
             <div className='container container-1320'>
                 <div className='text-center'>
                     <span>What We Build</span>

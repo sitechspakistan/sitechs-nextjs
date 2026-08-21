@@ -61,7 +61,7 @@ const SavingsCalculator = () => {
                         </div>
 
                         {/* Right side - Results */}
-                        <div className='col-lg-6'>
+                        <div className='col-lg-6 results_col'>
                             <div className='result_box'>
                                 <h3>{formatNumber(hoursPerMonth)}</h3>
                                 <p>Hours / Month</p>

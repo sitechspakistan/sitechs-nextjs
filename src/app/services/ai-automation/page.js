@@ -6,11 +6,16 @@
 // import Faqs from "@/app/components/Faqs";
 import AiAutoHero from "@/app/components/AiAutoHero";
 import AiCalendarTool from "@/app/components/AiCalendarTool";
+import AiCta from "@/app/components/AiCta";
 import AiProcess from "@/app/components/AiProcess";
 import AiSolutions from "@/app/components/AiSolution";
 import AutomateSolution from "@/app/components/AutomateSolution";
 import Faqs from "@/app/components/Faqs";
+import FeaturedAutomationCase from "@/app/components/FeaturedAutomationCase";
+import PricingTiers from "@/app/components/PricingTies";
 import SavingsCalculator from "@/app/components/SavingsCalculator";
+import SeeItInAction from "@/app/components/SeeItAction";
+import TrustBar from "@/app/components/TrustBar";
 
 export const metadata = {
   title: "AI Automation Services | Sitechs",
@@ -69,12 +74,17 @@ export default function AiAutomations() {
     <>
 
       <AiAutoHero />
+      <TrustBar />
       <AiCalendarTool />
       <AutomateSolution />
       <AiSolutions />
+      <SeeItInAction />
+      <FeaturedAutomationCase />
       <AiProcess />
       <SavingsCalculator />
+      <PricingTiers />
       <Faqs />
+      <AiCta />
     </>
   );
 }

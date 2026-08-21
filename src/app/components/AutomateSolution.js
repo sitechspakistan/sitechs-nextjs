@@ -53,7 +53,7 @@ const automationData = [
 
 const AutomateSolution = () => {
     return (
-        <section className='auto_solution bg-white pb-50'>
+        <section className='auto_solution bg-white pt-50 pb-50'>
             <div className='container container-1320'>
                 <div className='text-center'>
                     <span>Why Automate</span>
