@@ -3,57 +3,36 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import ParallaxImage from "@/app/components/ParallaxImage";
-
-// Fetch single blog by slug
-async function getBlog(slug) {
-  const res = await fetch(`https://cms.sitechs.co/blogs?Slug=${slug}`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data[0];
-}
-
-// Fetch 3 latest blogs
-async function getLatestBlogs(currentSlug) {
-  const res = await fetch("https://cms.sitechs.co/blogs", { cache: "no-store" });
-  const data = await res.json();
-  return data
-    .filter((b) => b.Slug !== currentSlug)
-    .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
-    .slice(0, 3);
-}
+import blogData from "@/data/blogdata.json";
 
 // ✅ SEO Metadata from Strapi fields
 export async function generateMetadata({ params }) {
-  const blog = await getBlog(params.slug);
+  const { slug } = await params;
+
+  const blog = blogData.find((item) => item.slug === slug);
 
   if (!blog) {
     return {
       title: "Blog | Sitechs",
-      description: "Explore insights, AI automation, and web development trends from Sitechs.",
-      alternates: {
-        canonical: "https://sitechs.co/blog/${params.slug}",
-      },
+      description:
+        "Explore insights, AI automation, and web development trends from Sitechs.",
     };
   }
 
   return {
-    title: blog.meta_title || `${blog.Title} | Sitechs`,
-    description:
-      blog.meta_description ||
-      blog.Description?.slice(0, 155).replace(/\n/g, " ") ||
-      "Read our latest insights on AI automations, SaaS, and branding from Sitechs.",
+    title: blog.seo.title || `${blog.title} | Sitechs`,
+    description: blog.seo.description || blog.summary,
+
     openGraph: {
-      title: blog.meta_title || blog.Title,
+      title: blog.seo.title || blog.title,
       description:
-        blog.meta_description ||
-        blog.Description?.slice(0, 155).replace(/\n/g, " "),
+        blog.meta_description || blog.seo.description || blog.summary,
       images: [
         {
-          url: `https://cms.sitechs.co${blog.Image?.url}`,
+          url: `${blog.image}`,
           width: 1200,
           height: 630,
-          alt: blog.Title,
+          alt: blog.title,
         },
       ],
     },
@@ -61,9 +40,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogDetail({ params }) {
-  const { slug } = params;
-  const blog = await getBlog(slug);
-  const latestBlogs = await getLatestBlogs(slug);
+  const { slug } = await params;
+
+  const blog = blogData.find((item) => item.slug === slug);
 
   if (!blog) {
     return (
@@ -87,31 +66,31 @@ export default async function BlogDetail({ params }) {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://sitechs.co/blog/${slug}`,
     },
-    "headline": blog.Title,
-    "description":
+    headline: blog.Title,
+    description:
       blog.meta_description ||
-      blog.Description?.slice(0, 155).replace(/\n/g, " ") ||
+      blog.content?.slice(0, 155).replace(/\n/g, " ") ||
       "",
-    "image": `https://cms.sitechs.co${blog.Image?.url}`,
-    "author": {
+    image: `https://cms.sitechs.co${blog.imagemage?.url}`,
+    author: {
       "@type": "Organization",
-      "name": "Sitechs",
-      "url": "https://sitechs.co",
+      name: "Sitechs",
+      url: "https://sitechs.co",
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "Sitechs",
-      "logo": {
+      name: "Sitechs",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://sitechs.co/assets/images/logo.png",
+        url: "https://sitechs.co/assets/images/logo.png",
       },
     },
-    "datePublished": blog.published_at,
-    "dateModified": blog.updatedAt || blog.published_at,
+    datePublished: blog.date,
+    dateModified: blog.updatedAt || blog.published_at,
   };
 
   return (
@@ -130,10 +109,10 @@ export default async function BlogDetail({ params }) {
               <div className="col-xl-12">
                 <div className="blog-details-content z-index-5">
                   <span className="blog-details-meta text-black">
-                    {formatDate(blog.published_at)}
+                    {formatDate(blog.date)}
                   </span>
                   <h1 className="blog-details-title tp-text-black tp-char-animation">
-                    {blog.Title}
+                    {blog.title}
                   </h1>
                 </div>
               </div>
@@ -148,8 +127,8 @@ export default async function BlogDetail({ params }) {
               <div className="col-xl-12">
                 <div className="blog-details-thumb">
                   <ParallaxImage
-                    src={`https://cms.sitechs.co${blog.Image?.url}`}
-                    alt={blog.Title}
+                    src={`${blog.image}`}
+                    alt={blog.title}
                     speed=".8"
                   />
                 </div>
@@ -179,17 +158,24 @@ export default async function BlogDetail({ params }) {
                         />
                       ),
                       h1: ({ node, ...props }) => (
-                        <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />
+                        <h1
+                          className="text-3xl font-bold mt-8 mb-4"
+                          {...props}
+                        />
                       ),
+
                       h2: ({ node, ...props }) => (
-                        <h2 className="text-2xl font-semibold mt-6 mb-3" {...props} />
+                        <h2
+                          className="text-2xl font-semibold mt-6 mb-3"
+                          {...props}
+                        />
                       ),
                       p: ({ node, ...props }) => (
                         <p className="leading-relaxed mb-4" {...props} />
                       ),
                     }}
                   >
-                    {blog.Description}
+                    {blog.content}
                   </ReactMarkdown>
                 </article>
               </div>
@@ -199,7 +185,7 @@ export default async function BlogDetail({ params }) {
       </section>
 
       {/* Latest Posts */}
-      <div className="blog-details-realated-area grey-bg-2 pt-90 pb-40">
+      {/* <div className="blog-details-realated-area grey-bg-2 pt-90 pb-40">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-8">
@@ -209,7 +195,7 @@ export default async function BlogDetail({ params }) {
             </div>
           </div>
           <div className="row">
-            {latestBlogs.map((item) => (
+            {da.map((item) => (
               <div className="col-xl-4 col-lg-6 col-md-6 mb-50" key={item.id}>
                 <div className="tp-blog-item">
                   <div className="tp-blog-thumb fix p-relative">
@@ -233,7 +219,7 @@ export default async function BlogDetail({ params }) {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

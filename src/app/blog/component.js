@@ -2,35 +2,21 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import blogData from "@/data/blogdata.json";
 
 export default function Component() {
-  const [blogs, setBlogs] = useState([]);
-
-  useEffect(() => {
-    async function fetchBlogs() {
-      try {
-        const res = await fetch("https://cms.sitechs.co/blogs");
-        const data = await res.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    }
-    fetchBlogs();
-  }, []);
-
-  if (!blogs.length) {
+  if (!blogData.length) {
     return <div className="text-center py-10">Loading blogs...</div>;
   }
 
   // Sort blogs by date (latest first)
-  const sortedBlogs = blogs.sort(
-    (a, b) => new Date(b.published_at) - new Date(a.published_at)
-  );
+  // const sortedBlogs = blogs.sort(
+  //   (a, b) => new Date(b.published_at) - new Date(a.published_at),
+  // );
 
-  // Latest blog for banner
-  const latestBlog = sortedBlogs[0];
-  const otherBlogs = sortedBlogs;
+  // // Latest blog for banner
+  // const latestBlog = sortedBlogs[0];
+  // const otherBlogs = sortedBlogs;
 
   // Helper for date formatting
   const formatDate = (dateString) => {
@@ -45,7 +31,10 @@ export default function Component() {
   return (
     <>
       {/* Top Featured Blog */}
-      <div className="tp-blog-standard-area pt-120">
+      <h4 className="tp-blog-standard-title tp-char-animation pt-150 text-center text-black">
+        {"Blogs"}
+      </h4>
+      {/* <div className="tp-blog-standard-area pt-120">
         <div className="container container-1500">
           <div className="row">
             <div className="col-xl-12">
@@ -55,11 +44,7 @@ export default function Component() {
                   src={`https://cms.sitechs.co${latestBlog.Image?.url}`}
                   alt={latestBlog.Title}
                 />
-                <div className="tp-blog-standard-title-box d-none d-sm-block">
-                  <h4 className="tp-blog-standard-title tp-char-animation">
-                    {latestBlog.Title}
-                  </h4>
-                </div>
+                <div className="tp-blog-standard-title-box d-none d-sm-block"></div>
                 <div className="tp-blog-standard-meta d-none d-sm-block">
                   <span>
                     {formatDate(latestBlog.published_at).split(" ")[0]} <br />
@@ -70,30 +55,24 @@ export default function Component() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Other Blogs Grid */}
-      <div className="blog-details-realated-area pt-120 pb-70">
+      <div className="blog-details-realated-area pt-80 pb-80">
         <div className="container">
           <div className="row">
-            {otherBlogs.map((blog) => (
-              <div
-                className="col-xl-4 col-lg-6 col-md-6 mb-50"
-                key={blog.id}
-              >
+            {blogData.map((blog, index) => (
+              <div className="col-xl-4 col-lg-6 col-md-6 mb-50" key={index}>
                 <div className="tp-blog-item">
                   <div className="tp-blog-thumb fix p-relative">
-                    <img
-                      src={`https://cms.sitechs.co${blog.Image?.formats?.medium?.url || blog.Image?.url}`}
-                      alt={blog.Title}
-                    />
+                    <img src={`${blog.image}`} alt={blog.title} />
                     <div className="tp-blog-meta">
-                      <span>{formatDate(blog.published_at)}</span>
+                      <span>{formatDate(blog.date)}</span>
                     </div>
                   </div>
                   <div className="tp-blog-content">
                     <h4 className="tp-blog-title-sm">
-                      <Link href={`/blog/${blog.Slug}`}>{blog.Title}</Link>
+                      <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
                     </h4>
                   </div>
                 </div>
