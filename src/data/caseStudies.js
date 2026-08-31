@@ -1,7 +1,7 @@
 const CaseStudyData = [
     {
         slug: "ai-calling-agent-service-agency",
-        image: "/assets/images/case-studies/4.jpg",
+        image: "/assets/images/case-study/4.jpg",
         seo: {
             metaTitle: "AI Calling Agent for Service Businesses | Sitechs",
             metaDescription: "Sitechs built an AI Calling Agent that dials every lead from Google Sheets, answers customer questions, books the service automatically, and sends a confirmation email — built for a service-based agency.",
