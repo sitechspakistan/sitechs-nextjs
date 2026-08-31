@@ -1,5 +1,33 @@
 const CaseStudyData = [
     {
+        slug: "ai-calling-agent-service-agency",
+        image: "/assets/images/case-studies/4.jpg",
+        seo: {
+            metaTitle: "AI Calling Agent for Service Businesses | Sitechs",
+            metaDescription: "Sitechs built an AI Calling Agent that dials every lead from Google Sheets, answers customer questions, books the service automatically, and sends a confirmation email — built for a service-based agency.",
+        },
+        description: ["A service-based agency was manually calling every lead from their spreadsheet, answering the same pricing and FAQ questions on repeat, then manually confirming bookings and sending follow-up emails. It was slow, repetitive, and impossible to scale."],
+        category: ["AI Automation"],
+        title: "AI Calling Agent",
+        deliverables: ["AI Integration", "Voice Automation", "Workflow Automation"],
+        solution: [
+            "We built an AI Calling Agent trained on the client's pricing structure, FAQs, and company details that:",
+            {
+                type: "list",
+                items: [
+                    "Automatically calls every number listed in the Google Sheet",
+                    "Answers customer questions about pricing, services, and the company in real time",
+                    "Updates each lead's status and logs call outcomes back to the sheet",
+                    "Confirms and creates the booking directly on the website once a customer agrees",
+                    "Sends an automatic confirmation email to the customer"
+                ]
+            }
+        ],
+        result: [
+            "The result? A fully automated calling-to-booking pipeline that let the client reach every lead without lifting a phone, cut response time to zero, and freed the team from repetitive calls and manual scheduling."
+        ]
+    },
+    {
         slug: "ai-email-automation",
         image: "/assets/images/case-studies/1.jpg",
         seo: {
