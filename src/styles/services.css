@@ -978,9 +978,10 @@
 
 .pricing-card__head {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 8px 10px;
 }
 
 .pricing-card__name {
@@ -1898,8 +1899,9 @@
 
 .savings-slider__row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 10px;
+  gap: 4px 10px;
   font-size: 13.5px;
   color: rgba(244, 242, 238, 0.75);
   margin-bottom: 10px;

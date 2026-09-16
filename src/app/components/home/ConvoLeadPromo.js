@@ -9,7 +9,7 @@ export default function ConvoLeadPromo() {
   const magnetic = useMagnetic();
 
   return (
-    <section id="convolead" className="convolead-section" style={{display: "none"}}>
+    <section id="convolead" className="convolead-section">
       <div className="convolead-section__inner">
         <div className="convolead-glow" />
         <div ref={ref} className={`convolead-grid reveal reveal--up${revealed ? " is-visible" : ""}`}>
@@ -53,8 +53,15 @@ export default function ConvoLeadPromo() {
                 ConvoLead reel
               </div>
               <div className="convolead-window__body">
-                <div className="convolead-play">▶</div>
-                <span className="convolead-window__caption">Drop the ConvoLead reel here</span>
+                <video
+                  className="convolead-video"
+                  src="/assets/reel.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                />
               </div>
             </div>
           </div>
