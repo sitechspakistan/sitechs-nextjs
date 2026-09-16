@@ -28,7 +28,7 @@ export default function AiBookingHero() {
                                         fill="currentcolor" />
                                 </svg>
                             </span>
-                            Ai Automation For Bookings & Appointments
+                            Ai Automation For Bookings & Appointments With Sitechs
                         </span>
                         <div className="tp-hero-3-content-box p-relative">
                             <h4 className="tp-hero-3-title ">
