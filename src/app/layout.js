@@ -1,22 +1,31 @@
-import { Poppins } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import "../styles/bootstrap.css";
-import "../styles/animate.css";
-import "../styles/custom-animation.css";
-import "../styles/spacing.css";
-import "../styles/font-awesome-pro.css";
-import "../styles/main.css";
+import "../styles/header.css";
+import "../styles/footer.css";
+import "../styles/home.css";
+import "../styles/services.css";
+import "../styles/content-pages.css";
 import Header from "./includes/Header";
 import Footer from "./includes/Footer";
-import ChatCTA from "./components/ChatCTA";
-import "../styles/custom.css";
-import "../styles/custom2.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600", "800"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata = {
@@ -61,7 +70,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={poppins.variable}>
+      <body className={`${bricolage.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-HTX30J3VNZ"
@@ -79,15 +88,6 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         <Footer />
-
-        <Script
-          src="/assets/js/gsap-split-text.js"
-          strategy="beforeInteractive"
-        />
-        <Script async src="/assets/js/vendor/jquery.js"></Script>
-        <Script async src="/assets/js/bootstrap-bundle.js"></Script>
-
-        {/* <ChatCTA /> */}
       </body>
     </html>
   );

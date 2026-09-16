@@ -1,22 +1,31 @@
-import Hero from "./components/Hero";
-import AboutArea from "./components/AboutArea";
-import ServicesArea from "./components/ServicesArea";
-import ClientsArea from "./components/ClientsArea";
-import Counter from "./components/Counter";
-import Testimonials from "./components/Testimonials";
-import TechSec from "./components/TechSec";
+import Hero from "./components/home/Hero";
+import KineticStrip from "./components/home/KineticStrip";
+import ClientLogos from "./components/home/ClientLogos";
+import Work from "./components/home/Work";
+import Services from "./components/home/Services";
+import Stats from "./components/home/Stats";
+import Process from "./components/home/Process";
+import EngagementPlans from "./components/home/EngagementPlans";
+import ConvoLeadPromo from "./components/home/ConvoLeadPromo";
+import Testimonials from "./components/home/Testimonials";
+import Faq from "./components/home/Faq";
+import ClosingCta from "./components/home/ClosingCta";
 
 export default function Home() {
   return (
-    <>                  
-        <Hero />
-        <AboutArea />
-        <ServicesArea />
-        <ClientsArea />
-        {/* <CaseStudies /> */}
-        <Counter />
-        <TechSec />
-        <Testimonials />
-    </>
+    <main className="home">
+      <Hero />
+      <KineticStrip />
+      <ClientLogos />
+      <Work />
+      <Services />
+      <Stats />
+      <Process />
+      <EngagementPlans />
+      <ConvoLeadPromo />
+      <Testimonials />
+      <Faq />
+      <ClosingCta />
+    </main>
   );
 }

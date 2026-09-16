@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="Sitechs Homepage v3.dc.html" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="padding:9px 15px; border-radius:999px; font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease; color:{{ l.color }}; background:{{ l.bg }}" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative; padding:48px 34px 0; overflow:hidden">
+    <div data-parallax=".12" style="position:absolute; left:50%; top:-28%; width:60vw; height:60vw; margin-left:-30vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.12), rgba(163,156,224,0) 62%); filter:blur(24px); pointer-events:none"></div>
+    <div style="position:relative; max-width:1360px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr)); gap:48px; align-items:center">
+      <div style="min-width:0">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 360ms ease-out forwards">
+          <a href="Sitechs Work.dc.html" style="color:rgba(244,242,238,.55)" style-hover="color:#A39CE0">Case studies</a>
+          <span>/</span>
+          <sc-for list="{{ category }}" as="c" hint-placeholder-count="1">
+            <span style="color:#A39CE0">{{ c }}</span>
+          </sc-for>
+        </div>
+        <h1 style="margin:22px 0 0; max-width:14ch; font-size:clamp(38px,5.4vw,78px); line-height:.94; letter-spacing:-.046em; font-weight:800; text-transform:uppercase; overflow:hidden">
+          <span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 80ms both">{{ title }}</span>
+        </h1>
+        <p style="margin:26px 0 0; max-width:48ch; font-size:17px; line-height:1.66; color:rgba(244,242,238,.74); opacity:0; animation:fadeUp 380ms ease-out 300ms forwards">{{ description }}</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; opacity:0; animation:fadeUp 380ms ease-out 380ms forwards">
+          <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:17px 30px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:15.5px; font-weight:600; transition:transform 160ms ease-out; box-shadow:0 16px 44px -16px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">Start a project</a>
+          <a href="Sitechs Work.dc.html" style="padding:17px 30px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:15.5px; font-weight:500; transition:background 220ms ease, border-color 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">All case studies</a>
+        </div>
+      </div>
+      <div style="min-width:0; opacity:0; animation:fadeUp 480ms ease-out 320ms forwards">
+        <div style="border-radius:18px; overflow:hidden; border:1px solid rgba(244,242,238,.12); background:#131317; box-shadow:0 60px 120px -70px rgba(0,0,0,.95)">
+          <img ref="{{ imgRef }}" src="uploads/5.jpg" alt="Case study" style="display:block; width:100%; height:auto">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div style="max-width:1060px; margin:0 auto; padding:64px 34px 0">
+    <div data-reveal="1" data-delay="60" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.55)">Deliverables</div>
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+        <sc-for list="{{ deliverables }}" as="d" hint-placeholder-count="2">
+          <span style="padding:10px 18px; border:1px solid rgba(244,242,238,.16); border-radius:999px; font-size:14.5px; color:rgba(244,242,238,.78); transition:border-color 220ms ease, background 220ms ease, color 220ms ease" style-hover="border-color:#A39CE0; background:rgba(163,156,224,.08); color:#F4F2EE">{{ d }}</span>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SOLUTION + RESULTS (light) -->
+  <div style="margin-top:64px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1060px; margin:0 auto; padding:72px 34px 78px">
+      <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+        <h2 style="margin:0; font-size:clamp(27px,3.4vw,42px); line-height:1.04; letter-spacing:-.04em; font-weight:800; text-transform:uppercase">Our Solution</h2>
+        <div style="margin-top:14px; width:54px; height:2px; background:#4A3F8C"></div>
+        <div style="margin-top:24px; display:flex; flex-direction:column; gap:20px">
+          <sc-for list="{{ solution }}" as="b" hint-placeholder-count="2">
+            <sc-if value="{{ b.isText }}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0; max-width:70ch; font-size:16.5px; line-height:1.72; color:rgba(20,19,26,.72)">{{ b.text }}</p>
+            </sc-if>
+            <sc-if value="{{ b.isList }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; flex-direction:column; gap:14px; max-width:70ch">
+                <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="2">
+                  <div style="display:flex; gap:14px; align-items:baseline">
+                    <span style="color:#4A3F8C; font-size:11px; flex:none">◆</span>
+                    <span style="font-size:16.5px; line-height:1.72; color:rgba(20,19,26,.72); min-width:0">{{ it }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+
+      <div data-reveal="1" data-delay="100" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin-top:56px; padding-top:46px; border-top:1px solid rgba(20,19,26,.16)">
+        <h2 style="margin:0; font-size:clamp(27px,3.4vw,42px); line-height:1.04; letter-spacing:-.04em; font-weight:800; text-transform:uppercase">Results</h2>
+        <div style="margin-top:14px; width:54px; height:2px; background:#4A3F8C"></div>
+        <div style="margin-top:24px; display:flex; flex-direction:column; gap:20px">
+          <sc-for list="{{ result }}" as="b" hint-placeholder-count="2">
+            <sc-if value="{{ b.isText }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0; max-width:70ch; font-size:16.5px; line-height:1.72; color:rgba(20,19,26,.72)">{{ b.text }}</p>
+            </sc-if>
+            <sc-if value="{{ b.isList }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; flex-direction:column; gap:14px; max-width:70ch">
+                <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="3">
+                  <div style="display:flex; gap:14px; align-items:baseline">
+                    <span style="color:#4A3F8C; font-size:11px; flex:none">◆</span>
+                    <span style="font-size:16.5px; line-height:1.72; color:rgba(20,19,26,.72); min-width:0">{{ it }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1060px; margin:0 auto; padding:52px 34px 0">
+    <div data-reveal="1" data-delay="120" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; gap:20px; flex-wrap:wrap; justify-content:space-between; align-items:center">
+      <a href="Sitechs Work.dc.html" style="font-size:15px; font-weight:600; color:#A39CE0">← All case studies</a>
+      <a href="Sitechs Start a Project.dc.html" style="padding:15px 26px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:14.5px; font-weight:600; transition:border-color 220ms ease, background 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">Start a project ↗</a>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="margin-top:80px; background:#A39CE0; color:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:68px 34px 60px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; max-width:900px; margin:0 auto; text-align:center">
+        <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 16px; border-radius:999px; border:1px solid rgba(11,11,12,.28); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(11,11,12,.75)">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0B0B0C"></span>Free, 30 minutes, no deck
+        </div>
+        <h2 style="margin:22px auto 0; font-size:clamp(32px,5.4vw,74px); line-height:.94; letter-spacing:-.045em; font-weight:800; text-transform:uppercase; max-width:17ch">Let us build intelligent things.</h2>
+        <p style="margin:20px auto 0; max-width:50ch; font-size:17px; line-height:1.6; color:rgba(11,11,12,.75)">Tell us the task nobody wants to do. We will map where automation pays off first and what it would save.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:30px">
+          <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:19px 34px; border-radius:999px; background:#0B0B0C; color:#A39CE0; font-size:16.5px; font-weight:600; transition:transform 160ms ease-out" style-hover="color:#A39CE0">Start a project</a>
+          <button onClick="{{ copyEmail }}" style="padding:19px 28px; border-radius:999px; border:1px solid rgba(11,11,12,.32); background:transparent; color:#0B0B0C; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.06em; transition:background 200ms ease" style-hover="background:rgba(11,11,12,.08)">info@sitechs.co — {{ copyLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Services</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs AI Automations.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">AI Automations</a>
+          <a href="Sitechs Website Design.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Design</a>
+          <a href="Sitechs Website Development.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Development</a>
+          <a href="Sitechs Chrome Extensions.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Chrome Extensions</a>
+          <a href="Sitechs Website Care Plans.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Care Plans</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Studio</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs Work.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Work</a>
+          <a href="Sitechs Services.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Services</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Start a project</a>
+          <span style="color:rgba(244,242,238,.58)">info@sitechs.co</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { now: "--:--:--", copied: false };
+
+  navRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  barRef = React.createRef();
+  imgRef = React.createRef();
+
+  // CMS payload — the only part that changes per case study
+  caseStudy = {
+    slug: "whatsapp-crm-bot",
+    image: "uploads/5.jpg",
+    seo: {
+      metaTitle: "WhatsApp CRM Bot – Zoop AI Agent | Sitechs",
+      metaDescription: "Sitechs built Zoop — a WhatsApp AI agent that connects directly to your CRM, letting customers create invoices, check payments, and manage tickets via simple chat messages."
+    },
+    description: "A client approached Sitechs with a unique idea Can my CRM talk on WhatsApp? They wanted their customers to perform tasks directly from WhatsApp instead of logging into the CRM every time.",
+    category: ["Website Development"],
+    title: "WhatsApp CRM Bot",
+    deliverables: ["CRM Integration"],
+    solution: [
+      "We built Zoop, a WhatsApp-based AI Agent that connects directly with the client's CRM. Customers can now interact naturally using simple messages like:",
+      {
+        type: "list",
+        items: [
+          "Hey Zoop, create an invoice for order #1204 Hey Zoop, show my pending tickets",
+          "Zoop understands each command, processes it in real time, and responds instantly all without requiring users to log in. From creating invoices to checking payments or adding notes, Zoop handles it all through a smooth conversational flow."
+        ]
+      }
+    ],
+    result: [
+      {
+        type: "list",
+        items: [
+          "70 % faster response times",
+          "Improved customer satisfaction",
+          "Zero repetitive work for internal teams"
+        ]
+      },
+      "Zoop understands each command, processes it in real time, and responds instantly all without requiring users to log in.From creating invoices to checking payments or adding notes, Zoop handles it all through a smooth conversational flow"
+    ]
+  };
+
+  blocks(list) {
+    return (list || []).map((b) => (typeof b === "string"
+      ? { isText: true, isList: false, text: b, items: [] }
+      : { isText: false, isList: true, text: "", items: b.items || [] }));
+  }
+
+  componentDidMount() {
+    const img = this.imgRef.current;
+    if (img && this.caseStudy.image) { img.src = this.caseStudy.image; img.alt = this.caseStudy.title; }
+    document.title = this.caseStudy.seo.metaTitle;
+    let m = document.querySelector('meta[name="description"]');
+    if (!m) { m = document.createElement("meta"); m.setAttribute("name", "description"); document.head.appendChild(m); }
+    m.setAttribute("content", this.caseStudy.seo.metaDescription);
+
+    this.onScroll = () => { if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); }); };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId].forEach(clearInterval);
+    clearTimeout(this.copyT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const on = y > 20;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    if (shell) {
+      shell.style.maxWidth = on ? "760px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const links = this.navLinksRef.current, clk = this.navClockRef.current;
+    if (links) { links.style.maxWidth = on ? "0px" : "560px"; links.style.opacity = on ? "0" : "1"; }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      el.style.transform = "translate3d(0," + (y * (parseFloat(el.dataset.parallax) || 0)).toFixed(1) + "px,0)";
+    });
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }
+
+  renderVals() {
+    const cs = this.caseStudy;
+    return {
+      navRef: this.navRef, navShellRef: this.navShellRef, navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef, barRef: this.barRef,
+      clock: this.state.now,
+      title: cs.title,
+      image: cs.image,
+      hasImage: !!cs.image,
+      description: cs.description,
+      category: cs.category,
+      deliverables: cs.deliverables,
+      solution: this.blocks(cs.solution),
+      result: this.blocks(cs.result),
+      copyLabel: this.state.copied ? "copied" : "copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        el.style.transform = "translate(" + ((e.clientX - (r.left + r.width / 2)) * 0.16).toFixed(1) + "px," + ((e.clientY - (r.top + r.height / 2)) * 0.24).toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      navLinks: [
+        { href: "Sitechs Work.dc.html", label: "Work", color: "#F4F2EE", bg: "rgba(163,156,224,.16)" },
+        { href: "Sitechs Services.dc.html", label: "Services", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Start a Project.dc.html", label: "Contact", color: "rgba(244,242,238,.72)", bg: "transparent" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="Sitechs Homepage v3.dc.html" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="padding:9px 15px; border-radius:999px; font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease; color:{{ l.color }}; background:{{ l.bg }}" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <div style="position:relative; padding:56px 34px 0; overflow:hidden">
+    <div data-parallax=".12" style="position:absolute; left:50%; top:-30%; width:60vw; height:60vw; margin-left:-30vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.12), rgba(163,156,224,0) 62%); filter:blur(24px); pointer-events:none"></div>
+    <div style="position:relative; max-width:860px; margin:0 auto; text-align:center">
+      <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 360ms ease-out forwards">
+        <a href="Sitechs Blog.dc.html" style="color:rgba(244,242,238,.55)" style-hover="color:#A39CE0">Blog</a>
+        <span>/</span>
+        <span style="color:#A39CE0">{{ category }}</span>
+      </div>
+      <h1 style="margin:22px auto 0; max-width:26ch; font-size:clamp(32px,4.8vw,64px); line-height:1; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; text-wrap:balance; overflow:hidden">
+        <span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 80ms both">{{ title }}</span>
+      </h1>
+      <div style="margin-top:24px; display:flex; justify-content:center; gap:10px 22px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 380ms ease-out 300ms forwards">
+        <span>{{ date }}</span>
+        <span>{{ read }}</span>
+        <span>By {{ author }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE (light) -->
+  <div style="margin-top:56px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1060px; margin:0 auto; padding:72px 34px 78px">
+      <p data-reveal="1" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin:0; max-width:62ch; font-size:clamp(19px,2.1vw,24px); line-height:1.58; letter-spacing:-.018em; color:rgba(20,19,26,.82)">{{ excerpt }}</p>
+      <div data-reveal="1" data-delay="60" style="opacity:0; transform:translateY(14px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin-top:34px; width:54px; height:2px; background:#4A3F8C"></div>
+
+      <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin-top:34px; display:flex; flex-direction:column; gap:24px">
+        <sc-for list="{{ body }}" as="b" hint-placeholder-count="6">
+          <sc-if value="{{ b.isHeading }}" hint-placeholder-val="{{ false }}">
+            <h2 style="margin:20px 0 0; max-width:34ch; font-size:clamp(23px,2.6vw,32px); line-height:1.14; letter-spacing:-.032em; font-weight:700">{{ b.text }}</h2>
+          </sc-if>
+          <sc-if value="{{ b.isText }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0; max-width:68ch; font-size:17px; line-height:1.76; color:rgba(20,19,26,.76)">{{ b.text }}</p>
+          </sc-if>
+          <sc-if value="{{ b.isQuote }}" hint-placeholder-val="{{ false }}">
+            <blockquote style="margin:10px 0; max-width:56ch; padding-left:26px; border-left:2px solid #4A3F8C; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-size:clamp(21px,2.3vw,28px); line-height:1.32; letter-spacing:-.018em; color:#4A3F8C">{{ b.text }}</blockquote>
+          </sc-if>
+          <sc-if value="{{ b.isList }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:14px; max-width:68ch">
+              <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="3">
+                <div style="display:flex; gap:14px; align-items:baseline">
+                  <span style="color:#4A3F8C; font-size:11px; flex:none">◆</span>
+                  <span style="font-size:17px; line-height:1.76; color:rgba(20,19,26,.76); min-width:0">{{ it }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </sc-for>
+      </div>
+
+      <div data-reveal="1" data-delay="120" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin-top:52px; padding-top:30px; border-top:1px solid rgba(20,19,26,.16); display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:space-between">
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <sc-for list="{{ tags }}" as="t" hint-placeholder-count="3">
+            <span style="padding:9px 16px; border:1px solid rgba(20,19,26,.22); border-radius:999px; font-size:14px; color:rgba(20,19,26,.72); transition:border-color 220ms ease, background 220ms ease, color 220ms ease" style-hover="border-color:#4A3F8C; background:rgba(74,63,140,.07); color:#14131A">{{ t }}</span>
+          </sc-for>
+        </div>
+        <a href="Sitechs Blog.dc.html" style="font-size:15px; font-weight:600; color:#4A3F8C">← All articles</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MORE -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:30px; flex-wrap:wrap">
+        <h2 style="margin:0; font-size:clamp(26px,3.4vw,44px); line-height:1; letter-spacing:-.04em; font-weight:800; text-transform:uppercase">Keep reading</h2>
+        <a href="Sitechs Blog.dc.html" style="padding:15px 26px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:14.5px; font-weight:500; transition:border-color 220ms ease, background 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">All articles ↗</a>
+      </div>
+      <div style="margin-top:28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="3">
+          <a href="{{ r.href }}" style="border:1px solid rgba(244,242,238,.12); border-radius:14px; padding:26px; display:flex; flex-direction:column; gap:10px; transition:border-color 240ms ease, background 240ms ease, transform 240ms ease" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05); transform:translateY(-3px)">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ r.tag }}</span>
+            <span style="font-size:18px; font-weight:600; letter-spacing:-.026em; line-height:1.26; color:#F4F2EE; text-wrap:pretty">{{ r.title }}</span>
+            <span style="font-size:14px; line-height:1.55; color:rgba(244,242,238,.66)">{{ r.summary }}</span>
+            <span style="margin-top:4px; font-size:14px; font-weight:600; color:#A39CE0">Read ↗</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="margin-top:80px; background:#A39CE0; color:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:68px 34px 60px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; max-width:900px; margin:0 auto; text-align:center">
+        <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 16px; border-radius:999px; border:1px solid rgba(11,11,12,.28); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(11,11,12,.75)">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0B0B0C"></span>Free, 30 minutes, no deck
+        </div>
+        <h2 style="margin:22px auto 0; font-size:clamp(32px,5.4vw,74px); line-height:.94; letter-spacing:-.045em; font-weight:800; text-transform:uppercase; max-width:17ch">Rather talk than read?</h2>
+        <p style="margin:20px auto 0; max-width:50ch; font-size:17px; line-height:1.6; color:rgba(11,11,12,.75)">Bring the problem behind the search. We will tell you what we would do first, and what it costs.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:30px">
+          <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:19px 34px; border-radius:999px; background:#0B0B0C; color:#A39CE0; font-size:16.5px; font-weight:600; transition:transform 160ms ease-out" style-hover="color:#A39CE0">Start a project</a>
+          <button onClick="{{ copyEmail }}" style="padding:19px 28px; border-radius:999px; border:1px solid rgba(11,11,12,.32); background:transparent; color:#0B0B0C; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.06em; transition:background 200ms ease" style-hover="background:rgba(11,11,12,.08)">info@sitechs.co — {{ copyLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Services</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs AI Automations.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">AI Automations</a>
+          <a href="Sitechs Website Design.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Design</a>
+          <a href="Sitechs Website Development.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Development</a>
+          <a href="Sitechs Chrome Extensions.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Chrome Extensions</a>
+          <a href="Sitechs Website Care Plans.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Care Plans</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Studio</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs Work.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Work</a>
+          <a href="Sitechs Services.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Services</a>
+          <a href="Sitechs Blog.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Blog</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Start a project</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { now: "--:--:--", copied: false };
+
+  navRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  barRef = React.createRef();
+
+  // CMS payload — the only part that changes per article
+  post = {
+    slug: "small-businesses-ai-automation-compete-big-brands",
+    seo: {
+      metaTitle: "How Small Businesses Are Using AI Automation to Compete With Big Brands | Sitechs",
+      metaDescription: "Discover how small businesses are using AI automation tools to match the speed, personalisation, and efficiency of big brands without the big budget."
+    },
+    title: "How Small Businesses Are Using AI Automation to Compete With Big Brands",
+    category: "AI Automation",
+    date: "March 18, 2026",
+    read: "7 min read",
+    author: "Sitechs Studio",
+    excerpt: "Big brands win on speed and consistency, not on taste. That is the part a five-person team can now buy for the price of one part-time hire.",
+    tags: ["AI Automation", "Small Business", "Operations"],
+    body: [
+      "For years the gap between a small business and a national brand was not quality — it was operational capacity. The brand could answer every enquiry in minutes, follow up four times, and never lose a lead to somebody going on holiday. You could not, because you had three people and a shared inbox.",
+      { type: "heading", text: "The advantage was never creative" },
+      "That gap was staffing, and staffing is exactly what automation replaces. Not the thinking, not the relationship, not the judgement — the repeatable decisions that sit between a customer asking something and somebody acting on it.",
+      { type: "quote", text: "You are not competing with their marketing. You are competing with their response time." },
+      { type: "heading", text: "Where the leverage actually is" },
+      "In the businesses we work with, four automations cover most of the gap before anything exotic is needed:",
+      {
+        type: "list",
+        items: [
+          "Lead qualification — every enquiry answered in seconds, at any hour, with the right questions asked before a human ever sees it.",
+          "Follow-up sequences — the second, third and fourth contact that nobody remembers to send, triggered on real behaviour rather than a calendar.",
+          "Document handling — invoices, contracts and forms read and filed without anyone re-keying them into a second system.",
+          "Reporting — the numbers assembled every Monday morning instead of the week somebody finally has time."
+        ]
+      },
+      { type: "heading", text: "Start with one painful task" },
+      "The mistake is buying a platform and looking for something to automate. Start from the opposite end: the task your team complains about, the one that happens fifty times a week and has a clear right answer. Automate that, measure it for a month, then pick the next one.",
+      "Done in that order, automation compounds. Done as a platform rollout, it becomes another tool nobody opens — which is the one thing a small team genuinely cannot afford."
+    ],
+    related: [
+      { tag: "AI Automation", title: "Guardrails: What Happens When the AI Gets It Wrong", summary: "Confidence thresholds, escalation paths and audit trails.", href: "Sitechs Blog.dc.html" },
+      { tag: "Website Design", title: "Why Your Redesign Did Not Move the Numbers", summary: "A prettier site is not a better site. Four things we check first.", href: "Sitechs Blog.dc.html" },
+      { tag: "Development", title: "Performance Budgets That Survive Launch Day", summary: "Keeping sites fast a year after the build, using CI not intentions.", href: "Sitechs Blog.dc.html" }
+    ]
+  };
+
+  blocks(list) {
+    return (list || []).map((b) => {
+      if (typeof b === "string") return { isText: true, isHeading: false, isQuote: false, isList: false, text: b, items: [] };
+      const t = b.type;
+      return {
+        isText: t === "text",
+        isHeading: t === "heading",
+        isQuote: t === "quote",
+        isList: t === "list",
+        text: b.text || "",
+        items: b.items || []
+      };
+    });
+  }
+
+  componentDidMount() {
+    document.title = this.post.seo.metaTitle;
+    let m = document.querySelector('meta[name="description"]');
+    if (!m) { m = document.createElement("meta"); m.setAttribute("name", "description"); document.head.appendChild(m); }
+    m.setAttribute("content", this.post.seo.metaDescription);
+
+    this.onScroll = () => { if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); }); };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId].forEach(clearInterval);
+    clearTimeout(this.copyT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const on = y > 20;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    if (shell) {
+      shell.style.maxWidth = on ? "760px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const links = this.navLinksRef.current, clk = this.navClockRef.current;
+    if (links) { links.style.maxWidth = on ? "0px" : "560px"; links.style.opacity = on ? "0" : "1"; }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      el.style.transform = "translate3d(0," + (y * (parseFloat(el.dataset.parallax) || 0)).toFixed(1) + "px,0)";
+    });
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }
+
+  renderVals() {
+    const p = this.post;
+    return {
+      navRef: this.navRef, navShellRef: this.navShellRef, navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef, barRef: this.barRef,
+      clock: this.state.now,
+      title: p.title, category: p.category, date: p.date,
+      read: p.read, author: p.author, excerpt: p.excerpt, tags: p.tags,
+      body: this.blocks(p.body),
+      related: p.related,
+      copyLabel: this.state.copied ? "copied" : "copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        el.style.transform = "translate(" + ((e.clientX - (r.left + r.width / 2)) * 0.16).toFixed(1) + "px," + ((e.clientY - (r.top + r.height / 2)) * 0.24).toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      navLinks: [
+        { href: "Sitechs Work.dc.html", label: "Work", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Services.dc.html", label: "Services", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Blog.dc.html", label: "Blog", color: "#F4F2EE", bg: "rgba(163,156,224,.16)" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

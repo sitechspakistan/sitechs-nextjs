@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  input, textarea, select, button { font-family:'Bricolage Grotesque', Helvetica, sans-serif; }
+  input::placeholder, textarea::placeholder { color:rgba(20,19,26,.34); }
+  input:focus, textarea:focus { outline:none; border-bottom-color:#4A3F8C !important; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes popIn { from { opacity:0; transform:translateY(-8px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="Sitechs Homepage v3.dc.html" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="padding:9px 15px; border-radius:999px; font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease; color:{{ l.color }}; background:{{ l.bg }}" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a href="#form" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative; padding:56px 34px 0; overflow:hidden">
+    <div data-parallax=".12" style="position:absolute; left:50%; top:-24%; width:60vw; height:60vw; margin-left:-30vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.12), rgba(163,156,224,0) 62%); filter:blur(24px); pointer-events:none"></div>
+    <div style="position:relative; max-width:1360px; margin:0 auto; text-align:center">
+      <div style="display:inline-flex; gap:12px; align-items:center; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6); opacity:0; animation:fadeUp 360ms ease-out forwards">
+        <span style="width:26px; height:1px; background:#A39CE0"></span>Start a project<span style="width:26px; height:1px; background:#A39CE0"></span>
+      </div>
+      <h1 style="margin:24px auto 0; max-width:20ch; font-size:clamp(38px,6.4vw,92px); line-height:.94; letter-spacing:-.042em; font-weight:800; text-transform:uppercase">
+        <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 60ms both">Tell us what</span></span>
+        <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 170ms both; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#A39CE0">is not working.</span></span>
+      </h1>
+      <p style="margin:24px auto 0; max-width:56ch; font-size:17.5px; line-height:1.62; color:rgba(244,242,238,.72); opacity:0; animation:fadeUp 380ms ease-out 320ms forwards">One form, two minutes. You get a real reply from the person who would run the work — not a sequence, not a sales call disguised as a discovery call.</p>
+      <div style="display:flex; gap:10px 34px; flex-wrap:wrap; justify-content:center; margin-top:32px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 380ms ease-out 400ms forwards">
+        <sc-for list="{{ heroNotes }}" as="hn" hint-placeholder-count="3">
+          <span>{{ hn }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div id="form" style="margin-top:64px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1220px; margin:0 auto; padding:78px 34px 84px; display:flex; flex-wrap:wrap; gap:64px 72px; align-items:flex-start">
+
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; flex:1 1 560px; min-width:0">
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:popIn 380ms cubic-bezier(.22,1,.36,1) both; padding:20px 0 40px; max-width:46ch">
+            <div style="width:52px; height:52px; border-radius:50%; background:rgba(45,140,85,.1); border:1px solid rgba(45,140,85,.38); color:#2D8C55; display:flex; align-items:center; justify-content:center; font-size:20px">✓</div>
+            <h2 style="margin:26px 0 0; font-size:clamp(28px,3.6vw,44px); line-height:1; font-weight:800; letter-spacing:-.04em; text-transform:uppercase">Brief received.</h2>
+            <p style="margin:16px 0 0; font-size:16.5px; line-height:1.66; color:rgba(20,19,26,.68)">We read every one properly. You will hear back within one working day, from a person, with an actual opinion on your project.</p>
+            <button onClick="{{ reset }}" style="margin-top:28px; padding:0 0 4px; border:0; border-bottom:1px solid rgba(20,19,26,.3); background:transparent; color:#14131A; font-size:15px; font-weight:600; cursor:pointer; transition:border-color 220ms ease, color 220ms ease" style-hover="color:#4A3F8C; border-color:#4A3F8C">Send another brief</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ editing }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">The brief</div>
+            <h2 style="margin:16px 0 0; font-size:clamp(28px,3.4vw,42px); line-height:1.02; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:16ch">Three questions.</h2>
+            <p style="margin:14px 0 0; max-width:44ch; font-size:16px; line-height:1.64; color:rgba(20,19,26,.66)">The more specific the last one, the better the first reply.</p>
+
+            <div style="margin-top:46px; display:flex; gap:26px; align-items:baseline; flex-wrap:wrap">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; line-height:1.6; color:rgba(20,19,26,.4); flex:none; width:38px">01</span>
+              <div style="flex:1 1 280px; min-width:0">
+                <div style="font-size:19px; font-weight:600; letter-spacing:-.026em">What do you need?</div>
+                <div style="margin-top:6px; font-size:14.5px; color:rgba(20,19,26,.58)">Pick everything that applies.</div>
+                <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap">
+                  <sc-for list="{{ services }}" as="s" hint-placeholder-count="7">
+                    <button onClick="{{ s.toggle }}" style="display:inline-flex; align-items:center; gap:9px; padding:11px 19px; border-radius:999px; cursor:pointer; font-size:14.5px; font-weight:500; letter-spacing:-.014em; border:1px solid {{ s.border }}; background:{{ s.bg }}; color:{{ s.ink }}; transition:border-color 260ms cubic-bezier(.22,1,.36,1), background 260ms cubic-bezier(.22,1,.36,1), color 260ms ease, transform 260ms cubic-bezier(.22,1,.36,1), box-shadow 260ms ease" style-hover="border-color:{{ s.hoverBorder }}; background:{{ s.hoverBg }}; color:{{ s.hoverInk }}; transform:translateY(-2px); box-shadow:0 12px 24px -16px rgba(74,63,140,.85)">
+                      <span style="width:{{ s.dotW }}; height:6px; border-radius:999px; background:{{ s.dot }}; transition:width 260ms cubic-bezier(.22,1,.36,1), background 260ms ease"></span>{{ s.label }}
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:38px; height:1px; background:rgba(20,19,26,.14)"></div>
+
+            <div style="margin-top:38px; display:flex; gap:26px; align-items:baseline; flex-wrap:wrap">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; line-height:1.6; color:rgba(20,19,26,.4); flex:none; width:38px">02</span>
+              <div style="flex:1 1 280px; min-width:0">
+                <div style="font-size:19px; font-weight:600; letter-spacing:-.026em">Budget range</div>
+                <div style="margin-top:6px; font-size:14.5px; color:rgba(20,19,26,.58)">A rough band is enough — it shapes what we propose.</div>
+                <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap">
+                  <sc-for list="{{ budgets }}" as="b" hint-placeholder-count="5">
+                    <button onClick="{{ b.pick }}" style="padding:11px 19px; border-radius:999px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.04em; border:1px solid {{ b.border }}; background:{{ b.bg }}; color:{{ b.ink }}; transition:border-color 260ms cubic-bezier(.22,1,.36,1), background 260ms cubic-bezier(.22,1,.36,1), color 260ms ease, transform 260ms cubic-bezier(.22,1,.36,1), box-shadow 260ms ease" style-hover="border-color:{{ b.hoverBorder }}; background:{{ b.hoverBg }}; color:{{ b.hoverInk }}; transform:translateY(-2px); box-shadow:0 12px 24px -16px rgba(74,63,140,.85)">{{ b.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:38px; height:1px; background:rgba(20,19,26,.14)"></div>
+
+            <div style="margin-top:38px; display:flex; gap:26px; align-items:baseline; flex-wrap:wrap">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; line-height:1.6; color:rgba(20,19,26,.4); flex:none; width:38px">03</span>
+              <div style="flex:1 1 280px; min-width:0">
+                <div style="font-size:19px; font-weight:600; letter-spacing:-.026em">About you</div>
+                <div style="margin-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:26px 32px">
+                  <sc-for list="{{ fields }}" as="fd" hint-placeholder-count="4">
+                    <label style="display:flex; flex-direction:column; gap:7px; min-width:0">
+                      <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(20,19,26,.5)">{{ fd.label }}</span>
+                      <input type="{{ fd.type }}" value="{{ fd.value }}" onChange="{{ fd.onChange }}" onInput="{{ fd.onChange }}" placeholder="{{ fd.placeholder }}" style="width:100%; box-sizing:border-box; padding:9px 0 11px; border:0; border-bottom:1px solid rgba(20,19,26,.24); background:transparent; color:#14131A; font-size:17px; letter-spacing:-.016em; transition:border-color 240ms ease">
+                    </label>
+                  </sc-for>
+                </div>
+                <label style="margin-top:30px; display:flex; flex-direction:column; gap:7px">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(20,19,26,.5)">What is the problem, in your words?</span>
+                  <textarea value="{{ brief }}" onChange="{{ onBrief }}" onInput="{{ onBrief }}" rows="4" placeholder="The site is slow and the form barely converts. We also re-key every lead into the CRM by hand." style="width:100%; box-sizing:border-box; padding:9px 0 11px; border:0; border-bottom:1px solid rgba(20,19,26,.24); background:transparent; color:#14131A; font-size:17px; line-height:1.62; letter-spacing:-.016em; resize:vertical; transition:border-color 240ms ease"></textarea>
+                </label>
+              </div>
+            </div>
+
+            <div style="margin-top:44px; display:flex; gap:20px; flex-wrap:wrap; align-items:center">
+              <button onClick="{{ submit }}" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="display:inline-flex; align-items:center; gap:12px; padding:17px 20px 17px 32px; border-radius:999px; border:0; cursor:pointer; background:#14131A; color:#F4F2EE; font-size:15.5px; font-weight:600; letter-spacing:-.014em; transition:transform 160ms ease-out, background 240ms ease" style-hover="background:#4A3F8C">
+                Send the brief
+                <span style="width:26px; height:26px; border-radius:50%; background:rgba(244,242,238,.16); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+              </button>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:{{ statusInk }}">{{ status }}</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; flex:1 1 280px; min-width:0; max-width:400px; border-left:1px solid rgba(20,19,26,.16); padding-left:34px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">Prefer to talk</div>
+        <button onClick="{{ copyEmail }}" style="margin-top:16px; display:block; text-align:left; padding:0; border:0; background:transparent; cursor:pointer; color:#14131A">
+          <div style="font-size:clamp(20px,2.2vw,27px); font-weight:600; letter-spacing:-.03em; transition:color 220ms ease">info@sitechs.co</div>
+          <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#4A3F8C">{{ copyLabel }}</div>
+        </button>
+        <div style="margin-top:22px">
+          <div style="font-size:clamp(20px,2.2vw,27px); font-weight:600; letter-spacing:-.03em">+92 342 3543100</div>
+          <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,19,26,.5)">Phone &amp; WhatsApp</div>
+        </div>
+
+        <div style="margin-top:40px; height:1px; background:rgba(20,19,26,.14)"></div>
+
+        <div style="margin-top:32px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">What happens next</div>
+        <div style="margin-top:20px; display:flex; flex-direction:column; gap:22px">
+          <sc-for list="{{ next }}" as="nx" hint-placeholder-count="3">
+            <div style="display:flex; gap:16px; align-items:baseline">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; line-height:1.5; color:#4A3F8C; flex:none">{{ nx.n }}</span>
+              <div style="min-width:0">
+                <div style="font-size:16px; font-weight:600; letter-spacing:-.024em">{{ nx.title }}</div>
+                <div style="margin-top:6px; font-size:14px; line-height:1.6; color:rgba(20,19,26,.66)">{{ nx.body }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:40px; height:1px; background:rgba(20,19,26,.14)"></div>
+
+        <div style="margin-top:28px; display:flex; gap:32px; flex-wrap:wrap">
+          <sc-for list="{{ trust }}" as="t" hint-placeholder-count="3">
+            <div style="min-width:0">
+              <div style="font-size:26px; font-weight:800; letter-spacing:-.045em; line-height:1">{{ t.value }}</div>
+              <div style="margin-top:7px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,19,26,.55)">{{ t.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Services</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs AI Automations.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">AI Automations</a>
+          <a href="Sitechs Website Design.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Design</a>
+          <a href="Sitechs Website Development.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Development</a>
+          <a href="Sitechs Chrome Extensions.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Chrome Extensions</a>
+          <a href="Sitechs Website Care Plans.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Care Plans</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Studio</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs Work.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Work</a>
+          <a href="Sitechs Services.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Services</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Start a project</a>
+          <span style="color:rgba(244,242,238,.58)">info@sitechs.co</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="#form" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="#form" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="#form" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="#form" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = {
+    now: "--:--:--", copied: false, sent: false, error: "",
+    picked: [], budget: "",
+    name: "", email: "", company: "", website: "", brief: ""
+  };
+
+  navRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  barRef = React.createRef();
+
+  serviceList = ["AI Automations", "Website Design", "Website Development", "Chrome Extensions", "Website Care Plan", "Branding", "Not sure yet"];
+  budgetList = ["Under $3k", "$3k – $8k", "$8k – $20k", "$20k+", "Monthly retainer"];
+
+  componentDidMount() {
+    this.onScroll = () => { if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); }); };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId].forEach(clearInterval);
+    clearTimeout(this.copyT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const on = y > 20;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    if (shell) {
+      shell.style.maxWidth = on ? "760px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const links = this.navLinksRef.current, clk = this.navClockRef.current;
+    if (links) { links.style.maxWidth = on ? "0px" : "560px"; links.style.opacity = on ? "0" : "1"; }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      el.style.transform = "translate3d(0," + (y * (parseFloat(el.dataset.parallax) || 0)).toFixed(1) + "px,0)";
+    });
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }
+
+  renderVals() {
+    const s = this.state;
+    const chip = (active) => ({
+      bg: active ? "#4A3F8C" : "transparent",
+      ink: active ? "#F4F2EE" : "rgba(20,19,26,.72)",
+      border: active ? "#4A3F8C" : "rgba(20,19,26,.22)",
+      hoverBg: active ? "#3B3274" : "rgba(74,63,140,.08)",
+      hoverInk: active ? "#F4F2EE" : "#14131A",
+      hoverBorder: active ? "#3B3274" : "#4A3F8C",
+      dot: active ? "#F4F2EE" : "rgba(20,19,26,.22)",
+      dotW: active ? "16px" : "6px"
+    });
+    return {
+      navRef: this.navRef, navShellRef: this.navShellRef, navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef, barRef: this.barRef,
+      clock: s.now,
+      sent: s.sent,
+      editing: !s.sent,
+      heroNotes: ["Reply within one working day", "No obligation, no deck", "Straight answer on fit"],
+      services: this.serviceList.map((label) => {
+        const active = s.picked.indexOf(label) > -1;
+        return Object.assign({ label, toggle: () => this.setState((st) => ({
+          error: "",
+          picked: st.picked.indexOf(label) > -1 ? st.picked.filter((x) => x !== label) : st.picked.concat([label])
+        })) }, chip(active));
+      }),
+      budgets: this.budgetList.map((label) => Object.assign(
+        { label, pick: () => this.setState({ budget: s.budget === label ? "" : label }) },
+        chip(s.budget === label)
+      )),
+      fields: [
+        { label: "Your name", type: "text", value: s.name, placeholder: "Ayesha Khan", onChange: (e) => this.setState({ name: e.target.value, error: "" }) },
+        { label: "Work email", type: "email", value: s.email, placeholder: "you@company.com", onChange: (e) => this.setState({ email: e.target.value, error: "" }) },
+        { label: "Company", type: "text", value: s.company, placeholder: "Optional", onChange: (e) => this.setState({ company: e.target.value }) },
+        { label: "Website", type: "text", value: s.website, placeholder: "Optional" , onChange: (e) => this.setState({ website: e.target.value }) }
+      ],
+      brief: s.brief,
+      onBrief: (e) => this.setState({ brief: e.target.value, error: "" }),
+      status: s.error || (s.picked.length ? s.picked.length + " service" + (s.picked.length > 1 ? "s" : "") + " selected" : "Pick at least one service"),
+      statusInk: s.error ? "#B4442C" : "rgba(20,19,26,.5)",
+      submit: () => {
+        if (!s.picked.length) return this.setState({ error: "Pick at least one service first." });
+        if (!s.name.trim()) return this.setState({ error: "We need a name to reply to." });
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.email.trim())) return this.setState({ error: "That email does not look right." });
+        if (s.brief.trim().length < 12) return this.setState({ error: "Tell us a little more about the problem." });
+        this.setState({ sent: true, error: "" });
+      },
+      reset: () => this.setState({ sent: false, picked: [], budget: "", name: "", email: "", company: "", website: "", brief: "", error: "" }),
+      next: [
+        { n: "01", title: "We read it properly", body: "A person, usually the one who would lead the work, within one working day." },
+        { n: "02", title: "A 30-minute call", body: "We ask about the constraint behind the request and tell you where we would start." },
+        { n: "03", title: "A fixed scope and price", body: "In writing, before anything begins. If we are the wrong fit, we say so." }
+      ],
+      trust: [
+        { value: "235", label: "Projects shipped" },
+        { value: "60+", label: "Automations live" },
+        { value: "< 1 day", label: "Reply time" }
+      ],
+      copyLabel: s.copied ? "copied" : "click to copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        el.style.transform = "translate(" + ((e.clientX - (r.left + r.width / 2)) * 0.16).toFixed(1) + "px," + ((e.clientY - (r.top + r.height / 2)) * 0.24).toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      navLinks: [
+        { href: "Sitechs Work.dc.html", label: "Work", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Services.dc.html", label: "Services", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Start a Project.dc.html", label: "Contact", color: "#F4F2EE", bg: "rgba(163,156,224,.16)" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes blink { 0%,100% { opacity:.3; transform:translateY(0); } 50% { opacity:1; transform:translateY(-2px); } }
+  @keyframes fieldPulse { 0%,100% { box-shadow:0 0 0 0 rgba(163,156,224,.28); } 50% { box-shadow:0 0 0 10px rgba(163,156,224,0); } }
+  @keyframes hintBob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
+  @keyframes drawArrow { to { stroke-dashoffset:0; } }
+  @keyframes marqueeRev { from { transform:translateX(-50%); } to { transform:translateX(0); } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="#top" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease, margin 380ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="position:relative; padding:9px 15px; border-radius:999px; color:rgba(244,242,238,.72); font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a ref="{{ navCallRef }}" href="Sitechs Start a Project.dc.html" style="flex:none; overflow:hidden; white-space:nowrap; max-width:0; opacity:0; padding:12px 0; border-radius:999px; border:1px solid rgba(244,242,238,0); color:#F4F2EE; font-size:14px; font-weight:500; letter-spacing:-.005em; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, background 220ms ease, border-color 240ms ease" style-hover="color:#F4F2EE; background:rgba(244,242,238,.08)">Book a call</a>
+        <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; letter-spacing:-.005em; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative; padding:40px 34px 0; overflow:hidden">
+    <div data-parallax=".18" style="position:absolute; left:-6%; top:-10%; width:60vw; height:60vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.16), rgba(163,156,224,0) 62%); filter:blur(20px); pointer-events:none"></div>
+    <div style="position:relative; max-width:1360px; margin:0 auto">
+      <div style="display:flex; gap:14px; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.64); opacity:0; animation:fadeUp 360ms ease-out forwards">
+        <span style="width:30px; height:1px; background:#A39CE0"></span>AI automation &amp; digital product studio — since 2014
+      </div>
+      <h1 style="position:relative; margin:26px auto 0; max-width:17ch; text-align:center; font-size:clamp(44px,8.4vw,128px); line-height:.9; letter-spacing:-.045em; font-weight:800; text-transform:uppercase">
+        <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 60ms both">We automate</span></span>
+        <span style="display:block; overflow:hidden; padding:0 6px"><span onClick="{{ focusField }}" style="position:relative; display:inline-flex; align-items:center; gap:.18em; cursor:text; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 160ms both, fieldPulse 2.6s ease-out 1.2s infinite; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#A39CE0; background:rgba(163,156,224,.1); border:1px dashed rgba(163,156,224,.65); border-radius:.18em; padding:.02em .26em .08em">
+          <input ref="{{ inputRef }}" value="{{ industry }}" onInput="{{ onIndustry }}" onFocus="{{ onFocus }}" onKeyDown="{{ onKey }}" placeholder="{{ placeholder }}" spellcheck="false" aria-label="Type your industry" style="width:{{ inputWidth }}; min-width:6ch; border:0; outline:0; background:transparent; padding:0; color:#A39CE0; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-size:inherit; line-height:1.1; letter-spacing:-.02em; text-align:center; caret-color:#A39CE0">
+          <sc-if value="{{ showHint }}" hint-placeholder-val="{{ true }}">
+            <span style="position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:16px; display:flex; align-items:center; gap:10px; white-space:nowrap; opacity:0; animation:fadeUp 380ms ease-out 560ms forwards, hintBob 2.4s ease-in-out 1.6s infinite">
+              <svg viewBox="0 0 120 84" width="92" height="64" fill="none" aria-hidden="true" style="flex:none; overflow:visible">
+                <path d="M114 8C104 42 78 58 22 42" stroke="#A39CE0" stroke-width="7" stroke-linecap="round" stroke-dasharray="180" stroke-dashoffset="180" style="animation:drawArrow 1000ms cubic-bezier(.22,1,.36,1) 640ms forwards"></path>
+                <path d="M46 20C33 30 23 40 22 42 24 44 34 53 46 62" stroke="#A39CE0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0" style="animation:fadeUp 280ms ease-out 1480ms forwards"></path>
+              </svg>
+              <span style="font-size:23px; line-height:1; color:#A39CE0">type yours</span>
+            </span>
+          </sc-if>
+        </span></span>
+        <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 260ms both">and design the rest.</span></span>
+      </h1>
+
+      <div style="max-width:1080px; margin:22px auto 0; border:1px solid rgba(244,242,238,.12); border-radius:16px; background:rgba(244,242,238,.025); overflow:hidden; opacity:0; animation:fadeUp 380ms ease-out 400ms forwards">
+        <div style="display:flex; align-items:center; gap:12px; padding:11px 16px; border-bottom:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.64)">
+          <span style="width:7px; height:7px; border-radius:50%; background:#A39CE0"></span>{{ plan.status }}
+          <div style="flex:1"></div>
+          <span>{{ plan.eta }}</span>
+        </div>
+        <div style="padding:22px 22px 24px">
+          <p style="margin:0 0 18px; font-size:15px; line-height:1.55; color:rgba(244,242,238,.72); text-align:left">{{ plan.lead }}</p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); gap:12px">
+            <sc-for list="{{ ideas }}" as="idea" hint-placeholder-count="4">
+              <button onClick="{{ idea.pick }}" style="text-align:left; cursor:pointer; border:1px solid {{ idea.border }}; background:{{ idea.bg }}; border-radius:12px; padding:18px; display:flex; flex-direction:column; gap:9px; font-family:'Bricolage Grotesque',sans-serif; transition:border-color 200ms ease, background 200ms ease, transform 200ms ease" style-hover="border-color:#A39CE0; transform:translateY(-2px)">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#A39CE0">{{ idea.n }}</span>
+                <span style="font-size:16.5px; font-weight:600; letter-spacing:-.02em; color:#F4F2EE; line-height:1.25">{{ idea.title }}</span>
+                <span style="font-size:13.5px; line-height:1.5; color:rgba(244,242,238,.66)">{{ idea.body }}</span>
+                <span style="margin-top:auto; padding-top:8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ idea.foot }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeModal }}" style="position:fixed; inset:0; z-index:95; background:rgba(6,6,8,.72); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeUp 220ms ease-out both">
+          <div onClick="{{ stop }}" style="width:100%; max-width:520px; border:1px solid rgba(244,242,238,.14); border-radius:18px; background:#131317; overflow:hidden; text-align:left; box-shadow:0 50px 120px -50px rgba(0,0,0,.95)">
+            <div style="display:flex; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.64)">
+              <span style="width:7px; height:7px; border-radius:50%; background:#A39CE0"></span>{{ modal.step }}
+              <div style="flex:1"></div>
+              <button onClick="{{ closeModal }}" style="border:0; background:transparent; color:rgba(244,242,238,.6); font-size:17px; cursor:pointer; line-height:1; padding:0">✕</button>
+            </div>
+            <sc-if value="{{ modal.sent }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:40px 26px 44px; text-align:center">
+                <div style="width:52px; height:52px; margin:0 auto; border-radius:50%; background:rgba(163,156,224,.16); border:1px solid rgba(163,156,224,.5); display:flex; align-items:center; justify-content:center; font-size:22px; color:#A39CE0">✓</div>
+                <h3 style="margin:20px 0 0; font-size:23px; font-weight:700; letter-spacing:-.03em">Got it, {{ modal.firstName }}.</h3>
+                <p style="margin:12px auto 0; max-width:38ch; font-size:15px; line-height:1.6; color:rgba(244,242,238,.68)">We will send a short breakdown of how we would build this — scope, timeline and cost — to {{ modal.email }} within one working day.</p>
+                <button onClick="{{ closeModal }}" style="margin-top:24px; padding:13px 26px; border-radius:999px; border:1px solid rgba(244,242,238,.2); background:transparent; color:#F4F2EE; font-family:'Bricolage Grotesque',sans-serif; font-size:14.5px; cursor:pointer; transition:border-color 200ms ease" style-hover="border-color:#A39CE0">Close</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ modal.form }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:24px 26px 28px">
+                <div style="border:1px solid rgba(163,156,224,.32); background:rgba(163,156,224,.08); border-radius:12px; padding:16px 18px">
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#A39CE0">{{ modal.industryLabel }}</div>
+                  <div style="margin-top:8px; font-size:16.5px; font-weight:600; letter-spacing:-.02em; line-height:1.3">{{ modal.ideaTitle }}</div>
+                </div>
+                <sc-if value="{{ modal.isOwn }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:18px">
+                    <label style="display:block; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); margin-bottom:8px">What would you automate?</label>
+                    <textarea value="{{ form.own }}" onInput="{{ onOwn }}" rows="3" placeholder="Describe the process that eats your week…" style="width:100%; box-sizing:border-box; resize:vertical; border:1px solid rgba(244,242,238,.16); border-radius:10px; background:rgba(244,242,238,.04); color:#F4F2EE; font-family:'Bricolage Grotesque',sans-serif; font-size:15px; line-height:1.5; padding:12px 14px; outline:0"></textarea>
+                  </div>
+                </sc-if>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:14px; margin-top:18px">
+                  <div>
+                    <label style="display:block; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); margin-bottom:8px">Name</label>
+                    <input value="{{ form.name }}" onInput="{{ onName }}" placeholder="Your name" style="width:100%; box-sizing:border-box; border:1px solid rgba(244,242,238,.16); border-radius:10px; background:rgba(244,242,238,.04); color:#F4F2EE; font-family:'Bricolage Grotesque',sans-serif; font-size:15px; padding:12px 14px; outline:0">
+                  </div>
+                  <div>
+                    <label style="display:block; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); margin-bottom:8px">Work email</label>
+                    <input value="{{ form.email }}" onInput="{{ onEmail }}" type="email" placeholder="you@company.com" style="width:100%; box-sizing:border-box; border:1px solid rgba(244,242,238,.16); border-radius:10px; background:rgba(244,242,238,.04); color:#F4F2EE; font-family:'Bricolage Grotesque',sans-serif; font-size:15px; padding:12px 14px; outline:0">
+                  </div>
+                </div>
+                <sc-if value="{{ modal.error }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:14px; font-size:13.5px; color:#E9A0A0">{{ modal.errorText }}</div>
+                </sc-if>
+                <button onClick="{{ submitLead }}" style="width:100%; margin-top:20px; padding:16px 24px; border:0; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-family:'Bricolage Grotesque',sans-serif; font-size:15.5px; font-weight:600; cursor:pointer; transition:transform 160ms ease-out" style-hover="transform:translateY(-1px)">Send me the breakdown</button>
+                <div style="margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:rgba(244,242,238,.5); text-align:center">No newsletter. One reply from a human.</div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:34px; opacity:0; animation:fadeUp 380ms ease-out 440ms forwards">
+        <a href="#contact" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:18px 32px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:16px; font-weight:600; transition:transform 160ms ease-out; box-shadow:0 16px 44px -16px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">Book a call</a>
+        <a href="#work" style="padding:18px 32px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:16px; font-weight:500; transition:background 220ms ease, border-color 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">See the work</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- KINETIC STRIP -->
+  <div style="margin-top:26px; background:#A39CE0; color:#0B0B0C; padding:16px 0; overflow:hidden; transform:rotate(-1.1deg) scale(1.03)">
+    <div style="display:flex; width:max-content; animation:marquee 30s linear infinite">
+      <sc-for list="{{ strip }}" as="s" hint-placeholder-count="12">
+        <div style="display:flex; align-items:center; gap:22px; padding:0 22px; font-size:17px; font-weight:600; letter-spacing:-.01em; text-transform:uppercase; white-space:nowrap">{{ s }}<span style="font-size:11px">◆</span></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- CLIENT LOGOS -->
+  <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.64); text-align:center">Trusted by teams that ship</div>
+    <div style="margin-top:26px; overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent)">
+      <div style="display:flex; width:max-content; animation:marqueeRev 40s linear infinite" style-hover="animation-play-state:paused">
+        <sc-for list="{{ marqueeLogos }}" as="logo" hint-placeholder-count="16">
+          <div title="{{ logo.name }}" style="flex:none; width:168px; height:46px; margin:0 26px; background-image:{{ logo.bg }}; background-size:contain; background-repeat:no-repeat; background-position:center; filter:grayscale(1) brightness(0) invert(1); opacity:.5; transition:filter 260ms ease, opacity 260ms ease" style-hover="filter:none; opacity:1"></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK (light) -->
+  <div id="work" style="margin-top:79px; background:#EFEBE4; color:#14131A; overflow:clip">
+    <div style="max-width:1360px; margin:0 auto; padding:72px 34px 88px">
+      <div data-reveal="1" style="opacity:0; transition:opacity 380ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:34px; flex-wrap:wrap">
+        <div style="min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.55)">01 — Selected work</div>
+          <h2 style="margin:16px 0 0; font-size:clamp(46px,9vw,148px); line-height:.86; letter-spacing:-.05em; font-weight:800; text-transform:uppercase">Featured<br><span style="font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.025em; color:#4A3F8C">work</span></h2>
+        </div>
+        <a href="#work" style="padding:15px 26px; border-radius:999px; border:1px solid rgba(20,19,26,.22); color:#14131A; font-size:14.5px; font-weight:500; transition:background 220ms ease, border-color 220ms ease" style-hover="color:#14131A; border-color:#14131A; background:rgba(20,19,26,.05)">All case studies ↗</a>
+      </div>
+
+      <div style="margin-top:56px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:34px 46px; align-items:start">
+        <sc-for list="{{ work }}" as="w" hint-placeholder-count="4">
+          <div data-drift="{{ w.drift }}" style="margin-top:{{ w.offset }}; will-change:transform">
+            <div data-reveal="1" style="opacity:0; transform:translateY(22px); transition:opacity 480ms ease-out, transform 480ms cubic-bezier(.22,1,.36,1)">
+              <div style="position:relative; border-radius:18px; overflow:hidden; background:{{ w.plate }}; aspect-ratio:4/3.4; border:1px solid rgba(20,19,26,.09)">
+                <div style="position:absolute; inset:0; background-image:{{ w.bg }}; background-size:cover; background-position:top center; transition:transform 700ms cubic-bezier(.22,1,.36,1)" style-hover="transform:scale(1.045)"></div>
+                <div style="position:absolute; left:18px; top:18px; padding:8px 14px; border-radius:999px; background:rgba(20,19,26,.86); color:#EFEBE4; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; backdrop-filter:blur(6px)">{{ w.metric }}</div>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:14px; margin-top:24px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; color:rgba(20,19,26,.45)">{{ w.n }}</span>
+                <h3 style="margin:0; font-size:clamp(24px,2.6vw,34px); font-weight:600; letter-spacing:-.035em; line-height:1.06">{{ w.title }}</h3>
+              </div>
+              <p style="margin:12px 0 0; font-size:16px; line-height:1.6; color:rgba(20,19,26,.68); max-width:42ch">{{ w.result }}</p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:18px">
+                <sc-for list="{{ w.chips }}" as="chip" hint-placeholder-count="2">
+                  <span style="padding:7px 13px; border:1px solid rgba(20,19,26,.18); border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:rgba(20,19,26,.62)">{{ chip }}</span>
+                </sc-for>
+                <span style="padding:7px 13px; border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; color:rgba(20,19,26,.45)">{{ w.year }}</span>
+              </div>
+              <a href="#work" style="display:inline-flex; align-items:center; gap:8px; margin-top:20px; font-size:14.5px; font-weight:600; color:#14131A; border-bottom:1px solid rgba(20,19,26,.28); padding-bottom:3px; transition:color 200ms ease, border-color 200ms ease, gap 200ms ease" style-hover="color:#4A3F8C; border-color:#4A3F8C; gap:13px">Read the case study <span>↗</span></a>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES (dark, sticky index) -->
+  <div id="services" style="max-width:1360px; margin:0 auto; padding:75px 34px 0">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:56px; align-items:start">
+      <div style="position:sticky; top:112px; align-self:start; padding-bottom:24px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.64)">02 — What we do</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(34px,4.6vw,62px); line-height:.96; letter-spacing:-.04em; font-weight:800; text-transform:uppercase">Four services. <span style="font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#A39CE0">One flagship.</span></h2>
+        <p style="margin:22px 0 0; max-width:34ch; font-size:16px; line-height:1.64; color:rgba(244,242,238,.6)">AI automation leads every engagement. Design, development and extensions are how it reaches your team.</p>
+        <a href="#contact" style="display:inline-flex; margin-top:26px; font-size:15px; font-weight:600; gap:8px; align-items:center">Scope a project ↗</a>
+      </div>
+      <div>
+        <sc-for list="{{ services }}" as="svc" hint-placeholder-count="4">
+          <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out, background 260ms ease, padding 260ms ease; border-top:1px solid rgba(244,242,238,.14); padding:30px 18px; margin:0 -18px" style-hover="background:rgba(163,156,224,.06)">
+            <div style="display:flex; gap:18px; align-items:baseline; flex-wrap:wrap">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,242,238,.64)">{{ svc.num }}</span>
+              <h3 style="margin:0; font-size:clamp(26px,3.2vw,42px); font-weight:600; letter-spacing:-.035em; line-height:1.04">{{ svc.title }}</h3>
+              <sc-if value="{{ svc.flagship }}" hint-placeholder-val="{{ false }}">
+                <span style="padding:6px 12px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase">Flagship</span>
+              </sc-if>
+            </div>
+            <p style="margin:16px 0 0; max-width:50ch; font-size:16px; line-height:1.66; color:rgba(244,242,238,.65)">{{ svc.body }}</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:18px">
+              <sc-for list="{{ svc.points }}" as="p" hint-placeholder-count="3">
+                <span style="padding:7px 13px; border:1px solid rgba(244,242,238,.15); border-radius:999px; font-size:13px; color:rgba(244,242,238,.62)">{{ p }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div style="max-width:1360px; margin:75px auto 0; padding:0 34px">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out; border-top:1px solid rgba(244,242,238,.14); border-bottom:1px solid rgba(244,242,238,.14); padding:40px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:36px">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div>
+          <div data-count="{{ s.to }}" data-suffix="{{ s.suffix }}" style="font-size:clamp(48px,6vw,86px); line-height:.92; letter-spacing:-.05em; font-weight:800">0</div>
+          <div style="margin-top:12px; font-size:14px; color:rgba(244,242,238,.58)">{{ s.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div style="max-width:1360px; margin:0 auto; padding:69px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.64)">03 — How we work</div>
+      <h2 style="margin:18px 0 0; font-size:clamp(32px,4.4vw,60px); line-height:.98; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:20ch">Four weeks, audit to <span style="font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#A39CE0">running system.</span></h2>
+    </div>
+    <div style="margin-top:35px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); gap:26px">
+      <sc-for list="{{ steps }}" as="step" hint-placeholder-count="4">
+        <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out, border-color 260ms ease, background 260ms ease; border:1px solid rgba(244,242,238,.12); border-radius:12px; padding:28px" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#A39CE0">{{ step.n }}</div>
+          <h3 style="margin:16px 0 0; font-size:22px; font-weight:600; letter-spacing:-.028em">{{ step.title }}</h3>
+          <p style="margin:12px 0 0; font-size:14.5px; line-height:1.64; color:rgba(244,242,238,.6)">{{ step.body }}</p>
+          <div style="margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:rgba(244,242,238,.64)">{{ step.out }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ENGAGEMENTS (light) -->
+  <div id="engage" style="margin-top:75px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:69px 34px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">04 — Care &amp; growth plans</div>
+          <h2 style="margin:18px 0 0; font-size:clamp(32px,4.4vw,60px); line-height:.98; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:20ch">Website care &amp; growth plans</h2>
+        </div>
+        <p style="margin:0; max-width:34ch; font-size:15px; line-height:1.62; color:rgba(20,19,26,.6)">Flexible monthly plans that keep your website secure, fast and growing. Cancel or change any month.</p>
+      </div>
+      <div style="margin-top:35px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:22px">
+        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+          <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out, transform 300ms ease, box-shadow 300ms ease; border:1px solid rgba(20,19,26,.16); border-radius:14px; padding:32px; background:#F6F3ED; display:flex; flex-direction:column; gap:16px" style-hover="box-shadow:0 30px 60px -40px rgba(20,19,26,.7)">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+              <h3 style="margin:0; font-size:21px; font-weight:600; letter-spacing:-.028em">{{ p.name }}</h3>
+              <sc-if value="{{ p.popular }}" hint-placeholder-val="{{ false }}">
+                <span style="padding:5px 11px; border-radius:999px; background:#14131A; color:#A39CE0; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase">Most picked</span>
+              </sc-if>
+            </div>
+            <div style="font-size:clamp(26px,2.8vw,36px); font-weight:800; letter-spacing:-.04em">{{ p.price }}<span style="font-size:14px; font-weight:400; letter-spacing:0; color:rgba(20,19,26,.55)"> {{ p.unit }}</span></div>
+            <p style="margin:0; font-size:14.5px; line-height:1.6; color:rgba(20,19,26,.65)">{{ p.for }}</p>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px">
+              <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="4">
+                <div style="display:flex; gap:11px; align-items:flex-start; font-size:14.5px; line-height:1.5; color:rgba(20,19,26,.78)"><span style="flex:none; width:17px; height:17px; margin-top:2px; border-radius:50%; background:rgba(74,63,140,.12); color:#4A3F8C; display:flex; align-items:center; justify-content:center; font-size:10px">✓</span>{{ it }}</div>
+              </sc-for>
+            </div>
+            <div style="flex:1"></div>
+            <a href="#contact" style="margin-top:10px; padding:14px 22px; border-radius:999px; background:#14131A; color:#F6F3ED; font-size:14.5px; font-weight:600; text-align:center; transition:background 220ms ease" style-hover="color:#F6F3ED; background:#332E42">{{ p.cta }}</a>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONVOLEAD -->
+  <div id="convolead" style="margin-top:75px; background:#0B0714; border-top:1px solid rgba(224,42,190,.3); border-bottom:1px solid rgba(224,42,190,.3)">
+    <div style="position:relative; max-width:1360px; margin:0 auto; padding:69px 34px">
+      <div style="position:absolute; left:6%; top:8%; width:44%; height:70%; background:radial-gradient(ellipse at 40% 40%, rgba(224,42,190,.16), rgba(107,61,240,.1) 45%, rgba(11,7,20,0) 72%); filter:blur(30px); pointer-events:none"></div>
+      <div data-reveal="1" style="position:relative; opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:52px; align-items:center">
+        <div>
+          <div style="display:inline-flex; align-items:center; gap:10px; padding:7px 14px; border-radius:999px; border:1px solid rgba(163,156,224,.45); background:rgba(163,156,224,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#A39CE0">
+            <span style="width:6px; height:6px; border-radius:50%; background:#A39CE0"></span>A product by Sitechs
+          </div>
+          <img src="uploads/logo.png" alt="ConvoLead" style="display:block; margin:22px 0 0; width:min(300px,70vw); height:auto; filter:brightness(0) invert(1)">
+          <p style="margin:16px 0 0; max-width:44ch; font-size:18px; line-height:1.56; color:rgba(244,242,238,.78)">The chatbot that stops treating your website like a contact form. It answers, qualifies and books — while your competitors reply on Monday.</p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr)); gap:14px; margin-top:26px">
+            <sc-for list="{{ convoStats }}" as="cs" hint-placeholder-count="3">
+              <div style="border-left:2px solid; border-image:linear-gradient(180deg,#E02ABE,#6B3DF0) 1; padding-left:14px">
+                <div style="font-size:26px; font-weight:800; letter-spacing:-.035em; color:#F4F2EE">{{ cs.value }}</div>
+                <div style="margin-top:4px; font-size:13px; line-height:1.4; color:rgba(244,242,238,.64)">{{ cs.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:30px">
+            <a href="#convolead" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:16px 28px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:15.5px; font-weight:600; transition:transform 160ms ease-out; box-shadow:0 16px 44px -16px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">Book a demo</a>
+            <a href="#convolead" style="padding:16px 28px; border-radius:999px; border:1px solid rgba(163,156,224,.5); color:#F4F2EE; font-size:15.5px; font-weight:500; transition:background 200ms ease, border-color 200ms ease" style-hover="color:#F4F2EE; background:rgba(163,156,224,.14); border-color:#A39CE0">Start free trial</a>
+          </div>
+          <div style="margin-top:16px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(244,242,238,.64)">convolead.ai — separate product, same studio</div>
+        </div>
+
+        <div style="display:flex; justify-content:center">
+          <div style="width:100%; border:1px solid rgba(244,242,238,.14); border-radius:18px; overflow:hidden; background:#120B22; box-shadow:0 50px 100px -60px rgba(0,0,0,.95)">
+            <div style="display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.64)">
+              <span style="width:7px; height:7px; border-radius:50%; background:linear-gradient(135deg,#E02ABE,#6B3DF0)"></span>ConvoLead reel
+            </div>
+            <div style="position:relative; aspect-ratio:16/10; background:repeating-linear-gradient(115deg, rgba(244,242,238,.05) 0 12px, rgba(244,242,238,0) 12px 24px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px">
+              <div style="width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg,#E02ABE,#6B3DF0); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:19px">▶</div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); text-align:center; padding:0 20px">Drop the ConvoLead reel here</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div style="background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:76px 34px 80px">
+      <div data-reveal="1" style="opacity:0; transition:opacity 380ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.55)">05 — Client voices</div>
+        <div style="display:flex; align-items:center; gap:14px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.1em; color:rgba(20,19,26,.55)">{{ quoteIndexLabel }}</span>
+          <button onClick="{{ prevQuote }}" aria-label="Previous testimonial" style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(20,19,26,.2); background:transparent; color:#14131A; cursor:pointer; font-size:15px; transition:background 220ms ease, border-color 220ms ease" style-hover="border-color:#4A3F8C; background:rgba(74,63,140,.07)">←</button>
+          <button onClick="{{ nextQuote }}" aria-label="Next testimonial" style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(20,19,26,.2); background:transparent; color:#14131A; cursor:pointer; font-size:15px; transition:background 220ms ease, border-color 220ms ease" style-hover="border-color:#4A3F8C; background:rgba(74,63,140,.07)">→</button>
+        </div>
+      </div>
+
+      <div data-reveal="1" style="opacity:0; transition:opacity 380ms ease-out; margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:48px; align-items:start">
+        <div style="grid-column:span 2; min-width:0">
+          <div style="font-family:'Instrument Serif',Georgia,serif; font-size:64px; line-height:.6; color:rgba(74,63,140,.35); height:34px">“</div>
+          <blockquote style="margin:0; font-family:'Instrument Serif',Georgia,serif; font-weight:400; font-size:clamp(25px,3.4vw,46px); line-height:1.22; letter-spacing:-.02em; max-width:30ch; text-wrap:pretty">{{ quote.text }}</blockquote>
+          <div style="margin-top:32px; display:flex; align-items:center; gap:15px">
+            <div style="width:50px; height:50px; border-radius:50%; background:#14131A; color:#EFEBE4; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:600; letter-spacing:-.01em; flex:none">{{ quote.initials }}</div>
+            <div>
+              <div style="font-size:15.5px; font-weight:600; letter-spacing:-.015em">{{ quote.name }}</div>
+              <div style="font-size:13.5px; color:rgba(20,19,26,.6); margin-top:2px">{{ quote.role }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:2px; border-top:1px solid rgba(20,19,26,.16)">
+          <sc-for list="{{ quoteList }}" as="q" hint-placeholder-count="3">
+            <button onClick="{{ q.go }}" style="text-align:left; cursor:pointer; border:0; border-bottom:1px solid rgba(20,19,26,.12); background:{{ q.bg }}; padding:20px 18px; margin:0 -18px; display:flex; gap:14px; align-items:baseline; font-family:'Bricolage Grotesque',sans-serif; transition:background 240ms ease" style-hover="background:rgba(74,63,140,.07)">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; color:{{ q.num }}">{{ q.n }}</span>
+              <span style="flex:1; min-width:0">
+                <span style="display:block; font-size:15px; font-weight:600; letter-spacing:-.018em; color:{{ q.fg }}">{{ q.name }}</span>
+                <span style="display:block; margin-top:4px; font-size:13px; line-height:1.45; color:rgba(20,19,26,.6)">{{ q.snippet }}</span>
+              </span>
+            </button>
+          </sc-for>
+          <div style="margin-top:18px; display:flex; gap:10px; align-items:center; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,19,26,.55)">
+            <span style="width:22px; height:1px; background:rgba(20,19,26,.3)"></span>140+ clients, 14 countries
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq" style="max-width:1360px; margin:0 auto; padding:69px 34px 0">
+    <div data-reveal="1" style="opacity:0; transition:opacity 380ms ease-out; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:56px; align-items:start">
+      <div style="position:sticky; top:112px; align-self:start; padding-bottom:24px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.64)">06 — FAQ</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,3.8vw,52px); line-height:.98; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:16ch">Before you ask.</h2>
+        <p style="margin:20px 0 0; max-width:30ch; font-size:15px; line-height:1.62; color:rgba(244,242,238,.6)">Still unsure where automation fits? Ask on the call — we will tell you if it does not.</p>
+      </div>
+      <div style="border-top:1px solid rgba(244,242,238,.14)">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid rgba(244,242,238,.14)">
+            <button onClick="{{ f.toggle }}" style="width:100%; display:flex; gap:18px; align-items:flex-start; text-align:left; padding:24px 0; border:0; background:transparent; cursor:pointer; font-family:'Bricolage Grotesque',sans-serif">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,242,238,.64); padding-top:5px">{{ f.n }}</span>
+              <span style="flex:1; font-size:18px; font-weight:500; letter-spacing:-.02em; color:#F4F2EE">{{ f.q }}</span>
+              <span style="font-size:20px; color:#A39CE0; line-height:1">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0; padding:0 0 26px 30px; max-width:60ch; font-size:15.5px; line-height:1.7; color:rgba(244,242,238,.66)">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSING CTA -->
+  <div id="contact" style="margin-top:79px; background:#A39CE0; color:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:63px 34px 52px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 380ms ease-out, transform 380ms ease-out; max-width:900px; margin:0 auto; text-align:center">
+        <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 16px; border-radius:999px; border:1px solid rgba(11,11,12,.28); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(11,11,12,.75)">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0B0B0C"></span>Idea → running system
+        </div>
+        <h2 style="margin:22px auto 0; font-size:clamp(34px,5.6vw,82px); line-height:.94; letter-spacing:-.045em; font-weight:800; text-transform:uppercase; max-width:15ch">Find the 20 hours a week your team is losing.</h2>
+        <p style="margin:22px auto 0; max-width:52ch; font-size:17px; line-height:1.6; color:rgba(11,11,12,.72)">Tell us where the time goes and we will come back with the three processes worth automating first.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; align-items:center; margin-top:32px">
+          <a href="#contact" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:19px 34px; border-radius:999px; background:#0B0B0C; color:#A39CE0; font-size:16.5px; font-weight:600; transition:transform 160ms ease-out" style-hover="color:#A39CE0">Book a free automation audit</a>
+          <button onClick="{{ copyEmail }}" style="padding:19px 28px; border-radius:999px; border:1px solid rgba(11,11,12,.32); background:transparent; color:#0B0B0C; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.06em; transition:background 200ms ease" style-hover="background:rgba(11,11,12,.08)">info@sitechs.co</button>
+        </div>
+        <div style="margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(11,11,12,.65)">30 minutes · no deck · no obligation</div>
+      </div>
+    </div>
+    <div style="overflow:hidden; border-top:1px solid rgba(11,11,12,.15); padding:12px 0">
+      <div style="display:flex; width:max-content; animation:marquee 26s linear infinite">
+        <sc-for list="{{ ctaStrip }}" as="c" hint-placeholder-count="10">
+          <div style="display:flex; align-items:center; gap:18px; padding:0 18px; font-size:15px; font-weight:600; text-transform:uppercase; letter-spacing:-.005em; white-space:nowrap">{{ c }}<span style="font-size:10px">◆</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Studio</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="#work" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Work</a>
+          <a href="#services" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Services</a>
+          <a href="#engage" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Engagements</a>
+          <a href="#faq" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">FAQ</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Office</div>
+        <div style="font-size:14px; line-height:1.72; color:rgba(244,242,238,.58)">B-238, Block 6<br>Gulshan-e-Iqbal, Karachi<br>+92 342 3543100<br>info@sitechs.co</div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { q: 0, faq: 0, copied: false, now: "--:--:--", industry: "", typed: 0, matchIdx: -1, caretOn: true, touched: false, phIdx: 0, chatN: 0, chatTyping: false, picked: -1, modalOpen: false, sent: false, err: "", lead: { name: "", email: "", own: "" } };
+
+  runChat() {
+    clearTimeout(this.chatId);
+    const n = this.state.chatN;
+    if (n >= this.chatScript.length) {
+      this.chatId = setTimeout(() => this.setState({ chatN: 0 }, () => this.runChat()), 4200);
+      return;
+    }
+    const next = this.chatScript[n];
+    const show = () => this.setState((s) => ({ chatN: s.chatN + 1, chatTyping: false }), () => this.runChat());
+    if (next.from === "bot") {
+      this.setState({ chatTyping: true });
+      this.chatId = setTimeout(show, 1250);
+    } else {
+      this.chatId = setTimeout(show, 900);
+    }
+  }
+
+  inputRef = React.createRef();
+
+  currentPlan() {
+    const i = this.state.matchIdx;
+    return i >= 0 ? this.industryMap[i] : this.genericPlan;
+  }
+
+  matchIndustry(raw) {
+    const v = (raw || "").toLowerCase().trim();
+    if (v.length < 3) return -1;
+    return this.industryMap.findIndex((m) => m.keys.some((k) => v.includes(k) || k.includes(v)));
+  }
+
+  setIndustry(value) {
+    const idx = this.matchIndustry(value);
+    this.setState({ industry: value, matchIdx: idx, touched: true, picked: -1 });
+  }
+
+
+  placeholders = ["dental clinic", "law firm", "e-commerce", "real estate", "logistics", "SaaS", "recruiting", "hospitality", "construction", "your industry"];
+
+  industryMap = [
+    { keys: ["dental", "dentist", "clinic", "medical", "doctor", "health", "hospital"], label: "dental clinics", eta: "Most go live in 2–4 weeks",
+      lead: "Here is what we would automate first for a dental clinic. Pick the one that hurts most.",
+      ideas: [
+        { title: "No-show recall agent", body: "Texts patients who miss or cancel, offers the next open slot and books it into your practice software.", foot: "~3 weeks · saves 6 hrs/wk" },
+        { title: "New-patient intake", body: "Forms, insurance details and history collected and verified before they walk in, filed to the right chart.", foot: "~3 weeks · saves 8 hrs/wk" },
+        { title: "Treatment follow-up", body: "Unaccepted treatment plans followed up on a schedule, with answers to the usual cost questions.", foot: "~2 weeks · lifts case acceptance" }
+      ] },
+    { keys: ["law", "legal", "attorney", "lawyer", "firm"], label: "law firms", eta: "Most go live in 3–4 weeks",
+      lead: "Here is what we would automate first for a law firm. Pick the one that hurts most.",
+      ideas: [
+        { title: "Enquiry screening agent", body: "Every enquiry screened against your matter criteria and conflict-checked, then scheduled or politely declined.", foot: "~4 weeks · saves 10 hrs/wk" },
+        { title: "Document intake & summary", body: "Client documents read, classified and summarised into the matter file with key dates extracted.", foot: "~4 weeks · saves 7 hrs/wk" },
+        { title: "Billing chase", body: "Unbilled time flagged weekly and invoices followed up automatically until paid.", foot: "~2 weeks · faster collection" }
+      ] },
+    { keys: ["ecommerce", "e-commerce", "shop", "store", "retail", "shopify", "brand", "dtc"], label: "e-commerce brands", eta: "Most go live in 2–4 weeks",
+      lead: "Here is what we would automate first for an e-commerce brand. Pick the one that hurts most.",
+      ideas: [
+        { title: "Support & WISMO agent", body: "Order status, returns and shipping questions answered from your live data — humans see only exceptions.", foot: "~3 weeks · deflects 70% of tickets" },
+        { title: "Returns triage", body: "Return requests assessed against policy, approved or escalated, labels issued without a human.", foot: "~3 weeks · saves 6 hrs/wk" },
+        { title: "Win-back sequences", body: "Browse and cart behaviour turned into timed, personal follow-ups that sound like your brand.", foot: "~2 weeks · lifts repeat rate" }
+      ] },
+    { keys: ["real estate", "realtor", "property", "realty", "broker", "mortgage", "loan"], label: "real estate teams", eta: "Most go live in 2–3 weeks",
+      lead: "Here is what we would automate first for a real estate team. Pick the one that hurts most.",
+      ideas: [
+        { title: "Instant lead response", body: "Portal enquiries enriched, scored and answered in minutes, then routed to the agent who covers that area.", foot: "~2 weeks · first to reply, always" },
+        { title: "Viewing scheduler", body: "Availability negotiated with buyer and vendor, confirmed in both calendars, reminders handled.", foot: "~3 weeks · saves 8 hrs/wk" },
+        { title: "Nurture for cold leads", body: "Old enquiries revived with listings that actually match what they asked for months ago.", foot: "~2 weeks · reactivates dead lists" }
+      ] },
+    { keys: ["logistics", "freight", "shipping", "transport", "trucking", "supply"], label: "logistics operators", eta: "Most go live in 3–4 weeks",
+      lead: "Here is what we would automate first for a logistics operator. Pick the one that hurts most.",
+      ideas: [
+        { title: "Document processing", body: "Bills of lading, PODs and invoices read, matched to the load and filed — nobody retypes a number.", foot: "~4 weeks · saves 12 hrs/wk" },
+        { title: "Status update agent", body: "Customer 'where is my load' questions answered from your TMS, around the clock.", foot: "~3 weeks · deflects 60% of calls" },
+        { title: "Exception alerts", body: "Delays, detention and missing paperwork flagged to the right person before the customer notices.", foot: "~2 weeks · fewer claims" }
+      ] },
+    { keys: ["saas", "software", "startup", "app", "tech", "product"], label: "SaaS teams", eta: "Most go live in 2–3 weeks",
+      lead: "Here is what we would automate first for a SaaS team. Pick the one that hurts most.",
+      ideas: [
+        { title: "Trial-to-paid nudges", body: "Usage signals trigger the right message at the right moment, so sales only sees real buyers.", foot: "~3 weeks · lifts conversion" },
+        { title: "Support deflection", body: "Docs, changelog and past tickets turned into an agent that answers first and escalates cleanly.", foot: "~3 weeks · deflects 50% of tickets" },
+        { title: "Churn-risk watch", body: "Usage drops detected early and routed to CS with the context needed to save the account.", foot: "~2 weeks · earlier saves" }
+      ] },
+    { keys: ["recruit", "staffing", "hr", "hiring", "talent", "agency"], label: "recruiting agencies", eta: "Most go live in 2–3 weeks",
+      lead: "Here is what we would automate first for a recruiting agency. Pick the one that hurts most.",
+      ideas: [
+        { title: "Application screening", body: "Every CV parsed, matched to the brief and shortlisted with written reasoning you can defend.", foot: "~3 weeks · saves 12 hrs/wk" },
+        { title: "Candidate re-engagement", body: "Your existing database mined for matches whenever a new brief lands.", foot: "~2 weeks · placements from old data" },
+        { title: "Interview coordination", body: "Slots negotiated between client and candidate, confirmed, reminded and rescheduled automatically.", foot: "~2 weeks · saves 7 hrs/wk" }
+      ] },
+    { keys: ["restaurant", "cafe", "hospitality", "hotel", "travel", "tour", "booking"], label: "hospitality and travel", eta: "Most go live in 2–3 weeks",
+      lead: "Here is what we would automate first for a hospitality or travel business. Pick the one that hurts most.",
+      ideas: [
+        { title: "Enquiry & quoting agent", body: "Availability questions and quotes answered day or night, in the guest's language.", foot: "~3 weeks · books while you sleep" },
+        { title: "Review generation", body: "Timed, personal review requests after checkout, with unhappy guests routed to you first.", foot: "~2 weeks · more 5-star volume" },
+        { title: "Upsell sequences", body: "Pre-arrival offers matched to booking type — rooms, tables, tours, transfers.", foot: "~2 weeks · lifts spend per guest" }
+      ] },
+    { keys: ["construction", "contractor", "trades", "manufactur", "field"], label: "construction firms", eta: "Most go live in 3–4 weeks",
+      lead: "Here is what we would automate first for a construction firm. Pick the one that hurts most.",
+      ideas: [
+        { title: "Quote assembly", body: "Site notes and supplier prices pulled into a consistent estimate, ready for your sign-off the same day.", foot: "~4 weeks · quotes out 5x faster" },
+        { title: "Site report capture", body: "Photos and voice notes from the field turned into structured daily reports clients can read.", foot: "~3 weeks · saves 6 hrs/wk" },
+        { title: "Subcontractor comms", body: "Schedules, variations and document requests chased automatically until answered.", foot: "~3 weeks · fewer delays" }
+      ] }
+  ];
+
+  genericPlan = {
+    label: "your operation",
+    eta: "Most go live in 2–4 weeks",
+    lead: "Tell us your industry above for a tailored set — or start from the three that fit almost every business.",
+    ideas: [
+      { title: "Instant enquiry response", body: "Every enquiry enriched, answered and routed within minutes, on any channel, at any hour.", foot: "~2 weeks · first to reply, always" },
+      { title: "Inbox & ticket triage", body: "Incoming mail read, categorised, answered where it is routine and escalated where it is not.", foot: "~3 weeks · saves 8 hrs/wk" },
+      { title: "Reporting that writes itself", body: "Numbers pulled from your tools into the report you currently rebuild by hand every week.", foot: "~2 weeks · saves 6 hrs/wk" }
+    ]
+  };
+
+  ownIdea = { title: "I already know what to automate", body: "Have something specific in mind? Describe it and we will tell you what it takes to build.", foot: "Tell us in one line" };
+
+  chatScript = [
+    { from: "them", text: "Hi — do you handle commercial fit-outs, or residential only?" },
+    { from: "bot", text: "Both. Commercial is about 60% of our work. What's the space and roughly what size?" },
+    { from: "them", text: "A café, around 1,800 sq ft. Need it open by March." },
+    { from: "bot", text: "That's a comfortable timeline. Two slots left for March starts — want me to hold one and book a 20-minute call?" },
+    { from: "them", text: "Yes please, Thursday afternoon works." },
+    { from: "bot", text: "Booked for Thursday 3:00pm. Confirmation sent, and your team has the brief already. 👌" }
+  ];
+
+  clientLogos = [
+    { src: "uploads/clients/1.png", name: "Creative Triplet" },
+    { src: "uploads/clients/2.png", name: "Your Friend Infertility" },
+    { src: "uploads/clients/3.png", name: "EventsHub" },
+    { src: "uploads/clients/4.png", name: "My Story" },
+    { src: "uploads/clients/5.png", name: "Relentless Triggers" },
+    { src: "uploads/clients/6.png", name: "Crafty Words" },
+    { src: "uploads/clients/7.png", name: "Mortgage Loan Originators" },
+    { src: "uploads/clients/8.png", name: "Chica Travelista" },
+    { src: "uploads/clients/9.png", name: "Travelista Travels" }
+  ];
+
+  workData = [
+        { img: "uploads/ct.webp", title: "Creative Triplet", year: "2025", metric: "2 days → 11 min", result: "Agent-driven intake replaced a manual lead queue: enquiries are scored, routed and answered before a human opens the inbox.", chips: ["AI automation", "Website"] },
+        { img: "uploads/2.jpg", title: "Hiller Media Group", year: "2025", metric: "+38% enquiry conversion", result: "Creator-economy agency site rebuilt around one campaign CTA, with enquiry routing automated end to end.", chips: ["Website design", "Next.js"] },
+        { img: "uploads/3.jpg", title: "Vezuon HR", year: "2024", metric: "21 staff, zero spreadsheets", result: "Attendance, applications and shift data pulled into one dashboard that fetches from the device log automatically.", chips: ["Dashboard", "Automation"] },
+        { img: "uploads/4.jpg", title: "UpFeeds", year: "2024", metric: "1 hr/day per agent", result: "Keyword-driven job feeds with an in-browser tool that captures, filters and files opportunities as they appear.", chips: ["Extension", "Automation"] }
+  ];
+
+  navRef = React.createRef();
+  barRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  navCallRef = React.createRef();
+
+  quotes = [
+    { text: "Response time went from two days to eleven minutes. Nobody on my team touches it.", name: "Creative Triplet", role: "Chief Executive Officer", initials: "CT" },
+    { text: "They automated our reporting, then designed the dashboard around it. Two roles went back to real work.", name: "Relentless Triggers", role: "Founder", initials: "RT" },
+    { text: "The extension they shipped saves each agent an hour a day. Twelve years of experience shows in the details.", name: "EventsHub", role: "Head of Operations", initials: "EH" }
+  ];
+
+  faqData = [
+    { q: "Where does AI automation actually fit in my business?", a: "Anywhere a person repeats a decision with rules behind it: qualifying leads, triaging tickets, reading documents, building reports. On the audit call we time-cost those steps and tell you which are worth automating — and which are not." },
+    { q: "How fast can you ship something real?", a: "An automation pilot goes live in two to four weeks. A full design and build runs six to ten weeks depending on scope and content readiness. You see working software every week, not status decks." },
+    { q: "Do you work with startups or established companies?", a: "Both. Roughly half our work is founder-led teams under twenty people; the rest are established companies replacing manual back-office processes." },
+    { q: "Can you take over an existing site or system?", a: "Yes. We audit what exists, keep what earns its place, and rebuild the rest — usually in Next.js, with your content migrated." },
+    { q: "What happens after launch?", a: "Automations get monitoring, guardrails and a monthly tuning window. Sites get a support retainer or a clean documented handoff, whichever you prefer." }
+  ];
+
+  componentDidMount() {
+    this.onScroll = () => {
+      if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); });
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+    this.autoId = setInterval(() => this.setState((s) => ({ q: (s.q + 1) % this.quotes.length })), 7000);
+    this.phId = setInterval(() => { if (!this.state.touched && !this.state.industry) this.setState((st) => ({ phIdx: (st.phIdx + 1) % this.placeholders.length })); }, 2000);
+    this.caretId = setInterval(() => this.setState((s) => ({ caretOn: !s.caretOn })), 520);
+    this.runChat();
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId, this.autoId, this.caretId, this.phId].forEach(clearInterval);
+    clearTimeout(this.chatId);
+    clearTimeout(this.copyT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    const on = y > 20;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    const links = this.navLinksRef.current, clk = this.navClockRef.current, call = this.navCallRef.current;
+    if (call) {
+      call.style.maxWidth = on ? "180px" : "0px";
+      call.style.opacity = on ? "1" : "0";
+      call.style.paddingLeft = on ? "20px" : "0px";
+      call.style.paddingRight = on ? "20px" : "0px";
+      call.style.borderColor = on ? "rgba(244,242,238,.18)" : "rgba(244,242,238,0)";
+    }
+    if (links) {
+      links.style.maxWidth = on ? "0px" : "520px";
+      links.style.opacity = on ? "0" : "1";
+      links.style.marginRight = on ? "-26px" : "0px";
+    }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    if (shell) {
+      shell.style.maxWidth = on ? "660px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      const speed = parseFloat(el.dataset.parallax) || 0;
+      el.style.transform = "translate3d(0," + (y * speed).toFixed(1) + "px,0)";
+    });
+    document.querySelectorAll("[data-drift]").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -300 || r.top > vh + 300) return;
+      const k = parseFloat(el.dataset.drift) || 0;
+      el.style.transform = "translate3d(0," + ((r.top + r.height / 2 - vh / 2) * k).toFixed(1) + "px,0)";
+    });
+    document.querySelectorAll("[data-scale]").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, 1 - r.top / vh));
+      el.style.transform = "scale(" + (1 + p * 0.05).toFixed(4) + ")";
+    });
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal],[data-count]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.reveal) { el.style.opacity = "1"; if (el.dataset.reveal === "1") el.style.transform = "none"; }
+    if (el.dataset.count) this.runCount(el);
+  }
+
+  runCount(el) {
+    const target = Number(el.dataset.count) || 0;
+    const suffix = el.dataset.suffix || "";
+    const t0 = performance.now(), dur = 1100;
+    const tick = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+
+  setIndustryQuiet(value) {
+    this.setState({ industry: value, matchIdx: this.matchIndustry(value), picked: -1 });
+  }
+
+  renderVals() {
+    const plan = this.currentPlan();
+    const len = Math.max(this.state.industry.length || this.placeholders[this.state.phIdx].length, 12);
+    const list = plan.ideas.concat([this.ownIdea]);
+    const picked = this.state.picked;
+    const isOwn = picked === plan.ideas.length;
+    return {
+      inputRef: this.inputRef,
+      industry: this.state.industry,
+      placeholder: this.placeholders[this.state.phIdx],
+      showHint: !this.state.touched,
+      focusField: () => { if (this.inputRef.current) this.inputRef.current.focus(); },
+      inputWidth: len + "ch",
+      onIndustry: (e) => { this.setIndustry(e.target.value); },
+      onFocus: () => { this.setState({ touched: true }); },
+      onKey: (e) => { if (e.key === "Enter") e.preventDefault(); },
+      plan: {
+        status: this.state.matchIdx >= 0 ? "Automation ideas — " + plan.label : "Automation ideas",
+        eta: plan.eta,
+        lead: plan.lead
+      },
+      ideas: list.map((idea, i) => ({
+        n: i === plan.ideas.length ? "Own idea" : "Idea " + String(i + 1).padStart(2, "0"),
+        title: idea.title,
+        body: idea.body,
+        foot: idea.foot,
+        bg: picked === i ? "rgba(163,156,224,.12)" : "rgba(244,242,238,.02)",
+        border: picked === i ? "#A39CE0" : "rgba(244,242,238,.12)",
+        pick: () => this.setState({ picked: i, modalOpen: true, sent: false, err: "" })
+      })),
+      modalOpen: this.state.modalOpen,
+      closeModal: () => this.setState({ modalOpen: false }),
+      stop: (e) => e.stopPropagation(),
+      modal: {
+        step: this.state.sent ? "Request received" : "Step 2 of 2 — who are we sending it to?",
+        sent: this.state.sent,
+        form: !this.state.sent,
+        isOwn: isOwn,
+        industryLabel: this.state.industry.trim() ? this.state.industry.trim() : plan.label,
+        ideaTitle: picked >= 0 ? list[picked].title : "",
+        error: !!this.state.err,
+        errorText: this.state.err,
+        firstName: (this.state.lead.name.trim().split(" ")[0]) || "there",
+        email: this.state.lead.email
+      },
+      form: this.state.lead,
+      onName: (e) => { const v = e.target.value; this.setState((s) => ({ lead: { ...s.lead, name: v } })); },
+      onEmail: (e) => { const v = e.target.value; this.setState((s) => ({ lead: { ...s.lead, email: v } })); },
+      onOwn: (e) => { const v = e.target.value; this.setState((s) => ({ lead: { ...s.lead, own: v } })); },
+      submitLead: () => {
+        const { name, email, own } = this.state.lead;
+        if (!name.trim()) return this.setState({ err: "Please add your name." });
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return this.setState({ err: "Please add a valid email address." });
+        if (isOwn && !own.trim()) return this.setState({ err: "Tell us in a line what you would automate." });
+        const payload = {
+          industry: this.state.industry.trim() || plan.label,
+          idea: isOwn ? own.trim() : (picked >= 0 ? list[picked].title : ""),
+          ideaType: isOwn ? "own" : "suggested",
+          name: name.trim(),
+          email: email.trim(),
+          submittedAt: new Date().toISOString()
+        };
+        console.log("[sitechs lead]", payload);
+        window.dispatchEvent(new CustomEvent("sitechs:lead", { detail: payload }));
+        this.setState({ sent: true, err: "" });
+      },
+      ...this.rest()
+    };
+  }
+
+  rest() {
+    return {
+      chat: this.chatScript.slice(0, this.state.chatN).map((m) => ({
+        text: m.text,
+        align: m.from === "bot" ? "flex-start" : "flex-end",
+        bg: m.from === "bot" ? "linear-gradient(125deg, rgba(224,42,190,.22), rgba(107,61,240,.22))" : "rgba(244,242,238,.06)",
+        fg: m.from === "bot" ? "#FBEDFA" : "rgba(244,242,238,.9)",
+        border: m.from === "bot" ? "rgba(224,42,190,.36)" : "rgba(244,242,238,.1)"
+      })),
+      chatTyping: this.state.chatTyping,
+      chatHint: this.state.chatN >= this.chatScript.length ? "Lead qualified and booked — no human involved" : "Ask Convolead anything…",
+      convoStats: [
+        { value: "< 10s", label: "First reply, any hour" },
+        { value: "3×", label: "More booked calls" },
+        { value: "24/7", label: "Never off, never rude" }
+      ],
+      navRef: this.navRef,
+      navShellRef: this.navShellRef,
+      navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef,
+      navCallRef: this.navCallRef,
+      navLinks: [
+        { href: "#work", label: "Work" },
+        { href: "#services", label: "Services" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans" },
+        { href: "#faq", label: "FAQ" }
+      ],
+      barRef: this.barRef,
+      clock: this.state.now,
+      copyLabel: this.state.copied ? "copied" : "copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) * 0.16;
+        const dy = (e.clientY - (r.top + r.height / 2)) * 0.24;
+        el.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      strip: [...Array(2)].flatMap(() => ["AI automations", "Website design", "Website development", "Chrome extensions", "12 years shipping", "235 products"]),
+      ctaStrip: [...Array(2)].flatMap(() => ["Book a call", "Free automation audit", "Fixed scope", "Weekly demos", "Ship in 4 weeks"]),
+      marqueeLogos: [...Array(2)].flatMap(() => this.clientLogos.map((c) => ({ name: c.name, bg: 'url("' + c.src + '")' }))),
+      work: this.workData.map((w, i) => ({
+        ...w,
+        n: String(i + 1).padStart(2, "0"),
+        bg: 'url("' + w.img + '")',
+        plate: i % 2 ? "#E4DFD6" : "#E9E5DC",
+        offset: i % 2 ? "56px" : "0px",
+        drift: i % 2 ? -0.045 : 0.03
+      })),
+      services: [
+        { num: "01", title: "AI Automations", flagship: true, body: "Cut 20+ hours of manual operations a week. AI agents and pipelines for lead qualification, support triage, document processing and reporting that writes itself.", points: ["AI agents & assistants", "Workflow automation", "RAG & internal search"] },
+        { num: "02", title: "Website Design", flagship: false, body: "Conversion-led design and UX as one system — brand, page architecture and a component library your developers build from without guesswork.", points: ["UX & IA", "Design systems", "Landing pages"] },
+        { num: "03", title: "Website Development", flagship: false, body: "Next.js builds that ship fast and stay fast: typed, tested, accessible and wired straight into the automation layer behind them.", points: ["Next.js & headless CMS", "Performance budgets", "CRM integration"] },
+        { num: "04", title: "Chrome Extensions", flagship: false, body: "Put automation inside the tools your team already lives in, so nobody has to learn a new dashboard to get the benefit.", points: ["Internal tools", "Data capture", "Web Store release"] }
+      ],
+      stats: [
+        { to: 235, suffix: "+", label: "Products shipped" },
+        { to: 12, suffix: "+", label: "Years in business" },
+        { to: 140, suffix: "+", label: "Clients worldwide" },
+        { to: 14, suffix: "", label: "Countries served" }
+      ],
+      steps: [
+        { n: "Week 01", title: "Discovery", body: "We audit your workflows and time-cost every manual step worth removing.", out: "Output: opportunity map" },
+        { n: "Week 02", title: "Strategy", body: "A prioritised plan: what an agent handles, what a human keeps, what it is worth.", out: "Output: automation spec" },
+        { n: "Week 03", title: "Build & automate", body: "Pipelines, agents and the interface layer built in parallel, demoed weekly.", out: "Output: working pilot" },
+        { n: "Week 04", title: "Launch & tune", body: "Monitoring, guardrails and iteration against real throughput data.", out: "Output: live system" }
+      ],
+      plans: [
+        { name: "Starter Care", price: "$299", unit: "/ month", popular: false, for: "Keeps your website stable, secure and quietly looked after.", items: ["Updates & security patching", "Bug fixes", "Daily backups", "Basic support"], cta: "Get started" },
+        { name: "Growth Optimization", price: "$299–$599", unit: "/ month", popular: true, for: "For improving performance and conversions every month.", items: ["Everything in Starter", "Monthly development hours", "Landing page updates", "Speed optimization", "Conversion improvements"], cta: "Get started" },
+        { name: "Agency Partner", price: "$800–$2,000+", unit: "/ month", popular: false, for: "For agencies and scaling businesses that need a development partner.", items: ["Dedicated developer hours", "Priority support", "Custom development", "Funnel improvements", "White-label support option"], cta: "Get started" }
+      ],
+      quote: this.quotes[this.state.q],
+      quoteList: this.quotes.map((q, i) => ({
+        n: String(i + 1).padStart(2, "0"),
+        name: q.name,
+        snippet: q.role,
+        bg: i === this.state.q ? "rgba(74,63,140,.1)" : "transparent",
+        fg: i === this.state.q ? "#4A3F8C" : "#14131A",
+        num: i === this.state.q ? "#4A3F8C" : "rgba(20,19,26,.45)",
+        go: () => { clearInterval(this.autoId); this.setState({ q: i }); }
+      })),
+      quoteIndexLabel: (this.state.q + 1) + " / " + this.quotes.length,
+      prevQuote: () => { clearInterval(this.autoId); this.setState((s) => ({ q: (s.q + this.quotes.length - 1) % this.quotes.length })); },
+      nextQuote: () => { clearInterval(this.autoId); this.setState((s) => ({ q: (s.q + 1) % this.quotes.length })); },
+      faqs: this.faqData.map((f, i) => ({
+        n: String(i + 1).padStart(2, "0"), q: f.q, a: f.a,
+        open: this.state.faq === i,
+        sign: this.state.faq === i ? "−" : "+",
+        toggle: () => this.setState((s) => ({ faq: s.faq === i ? -1 : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

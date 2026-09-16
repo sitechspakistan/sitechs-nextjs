@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes answerIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes ringPulse { 0%,100% { box-shadow:0 0 0 0 rgba(163,156,224,.22); } 50% { box-shadow:0 0 0 9px rgba(163,156,224,0); } }
+  @keyframes caret { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="Sitechs Homepage v3.dc.html" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="padding:9px 15px; border-radius:999px; font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease; color:{{ l.color }}; background:{{ l.bg }}" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a ref="{{ navCallRef }}" href="Sitechs Start a Project.dc.html" style="flex:none; overflow:hidden; white-space:nowrap; max-width:0; opacity:0; padding:12px 0; border-radius:999px; border:1px solid rgba(244,242,238,0); color:#F4F2EE; font-size:14px; font-weight:500; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, background 220ms ease, border-color 240ms ease" style-hover="color:#F4F2EE; background:rgba(244,242,238,.08)">Book a call</a>
+        <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative; padding:44px 34px 0; overflow:hidden">
+    <div data-parallax=".12" style="position:absolute; left:50%; top:-26%; width:60vw; height:60vw; margin-left:-30vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.12), rgba(163,156,224,0) 62%); filter:blur(24px); pointer-events:none"></div>
+    <div style="position:relative; max-width:1360px; margin:0 auto">
+      <div style="display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 360ms ease-out forwards">
+        <a href="Sitechs Services.dc.html" style="color:rgba(244,242,238,.55)" style-hover="color:#A39CE0">Services</a>
+        <span>/</span>
+        <span style="color:#A39CE0">Website Development</span>
+        <span style="width:22px; height:1px; background:rgba(244,242,238,.2)"></span>
+        <span>Service 03</span>
+      </div>
+      <div style="margin-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr)); gap:44px; align-items:center">
+        <div style="min-width:0">
+          <h1 style="margin:0; max-width:15ch; font-size:clamp(38px,5.6vw,82px); line-height:.92; letter-spacing:-.045em; font-weight:800; text-transform:uppercase">
+            <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 60ms both">Builds that</span></span>
+            <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 150ms both">stay fast</span></span>
+            <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 250ms both; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#A39CE0">after launch day.</span></span>
+          </h1>
+          <p style="margin:26px 0 0; max-width:46ch; font-size:17px; line-height:1.62; color:rgba(244,242,238,.72); opacity:0; animation:fadeUp 380ms ease-out 340ms forwards">We build in Next.js and TypeScript against a performance budget, wire the CMS so your team can edit without us, and hand over a repository your future developers will thank you for.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; opacity:0; animation:fadeUp 380ms ease-out 400ms forwards">
+            <a href="#contact" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:17px 30px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:15.5px; font-weight:600; transition:transform 160ms ease-out; box-shadow:0 16px 44px -16px rgba(163,156,224,.9); animation:ringPulse 3.2s ease-out 1.4s infinite" style-hover="color:#0B0B0C">Get a build quote</a>
+            <a href="#stack" style="padding:17px 30px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:15.5px; font-weight:500; transition:background 220ms ease, border-color 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">See the stack</a>
+          </div>
+        </div>
+
+        <div style="min-width:0; opacity:0; animation:fadeUp 480ms ease-out 360ms forwards">
+          <div style="position:relative; border-radius:16px; overflow:hidden; border:1px solid rgba(244,242,238,.12); background:#131317; box-shadow:0 60px 120px -70px rgba(0,0,0,.95)">
+            <div style="display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid rgba(244,242,238,.1)">
+              <span style="width:9px; height:9px; border-radius:50%; background:rgba(244,242,238,.16)"></span>
+              <span style="width:9px; height:9px; border-radius:50%; background:rgba(244,242,238,.16)"></span>
+              <span style="width:9px; height:9px; border-radius:50%; background:rgba(244,242,238,.16)"></span>
+              <span style="margin-left:10px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.06em; color:rgba(244,242,238,.5)">sitechs — production deploy</span>
+              <div style="flex:1"></div>
+              <span style="display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:#6ED396"><span style="width:6px; height:6px; border-radius:50%; background:#6ED396"></span>live</span>
+            </div>
+            <div style="padding:18px 18px 16px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.9; min-height:190px">
+              <sc-for list="{{ logLines }}" as="ln" hint-placeholder-count="6">
+                <div style="display:flex; gap:10px; align-items:baseline; opacity:{{ ln.op }}; transition:opacity 260ms ease">
+                  <span style="color:{{ ln.color }}; flex:none">{{ ln.mark }}</span>
+                  <span style="color:rgba(244,242,238,.78); min-width:0">{{ ln.text }}</span>
+                  <div style="flex:1"></div>
+                  <span style="color:rgba(244,242,238,.4); flex:none">{{ ln.ms }}</span>
+                </div>
+              </sc-for>
+              <div style="display:flex; gap:10px; align-items:baseline; color:#A39CE0">
+                <span>▸</span><span>{{ typed }}</span><span style="animation:caret 1s steps(1) infinite">▌</span>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:rgba(244,242,238,.1); border-top:1px solid rgba(244,242,238,.1)">
+              <sc-for list="{{ vitals }}" as="v" hint-placeholder-count="4">
+                <div style="background:#131317; padding:16px 12px 18px; text-align:center">
+                  <div style="font-size:clamp(20px,2.4vw,27px); font-weight:800; letter-spacing:-.04em; color:{{ v.color }}">{{ v.value }}</div>
+                  <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.5)">{{ v.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
+            <sc-for list="{{ heroChips }}" as="c" hint-placeholder-count="3">
+              <span style="padding:7px 13px; border:1px solid rgba(244,242,238,.14); border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.6)">{{ c }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:1px; background:rgba(244,242,238,.1); border:1px solid rgba(244,242,238,.1); border-radius:14px; overflow:hidden; opacity:0; animation:fadeUp 380ms ease-out 450ms forwards">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+          <div style="background:#0B0B0C; padding:22px 20px 24px">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ f.label }}</div>
+            <div style="margin-top:10px; font-size:21px; font-weight:600; letter-spacing:-.028em">{{ f.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRIP -->
+  <div style="margin-top:44px; background:#A39CE0; color:#0B0B0C; padding:14px 0; overflow:hidden; transform:rotate(-1.1deg) scale(1.03)">
+    <div style="display:flex; width:max-content; animation:marquee 30s linear infinite">
+      <sc-for list="{{ strip }}" as="s" hint-placeholder-count="12">
+        <div style="display:flex; align-items:center; gap:20px; padding:0 20px; font-size:16px; font-weight:600; letter-spacing:-.01em; text-transform:uppercase; white-space:nowrap">{{ s }}<span style="font-size:10px">◆</span></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM (light) -->
+  <div style="background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:80px 34px 84px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">01 — Why the build matters</div>
+        <div style="margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); gap:18px 56px; align-items:end">
+          <h2 style="margin:0; font-size:clamp(34px,4.6vw,62px); line-height:.94; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; text-wrap:balance">A design is a promise.</h2>
+          <p style="margin:0 0 6px; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-size:clamp(21px,2.2vw,30px); line-height:1.22; letter-spacing:-.018em; color:#4A3F8C; max-width:22ch">The build is whether you keep it.</p>
+        </div>
+      </div>
+
+      <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:40px 56px; align-items:end; padding-bottom:30px">
+        <p style="margin:0; max-width:52ch; font-size:16.5px; line-height:1.68; color:rgba(20,19,26,.7)">Good designs die in the build: a four-second hero, a CMS nobody can use, a plugin stack that breaks on update. Fixing that later costs more than building it right once.</p>
+        <div style="display:flex; gap:48px; flex-wrap:wrap">
+          <div>
+            <div style="font-size:clamp(28px,3vw,40px); font-weight:800; letter-spacing:-.045em; line-height:1">0.9s</div>
+            <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,19,26,.55)">Median LCP, was 4.2s</div>
+          </div>
+          <div>
+            <div style="font-size:clamp(28px,3vw,40px); font-weight:800; letter-spacing:-.045em; line-height:1">0</div>
+            <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,19,26,.55)">Plugin licences to renew</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; border-top:1px solid rgba(20,19,26,.18)">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:18px; padding:20px 0 14px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(20,19,26,.45)">
+          <span>What we inherit</span>
+          <span style="color:#4A3F8C">What we build instead</span>
+        </div>
+        <sc-for list="{{ problems }}" as="p" hint-placeholder-count="4">
+          <div data-reveal="1" data-delay="{{ p.delay }}" style="opacity:0; transform:translateY(14px); transition:opacity 480ms ease-out, transform 480ms ease-out, background 240ms ease, padding 240ms ease; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:18px; align-items:baseline; padding:24px 16px; margin:0 -16px; border-top:1px solid rgba(20,19,26,.14)" style-hover="background:rgba(74,63,140,.05)">
+            <div style="display:flex; gap:14px; align-items:baseline; min-width:0">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; color:rgba(20,19,26,.4)">{{ p.n }}</span>
+              <span style="font-size:17px; font-weight:500; letter-spacing:-.022em; line-height:1.3; color:rgba(20,19,26,.55); text-decoration:line-through; text-decoration-color:rgba(20,19,26,.28); text-decoration-thickness:1px">{{ p.bad }}</span>
+            </div>
+            <div style="display:flex; gap:12px; align-items:baseline; min-width:0">
+              <span style="color:#4A3F8C; font-size:15px; line-height:1.4">→</span>
+              <span style="font-size:17px; font-weight:500; letter-spacing:-.022em; line-height:1.36; color:#14131A">{{ p.good }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT'S INCLUDED -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">02 — What's included</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">Shipped, measured, and yours to keep.</h2>
+      </div>
+      <p style="margin:0; max-width:30ch; font-size:15.5px; line-height:1.62; color:rgba(244,242,238,.66)">One engagement covers the build, the CMS, the integrations and the month after launch.</p>
+    </div>
+    <div style="margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:16px">
+      <sc-for list="{{ included }}" as="inc" hint-placeholder-count="6">
+        <div data-reveal="1" data-delay="{{ inc.delay }}" style="opacity:0; transform:translateY(20px); transition:opacity 500ms ease-out, transform 500ms ease-out, border-color 240ms ease, background 240ms ease; border:1px solid rgba(244,242,238,.12); border-radius:14px; padding:26px; background:rgba(244,242,238,.015)" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; color:#A39CE0">{{ inc.n }}</div>
+          <div style="margin-top:14px; font-size:18px; font-weight:600; letter-spacing:-.024em">{{ inc.title }}</div>
+          <div style="margin-top:10px; font-size:14.5px; line-height:1.6; color:rgba(244,242,238,.68)">{{ inc.body }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <div id="stack" style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">03 — The stack</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">Boring tools, chosen on purpose.</h2>
+      </div>
+      <p style="margin:0; max-width:30ch; font-size:15.5px; line-height:1.62; color:rgba(244,242,238,.66)">Everything here is widely known, well documented and hireable for — so you are never locked to us.</p>
+    </div>
+    <div style="margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,47%),1fr)); gap:1px; background:rgba(244,242,238,.1); border:1px solid rgba(244,242,238,.1); border-radius:16px; overflow:hidden">
+      <sc-for list="{{ stack }}" as="st" hint-placeholder-count="4">
+        <div data-reveal="1" data-delay="{{ st.delay }}" style="opacity:0; transform:translateY(18px); transition:opacity 480ms ease-out, transform 480ms ease-out, background 240ms ease; background:#0B0B0C; padding:26px 24px 28px" style-hover="background:rgba(163,156,224,.06)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#A39CE0">{{ st.label }}</div>
+          <div style="margin-top:14px; display:flex; flex-direction:column; gap:9px">
+            <sc-for list="{{ st.items }}" as="it" hint-placeholder-count="3">
+              <div style="display:flex; gap:10px; align-items:baseline; font-size:15.5px; letter-spacing:-.018em; color:rgba(244,242,238,.82)"><span style="color:rgba(163,156,224,.6); font-size:11px">◆</span>{{ it }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div id="process" style="margin-top:76px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:72px 34px 80px">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:56px; align-items:start">
+        <div style="position:sticky; top:112px; align-self:start; padding-bottom:20px">
+          <div data-reveal="1" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">04 — How the build runs</div>
+            <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,56px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:14ch">Five phases, four <span style="font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#4A3F8C">weeks.</span></h2>
+            <p style="margin:22px 0 0; max-width:32ch; font-size:15.5px; line-height:1.64; color:rgba(20,19,26,.68)">You get a staging URL in week one and it never goes dark — every merge is visible the day it lands.</p>
+            <div style="margin-top:28px; display:flex; align-items:center; gap:14px">
+              <span ref="{{ procCountRef }}" style="font-family:'Instrument Serif',Georgia,serif; font-size:44px; line-height:1">01</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,19,26,.5)">of 05</span>
+              <div style="flex:1; min-width:60px; height:2px; background:rgba(20,19,26,.14); border-radius:2px; overflow:hidden">
+                <div ref="{{ procLineRef }}" style="height:100%; width:0%; background:#4A3F8C; transition:width 520ms cubic-bezier(.22,1,.36,1)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:relative; min-width:0">
+          <div style="position:absolute; left:22px; top:12px; bottom:12px; width:1px; background:rgba(20,19,26,.14)"></div>
+          <div ref="{{ procRailRef }}" style="position:absolute; left:22px; top:12px; width:1px; height:0%; background:#4A3F8C; transition:height 620ms cubic-bezier(.22,1,.36,1)"></div>
+          <sc-for list="{{ phases }}" as="ph" hint-placeholder-count="5">
+            <div data-reveal="1" data-proc="1" data-delay="{{ ph.delay }}" style="opacity:0; transform:translateY(20px); transition:opacity 520ms ease-out, transform 520ms ease-out; position:relative; padding:0 0 36px 62px">
+              <span style="position:absolute; left:11px; top:6px; width:23px; height:23px; border-radius:50%; background:#EFEBE4; border:1px solid rgba(20,19,26,.28); display:flex; align-items:center; justify-content:center">
+                <span style="width:7px; height:7px; border-radius:50%; background:#4A3F8C"></span>
+              </span>
+              <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(20,19,26,.5)">{{ ph.n }}</span>
+                <h3 style="margin:0; font-size:clamp(21px,2.5vw,31px); font-weight:600; letter-spacing:-.034em; line-height:1.05">{{ ph.title }}</h3>
+              </div>
+              <p style="margin:13px 0 0; font-size:16px; line-height:1.66; color:rgba(20,19,26,.7); max-width:48ch">{{ ph.body }}</p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px">
+                <sc-for list="{{ ph.items }}" as="it" hint-placeholder-count="3">
+                  <span style="padding:7px 13px; border:1px solid rgba(20,19,26,.18); border-radius:999px; font-size:13px; color:rgba(20,19,26,.7); transition:border-color 220ms ease, background 220ms ease" style-hover="border-color:#4A3F8C; background:rgba(74,63,140,.06)">{{ it }}</span>
+                </sc-for>
+              </div>
+              <div style="margin-top:16px; display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#4A3F8C">
+                <span style="width:16px; height:1px; background:#4A3F8C"></span>{{ ph.out }}
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <div id="work" style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">05 — Recent builds</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">Live, and still fast.</h2>
+      </div>
+      <a href="Sitechs Work.dc.html" style="padding:15px 26px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:14.5px; font-weight:500; transition:border-color 220ms ease, background 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">All case studies ↗</a>
+    </div>
+    <div style="margin-top:38px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px">
+      <sc-for list="{{ work }}" as="w" hint-placeholder-count="2">
+        <div data-reveal="1" data-delay="{{ w.delay }}" style="opacity:0; transform:translateY(22px); transition:opacity 520ms ease-out, transform 520ms ease-out">
+          <div style="position:relative; border-radius:14px; overflow:hidden; border:1px solid rgba(244,242,238,.12); background:#131317; aspect-ratio:16/10; transition:border-color 260ms ease" style-hover="border-color:rgba(163,156,224,.5)">
+            <div data-float="{{ w.float }}" style="position:absolute; inset:16px; background-image:{{ w.bg }}; background-size:contain; background-repeat:no-repeat; background-position:center; will-change:transform; transition:transform 480ms cubic-bezier(.22,1,.36,1)"></div>
+          </div>
+          <div style="margin-top:18px; display:flex; justify-content:space-between; gap:16px; align-items:baseline; border-bottom:1px solid rgba(244,242,238,.12); padding-bottom:12px">
+            <h3 style="margin:0; font-size:21px; font-weight:600; letter-spacing:-.028em">{{ w.title }}</h3>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(244,242,238,.5)">{{ w.year }}</span>
+          </div>
+          <p style="margin:13px 0 0; font-size:15px; line-height:1.6; color:rgba(244,242,238,.68); max-width:44ch">{{ w.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- PACKAGES -->
+  <div id="plans" style="max-width:1360px; margin:0 auto; padding:76px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">06 — Ways in</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">Fixed price before we start.</h2>
+      </div>
+      <p style="margin:0; max-width:30ch; font-size:15.5px; line-height:1.62; color:rgba(244,242,238,.66)">Scope agreed in writing, repository yours from day one. New scope is quoted, never invoiced quietly.</p>
+    </div>
+    <div style="margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr)); gap:18px">
+      <sc-for list="{{ packages }}" as="p" hint-placeholder-count="3">
+        <div data-reveal="1" data-delay="{{ p.delay }}" style="opacity:0; transform:translateY(22px); transition:opacity 520ms ease-out, transform 520ms ease-out, border-color 260ms ease, background 260ms ease; border:1px solid {{ p.border }}; border-radius:16px; padding:30px; background:{{ p.bg }}; display:flex; flex-direction:column; gap:15px" style-hover="border-color:rgba(163,156,224,.6)">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+            <h3 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-.026em">{{ p.name }}</h3>
+            <sc-if value="{{ p.popular }}" hint-placeholder-val="{{ false }}">
+              <span style="padding:5px 11px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase">Most picked</span>
+            </sc-if>
+          </div>
+          <div style="font-size:clamp(28px,3.2vw,40px); font-weight:800; letter-spacing:-.04em">{{ p.price }}<span style="font-size:14px; font-weight:400; letter-spacing:0; color:rgba(244,242,238,.6)"> {{ p.unit }}</span></div>
+          <p style="margin:0; font-size:14.5px; line-height:1.6; color:rgba(244,242,238,.68)">{{ p.for }}</p>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:2px">
+            <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="4">
+              <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.5; color:rgba(244,242,238,.78)"><span style="color:#A39CE0">—</span>{{ it }}</div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <a href="#contact" style="margin-top:8px; padding:14px 22px; border-radius:999px; background:{{ p.ctaBg }}; color:{{ p.ctaFg }}; border:1px solid {{ p.ctaBorder }}; font-size:14.5px; font-weight:600; text-align:center; transition:transform 180ms ease-out" style-hover="color:{{ p.ctaFg }}; transform:translateY(-1px)">{{ p.cta }}</a>
+        </div>
+      </sc-for>
+    </div>
+    <div data-reveal="1" data-delay="140" style="opacity:0; transform:translateY(16px); transition:opacity 480ms ease-out, transform 480ms ease-out; margin-top:18px; border:1px solid rgba(244,242,238,.12); border-radius:16px; padding:26px 30px; display:flex; gap:26px; flex-wrap:wrap; align-items:center; justify-content:space-between">
+      <div style="min-width:0">
+        <div style="font-size:18px; font-weight:600; letter-spacing:-.024em">Care plan — $480/mo</div>
+        <p style="margin:8px 0 0; max-width:62ch; font-size:14.5px; line-height:1.6; color:rgba(244,242,238,.68)">Dependency updates, uptime and Core Web Vitals monitoring, four hours of changes a month, and a human who answers within a day.</p>
+      </div>
+      <a href="#contact" style="flex:none; padding:14px 24px; border-radius:999px; border:1px solid rgba(244,242,238,.24); color:#F4F2EE; font-size:14.5px; font-weight:600; transition:border-color 220ms ease, background 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">Add care plan</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq" style="max-width:1360px; margin:0 auto; padding:76px 34px 0">
+    <div data-reveal="1" style="opacity:0; transition:opacity 460ms ease-out; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:52px; align-items:start">
+      <div style="position:sticky; top:112px; align-self:start; padding-bottom:24px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">07 — FAQ</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(28px,3.6vw,50px); line-height:.98; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:16ch">Build questions.</h2>
+        <p style="margin:20px 0 0; max-width:30ch; font-size:15px; line-height:1.62; color:rgba(244,242,238,.66)">Anything not covered here, ask on the call — we answer stack and hosting questions directly.</p>
+      </div>
+      <div style="border-top:1px solid rgba(244,242,238,.14)">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+          <div style="border-bottom:1px solid rgba(244,242,238,.14)">
+            <button onClick="{{ f.toggle }}" style="width:100%; display:flex; gap:18px; align-items:flex-start; text-align:left; padding:24px 0; border:0; background:transparent; cursor:pointer; font-family:'Bricolage Grotesque',sans-serif">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,242,238,.5); padding-top:5px">{{ f.n }}</span>
+              <span style="flex:1; font-size:18px; font-weight:500; letter-spacing:-.02em; color:#F4F2EE">{{ f.q }}</span>
+              <span style="font-size:20px; color:#A39CE0; line-height:1">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0; padding:0 0 26px 42px; max-width:60ch; font-size:15.5px; line-height:1.7; color:rgba(244,242,238,.7); animation:answerIn 300ms ease-out both">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT SERVICE -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px">
+      <sc-for list="{{ nextUp }}" as="nx" hint-placeholder-count="3">
+        <a href="{{ nx.href }}" style="border:1px solid rgba(244,242,238,.12); border-radius:14px; padding:26px; display:flex; flex-direction:column; gap:10px; transition:border-color 240ms ease, background 240ms ease, transform 240ms ease" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05); transform:translateY(-3px)">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ nx.n }}</span>
+          <span style="font-size:19px; font-weight:600; letter-spacing:-.026em; color:#F4F2EE">{{ nx.title }}</span>
+          <span style="font-size:14px; line-height:1.55; color:rgba(244,242,238,.66)">{{ nx.tag }}</span>
+          <span style="margin-top:4px; font-size:14px; font-weight:600; color:#A39CE0">View service ↗</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div id="contact" style="margin-top:80px; background:#A39CE0; color:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:68px 34px 60px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; max-width:900px; margin:0 auto; text-align:center">
+        <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 16px; border-radius:999px; border:1px solid rgba(11,11,12,.28); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(11,11,12,.75)">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0B0B0C"></span>Free, 30 minutes, no deck
+        </div>
+        <h2 style="margin:22px auto 0; font-size:clamp(32px,5.4vw,74px); line-height:.94; letter-spacing:-.045em; font-weight:800; text-transform:uppercase; max-width:17ch">Send us the site that is slow.</h2>
+        <p style="margin:20px auto 0; max-width:50ch; font-size:17px; line-height:1.6; color:rgba(11,11,12,.75)">We will run it live, show you what is costing you seconds, and tell you what we would fix first — rebuild or not.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:30px">
+          <a href="#contact" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:19px 34px; border-radius:999px; background:#0B0B0C; color:#A39CE0; font-size:16.5px; font-weight:600; transition:transform 160ms ease-out" style-hover="color:#A39CE0">Book a build review</a>
+          <button onClick="{{ copyEmail }}" style="padding:19px 28px; border-radius:999px; border:1px solid rgba(11,11,12,.32); background:transparent; color:#0B0B0C; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.06em; transition:background 200ms ease" style-hover="background:rgba(11,11,12,.08)">info@sitechs.co — {{ copyLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Services</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs AI Automations.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">AI Automations</a>
+          <a href="Sitechs Website Design.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Design</a>
+          <a href="Sitechs Website Development.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Development</a>
+          <a href="Sitechs Chrome Extensions.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Chrome Extensions</a>
+          <a href="Sitechs Website Care Plans.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Care Plans</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Start a project</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Office</div>
+        <div style="font-size:14px; line-height:1.72; color:rgba(244,242,238,.58)">B-238, Block 6<br>Gulshan-e-Iqbal, Karachi<br>+92 342 3543100<br>info@sitechs.co</div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { faq: 0, copied: false, now: "--:--:--", logStep: 0, typedN: 0, vitalsOn: false };
+
+  navRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  navCallRef = React.createRef();
+  barRef = React.createRef();
+  procLineRef = React.createRef();
+  procRailRef = React.createRef();
+  procCountRef = React.createRef();
+
+  logData = [
+    { mark: "✓", color: "#6ED396", text: "next build — 24 routes prerendered", ms: "18.4s" },
+    { mark: "✓", color: "#6ED396", text: "typecheck — 0 errors", ms: "3.1s" },
+    { mark: "✓", color: "#6ED396", text: "lighthouse ci — budget met", ms: "9.7s" },
+    { mark: "✓", color: "#6ED396", text: "cms schema synced — 6 models", ms: "1.2s" },
+    { mark: "✓", color: "#6ED396", text: "deployed to production", ms: "42s" }
+  ];
+
+  typeTarget = "sitechs deploy --prod";
+
+  faqData = [
+    { q: "What do you build with?", a: "Next.js and TypeScript on Vercel for most marketing sites and products, with a headless CMS your team edits directly. Shopify for commerce, Webflow only when the client explicitly wants to own it in Webflow." },
+    { q: "Can you build from someone else's design?", a: "Yes. We ask for the Figma file and a short handoff call. If the file has no component system we quote a small pass to build one first — it is cheaper than discovering the gaps mid-build." },
+    { q: "Who owns the code and the hosting?", a: "You do, from the first commit. The repository sits in your GitHub organisation and hosting is under your account — we work inside your infrastructure, never hold it hostage." },
+    { q: "Will our team be able to edit content?", a: "That is the point of the CMS work. Every page is modelled as blocks your marketers can add, reorder and publish without a developer, with previews before anything goes live." },
+    { q: "How do you keep it fast after launch?", a: "Performance budgets run in CI, so a merge that slows the site down fails before it ships. The care plan adds monthly Core Web Vitals reporting on real user data." },
+    { q: "What happens if something breaks at 2am?", a: "Care-plan clients get an emergency channel and we roll back to the previous deployment in minutes — every deploy is immutable and reversible." }
+  ];
+
+  componentDidMount() {
+    this.onScroll = () => { if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); }); };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+
+    this.typeId = setInterval(() => {
+      this.setState((s) => {
+        if (s.typedN >= this.typeTarget.length) { clearInterval(this.typeId); this.startLog(); return null; }
+        return { typedN: s.typedN + 1 };
+      });
+    }, 58);
+  }
+
+  startLog() {
+    this.logId = setInterval(() => {
+      this.setState((s) => {
+        if (s.logStep >= this.logData.length) {
+          clearInterval(this.logId);
+          return { vitalsOn: true };
+        }
+        return { logStep: s.logStep + 1 };
+      });
+    }, 420);
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId, this.typeId, this.logId].forEach(clearInterval);
+    clearTimeout(this.copyT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const on = y > 20;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    if (shell) {
+      shell.style.maxWidth = on ? "760px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const links = this.navLinksRef.current, clk = this.navClockRef.current, call = this.navCallRef.current;
+    if (links) { links.style.maxWidth = on ? "0px" : "520px"; links.style.opacity = on ? "0" : "1"; }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    if (call) {
+      call.style.maxWidth = on ? "180px" : "0px";
+      call.style.opacity = on ? "1" : "0";
+      call.style.paddingLeft = on ? "20px" : "0px";
+      call.style.paddingRight = on ? "20px" : "0px";
+      call.style.borderColor = on ? "rgba(244,242,238,.18)" : "rgba(244,242,238,0)";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      el.style.transform = "translate3d(0," + (y * (parseFloat(el.dataset.parallax) || 0)).toFixed(1) + "px,0)";
+    });
+    document.querySelectorAll("[data-float]").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      const mid = r.top + r.height / 2 - vh / 2;
+      el.style.transform = "translate3d(0," + (mid * parseFloat(el.dataset.float || "0")).toFixed(1) + "px,0)";
+    });
+    const steps = document.querySelectorAll("[data-proc]");
+    if (steps.length) {
+      let active = 0;
+      steps.forEach((el, i) => { if (el.getBoundingClientRect().top < vh * 0.55) active = i; });
+      const pct = ((active + 1) / steps.length) * 100;
+      if (this.procLineRef.current) this.procLineRef.current.style.width = pct + "%";
+      if (this.procRailRef.current) this.procRailRef.current.style.height = pct + "%";
+      if (this.procCountRef.current) this.procCountRef.current.textContent = String(active + 1).padStart(2, "0");
+    }
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }
+
+  renderVals() {
+    const on = this.state.vitalsOn;
+    return {
+      navRef: this.navRef, navShellRef: this.navShellRef, navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef, navCallRef: this.navCallRef, barRef: this.barRef,
+      procLineRef: this.procLineRef, procRailRef: this.procRailRef, procCountRef: this.procCountRef,
+      clock: this.state.now,
+      typed: this.typeTarget.slice(0, this.state.typedN),
+      logLines: this.logData.map((l, i) => Object.assign({}, l, { op: i < this.state.logStep ? "1" : "0" })),
+      vitals: [
+        { label: "Performance", value: on ? "99" : "—", color: on ? "#6ED396" : "rgba(244,242,238,.3)" },
+        { label: "LCP", value: on ? "0.9s" : "—", color: on ? "#F4F2EE" : "rgba(244,242,238,.3)" },
+        { label: "CLS", value: on ? "0.00" : "—", color: on ? "#F4F2EE" : "rgba(244,242,238,.3)" },
+        { label: "Accessibility", value: on ? "100" : "—", color: on ? "#6ED396" : "rgba(244,242,238,.3)" }
+      ],
+      copyLabel: this.state.copied ? "copied" : "copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        el.style.transform = "translate(" + ((e.clientX - (r.left + r.width / 2)) * 0.16).toFixed(1) + "px," + ((e.clientY - (r.top + r.height / 2)) * 0.24).toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      navLinks: [
+        { href: "Sitechs Work.dc.html", label: "Work", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Services.dc.html", label: "Services", color: "#F4F2EE", bg: "rgba(163,156,224,.16)" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "#faq", label: "FAQ", color: "rgba(244,242,238,.72)", bg: "transparent" }
+      ],
+      strip: [...Array(2)].flatMap(() => ["Next.js & TypeScript", "Headless CMS", "Shopify", "API integrations", "Performance budgets", "Analytics & tracking"]),
+      heroChips: ["Repo in your GitHub", "Figma → production", "Care plan available"],
+      facts: [
+        { label: "Timeline", value: "4 weeks typical" },
+        { label: "From", value: "$3,200 fixed" },
+        { label: "Deliverable", value: "Repo + CMS + docs" },
+        { label: "After launch", value: "30 days included" }
+      ],
+      problems: [
+        { delay: 0, n: "01", bad: "Four-second hero on mobile", good: "A performance budget enforced in CI on every merge" },
+        { delay: 70, n: "02", bad: "Fourteen plugins holding it together", good: "A typed codebase with dependencies you can audit" },
+        { delay: 140, n: "03", bad: "Every copy change needs a developer", good: "Block-based CMS your marketers publish from" },
+        { delay: 210, n: "04", bad: "No one knows how it was deployed", good: "Documented pipeline, immutable deploys, one-click rollback" }
+      ],
+      included: [
+        { delay: 0, n: "01", title: "Front-end build", body: "Every page built to the design, pixel-checked at three breakpoints, with real states not happy paths." },
+        { delay: 60, n: "02", title: "CMS modelling", body: "Content modelled as blocks your team composes, with previews and role-based publishing." },
+        { delay: 120, n: "03", title: "Integrations", body: "CRM, payments, booking, email and whatever else the funnel needs, tested end to end." },
+        { delay: 180, n: "04", title: "Performance & SEO", body: "Budgets in CI, image pipeline, metadata, schema and redirects mapped from the old site." },
+        { delay: 240, n: "05", title: "Analytics & tracking", body: "Events defined with you so the numbers answer questions instead of counting pageviews." },
+        { delay: 300, n: "06", title: "Handover & 30 days", body: "Docs, a recorded walkthrough, and a month of fixes after launch at no extra cost." }
+      ],
+      stack: [
+        { delay: 0, label: "Front end", items: ["Next.js (App Router)", "TypeScript", "Tailwind or CSS modules", "Motion for interaction"] },
+        { delay: 70, label: "Content", items: ["Sanity / Payload", "Shopify for commerce", "Preview + draft workflows", "Structured, block-based"] },
+        { delay: 140, label: "Infrastructure", items: ["Vercel or Cloudflare", "GitHub Actions CI", "Lighthouse budgets", "Immutable rollbacks"] },
+        { delay: 210, label: "Data & integrations", items: ["Postgres / Supabase", "Stripe, HubSpot, Cal.com", "REST and webhook APIs", "GA4 + server events"] }
+      ],
+      phases: [
+        { delay: 0, n: "Phase 01", title: "Technical planning", body: "We read the designs, agree the content model and write down every integration before a line of code.", items: ["Content model", "Integration list", "Performance budget"], out: "Output: build plan" },
+        { delay: 80, n: "Phase 02", title: "Foundations", body: "Repository, pipeline, design tokens and the component library built from the design system.", items: ["Repo and CI", "Tokens and components", "Staging URL"], out: "Output: live staging" },
+        { delay: 160, n: "Phase 03", title: "Pages & content", body: "Pages assembled from components and wired to the CMS, so your team can start loading real content early.", items: ["All pages built", "CMS wired", "Editor training"], out: "Output: editable site" },
+        { delay: 240, n: "Phase 04", title: "Integrations & QA", body: "Forms, payments and tracking connected, then tested across browsers, devices and screen readers.", items: ["Integrations live", "Cross-browser QA", "Accessibility pass"], out: "Output: release candidate" },
+        { delay: 320, n: "Phase 05", title: "Launch & handover", body: "DNS, redirects and monitoring in place, then a walkthrough with whoever keeps it running.", items: ["Redirect map", "Monitoring", "Recorded walkthrough"], out: "Output: live site + docs" }
+      ],
+      work: [
+        { delay: 0, float: 0.02, bg: 'url("uploads/2.jpg")', title: "Hiller Media Group", year: "2025", body: "Next.js rebuild with a block CMS. Mobile LCP from 4.2s to 0.9s, and the team now publishes campaigns without us." },
+        { delay: 100, float: -0.02, bg: 'url("uploads/ct.webp")', title: "Creative Triplet", year: "2025", body: "Marketing site plus an AI intake endpoint, deployed on one pipeline so the page and the agent ship together." }
+      ],
+      packages: [
+        { delay: 0, name: "Landing Build", price: "$3.2k", unit: "fixed", popular: false, for: "One page, built fast, wired to your CRM.", items: ["Single page from your design", "Form and CRM integration", "Analytics events", "Deployed to your hosting"], cta: "Scope a page", border: "rgba(244,242,238,.12)", bg: "rgba(244,242,238,.015)", ctaBg: "transparent", ctaFg: "#F4F2EE", ctaBorder: "rgba(244,242,238,.24)" },
+        { delay: 80, name: "Marketing Site", price: "$7.5k", unit: "from", popular: true, for: "Five to eight pages with a CMS your team actually uses.", items: ["Everything in Landing Build", "Up to 8 pages", "Headless CMS modelling", "SEO, redirects and schema", "30 days of post-launch fixes"], cta: "Scope a build", border: "rgba(163,156,224,.4)", bg: "rgba(163,156,224,.08)", ctaBg: "#A39CE0", ctaFg: "#0B0B0C", ctaBorder: "#A39CE0" },
+        { delay: 160, name: "Web App", price: "$14k", unit: "from", popular: false, for: "Authenticated products, dashboards and internal tools.", items: ["Auth, roles and permissions", "Database and API design", "Payments and billing", "Automated tests in CI", "Ongoing engineering retainer"], cta: "Talk product", border: "rgba(244,242,238,.12)", bg: "rgba(244,242,238,.015)", ctaBg: "transparent", ctaFg: "#F4F2EE", ctaBorder: "rgba(244,242,238,.24)" }
+      ],
+      nextUp: [
+        { href: "Sitechs AI Automations.dc.html", n: "Service 01", title: "AI Automations", tag: "The systems that run the work behind the interface." },
+        { href: "Sitechs Website Design.dc.html", n: "Service 02", title: "Website Design", tag: "The argument and the system this build is made from." },
+        { href: "Sitechs Chrome Extensions.dc.html", n: "Service 04", title: "Chrome Extensions", tag: "Automation inside the tools your team already uses." }
+      ],
+      faqs: this.faqData.map((f, i) => ({
+        n: String(i + 1).padStart(2, "0"), q: f.q, a: f.a,
+        open: this.state.faq === i,
+        sign: this.state.faq === i ? "−" : "+",
+        toggle: () => this.setState((s) => ({ faq: s.faq === i ? -1 : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

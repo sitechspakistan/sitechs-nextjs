@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes ringPulse { 0%,100% { box-shadow:0 0 0 0 rgba(163,156,224,.22); } 50% { box-shadow:0 0 0 9px rgba(163,156,224,0); } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="Sitechs Homepage v3.dc.html" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="padding:9px 15px; border-radius:999px; font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease; color:{{ l.color }}; background:{{ l.bg }}" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a ref="{{ navCallRef }}" href="Sitechs Start a Project.dc.html" style="flex:none; overflow:hidden; white-space:nowrap; max-width:0; opacity:0; padding:12px 0; border-radius:999px; border:1px solid rgba(244,242,238,0); color:#F4F2EE; font-size:14px; font-weight:500; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, background 220ms ease, border-color 240ms ease" style-hover="color:#F4F2EE; background:rgba(244,242,238,.08)">Book a call</a>
+        <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative; padding:44px 34px 0; overflow:hidden">
+    <div data-parallax=".12" style="position:absolute; left:50%; top:-26%; width:60vw; height:60vw; margin-left:-30vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.12), rgba(163,156,224,0) 62%); filter:blur(24px); pointer-events:none"></div>
+    <div style="position:relative; max-width:1360px; margin:0 auto">
+      <div style="display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 360ms ease-out forwards">
+        <span style="color:#A39CE0">Work</span>
+        <span style="width:22px; height:1px; background:rgba(244,242,238,.2)"></span>
+        <span>12 selected case studies</span>
+      </div>
+      <div style="margin-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:44px; align-items:end">
+        <h1 style="margin:0; font-size:clamp(42px,7vw,104px); line-height:.9; letter-spacing:-.05em; font-weight:800; text-transform:uppercase">
+          <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 60ms both">Case</span></span>
+          <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 160ms both; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.025em; color:#A39CE0">studies.</span></span>
+        </h1>
+        <p style="margin:0 0 10px; max-width:44ch; font-size:17px; line-height:1.62; color:rgba(244,242,238,.72); opacity:0; animation:fadeUp 380ms ease-out 320ms forwards">Automations in production, sites rebuilt, brands put to work. Every project below shipped — with the number it moved, not the mood board it came from.</p>
+      </div>
+
+      <div style="margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:1px; background:rgba(244,242,238,.1); border:1px solid rgba(244,242,238,.1); border-radius:14px; overflow:hidden; opacity:0; animation:fadeUp 380ms ease-out 420ms forwards">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+          <div style="background:#0B0B0C; padding:22px 20px 24px">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ f.label }}</div>
+            <div style="margin-top:10px; font-size:21px; font-weight:600; letter-spacing:-.028em">{{ f.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRIP -->
+  <div style="margin-top:44px; background:#A39CE0; color:#0B0B0C; padding:14px 0; overflow:hidden; transform:rotate(-1.1deg) scale(1.03)">
+    <div style="display:flex; width:max-content; animation:marquee 30s linear infinite">
+      <sc-for list="{{ strip }}" as="s" hint-placeholder-count="12">
+        <div style="display:flex; align-items:center; gap:20px; padding:0 20px; font-size:16px; font-weight:600; letter-spacing:-.01em; text-transform:uppercase; white-space:nowrap">{{ s }}<span style="font-size:10px">◆</span></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- FEATURED -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(20px); transition:opacity 520ms ease-out, transform 520ms ease-out; border:1px solid rgba(163,156,224,.32); border-radius:18px; background:rgba(163,156,224,.06); overflow:hidden">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:0; align-items:stretch">
+        <div style="padding:38px 34px 34px; min-width:0">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:#A39CE0">Featured case study</div>
+          <h2 style="margin:18px 0 0; font-size:clamp(28px,3.6vw,48px); line-height:1; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:14ch">WhatsApp CRM Bot</h2>
+          <div style="margin-top:12px; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-size:clamp(19px,2.1vw,26px); line-height:1.24; color:#A39CE0; max-width:26ch">WhatsApp AI automation, wired straight into the CRM.</div>
+          <p style="margin:20px 0 0; max-width:48ch; font-size:16px; line-height:1.66; color:rgba(244,242,238,.72)">A client came to us with one question: can my CRM talk on WhatsApp? Their customers wanted to raise invoices and check orders without logging in to anything. Now they message an agent, and it is done.</p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:22px">
+            <sc-for list="{{ featureTags }}" as="t" hint-placeholder-count="3">
+              <span style="padding:7px 13px; border:1px solid rgba(244,242,238,.18); border-radius:999px; font-size:13px; color:rgba(244,242,238,.72)">{{ t }}</span>
+            </sc-for>
+          </div>
+          <div style="margin-top:28px; display:flex; gap:44px; flex-wrap:wrap; align-items:flex-end">
+            <div>
+              <div style="font-size:clamp(30px,3.4vw,44px); font-weight:800; letter-spacing:-.045em; line-height:1; color:#A39CE0">70%</div>
+              <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.55)">Faster response times</div>
+            </div>
+            <div>
+              <div style="font-size:clamp(30px,3.4vw,44px); font-weight:800; letter-spacing:-.045em; line-height:1; color:#A39CE0">Zero</div>
+              <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.55)">Repetitive team logins</div>
+            </div>
+            <a href="Sitechs Case WhatsApp CRM Bot.dc.html" style="padding:15px 26px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14.5px; font-weight:600; transition:transform 180ms ease-out" style-hover="color:#0B0B0C; transform:translateY(-1px)">View case study ↗</a>
+          </div>
+        </div>
+        <div style="position:relative; min-height:320px; background:#131317; border-left:1px solid rgba(244,242,238,.1)">
+          <img src="uploads/5.jpg" alt="WhatsApp CRM bot interface" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEFORE & AFTER -->
+  <div style="margin-top:76px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:72px 34px 80px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">Transformation in action</div>
+        <div style="margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); gap:18px 56px; align-items:end">
+          <h2 style="margin:0; font-size:clamp(34px,4.6vw,62px); line-height:.94; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; text-wrap:balance">Before and after.</h2>
+          <p style="margin:0 0 6px; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-size:clamp(21px,2.2vw,30px); line-height:1.22; letter-spacing:-.018em; color:#4A3F8C; max-width:24ch">Drag the handle — same company, same week.</p>
+        </div>
+      </div>
+      <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(20px); transition:opacity 520ms ease-out, transform 520ms ease-out; margin-top:34px; border-radius:16px; overflow:hidden; border:1px solid rgba(20,19,26,.16); background:#0B0B0C; box-shadow:0 50px 100px -60px rgba(0,0,0,.6)">
+        <div ref="{{ cmpRef }}" onPointerDown="{{ cmpDown }}" onPointerMove="{{ cmpMove }}" onPointerUp="{{ cmpUp }}" onPointerLeave="{{ cmpUp }}" style="position:relative; aspect-ratio:16/9; overflow:hidden; cursor:ew-resize; touch-action:none; user-select:none">
+          <img src="uploads/ct-after.png" alt="Creative Triplet after redesign" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center; pointer-events:none">
+          <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none; width:{{ cmpPct }}">
+            <img src="uploads/ct-before.png" alt="Creative Triplet before redesign" draggable="false" style="position:absolute; inset:0; width:{{ cmpInner }}; height:100%; object-fit:cover; object-position:top center; max-width:none">
+          </div>
+          <div style="position:absolute; top:0; bottom:0; left:{{ cmpPct }}; width:2px; background:#A39CE0; pointer-events:none; transform:translateX(-1px); box-shadow:0 0 22px rgba(163,156,224,.6)">
+            <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:#A39CE0; color:#0B0B0C; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; box-shadow:0 10px 30px -10px rgba(0,0,0,.8)">⇄</span>
+          </div>
+          <span style="position:absolute; left:16px; top:16px; padding:7px 13px; border-radius:999px; background:rgba(11,11,12,.72); backdrop-filter:blur(6px); font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.85); pointer-events:none">Before</span>
+          <span style="position:absolute; right:16px; top:16px; padding:7px 13px; border-radius:999px; background:#A39CE0; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:#0B0B0C; pointer-events:none">After</span>
+        </div>
+      </div>
+      <div style="margin-top:16px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,19,26,.55)">
+        <span>Creative Triplet — website redesign</span>
+        <span style="color:#4A3F8C">Design + build, 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div id="all" style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:30px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">The archive</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">More case studies.</h2>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap">
+        <sc-for list="{{ filters }}" as="fl" hint-placeholder-count="4">
+          <button onClick="{{ fl.pick }}" style="padding:11px 18px; border-radius:999px; cursor:pointer; font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:500; letter-spacing:-.012em; border:1px solid {{ fl.border }}; background:{{ fl.bg }}; color:{{ fl.ink }}; transition:border-color 220ms ease, background 220ms ease, color 220ms ease">{{ fl.label }} <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; opacity:.6">{{ fl.count }}</span></button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin-top:34px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr)); gap:22px">
+      <sc-for list="{{ cases }}" as="c" hint-placeholder-count="8">
+        <a href="{{ c.href }}" style="display:flex; flex-direction:column; border:1px solid rgba(244,242,238,.12); border-radius:16px; overflow:hidden; background:rgba(244,242,238,.015); transition:border-color 240ms ease, background 240ms ease, transform 240ms ease" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05); transform:translateY(-4px)">
+          <div style="position:relative; aspect-ratio:16/10; background:#131317; overflow:hidden; border-bottom:1px solid rgba(244,242,238,.1)">
+            <sc-if value="{{ c.hasImage }}" hint-placeholder-val="{{ true }}">
+              <img src="{{ c.img }}" alt="{{ c.title }}" style="position:absolute; inset:0; width:100%; height:100%; padding:{{ c.pad }}; box-sizing:border-box; background:{{ c.tile }}; object-fit:{{ c.fit }}; object-position:{{ c.pos }}"></sc-if>
+            <sc-if value="{{ c.noImage }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; inset:0; background:repeating-linear-gradient(115deg, rgba(163,156,224,.12) 0 12px, rgba(0,0,0,0) 12px 24px); display:flex; align-items:center; justify-content:center; padding:0 22px">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.5); text-align:center">{{ c.slot }}</span>
+              </div>
+            </sc-if>
+            <span style="position:absolute; left:12px; top:12px; padding:6px 11px; border-radius:999px; background:rgba(11,11,12,.78); backdrop-filter:blur(6px); font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:#A39CE0">{{ c.tag }}</span>
+          </div>
+          <div style="padding:22px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1">
+            <div style="font-size:19px; font-weight:600; letter-spacing:-.026em; color:#F4F2EE">{{ c.title }}</div>
+            <p style="margin:0; font-size:14.5px; line-height:1.6; color:rgba(244,242,238,.66)">{{ c.body }}</p>
+            <div style="flex:1"></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:14px; padding-top:6px">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.5)">{{ c.metric }}</span>
+              <span style="font-size:14px; font-weight:600; color:#A39CE0">View ↗</span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div id="contact" style="margin-top:80px; background:#A39CE0; color:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:68px 34px 60px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; max-width:900px; margin:0 auto; text-align:center">
+        <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 16px; border-radius:999px; border:1px solid rgba(11,11,12,.28); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(11,11,12,.75)">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0B0B0C"></span>Free, 30 minutes, no deck
+        </div>
+        <h2 style="margin:22px auto 0; font-size:clamp(32px,5.4vw,74px); line-height:.94; letter-spacing:-.045em; font-weight:800; text-transform:uppercase; max-width:17ch">Your project, next in this list.</h2>
+        <p style="margin:20px auto 0; max-width:50ch; font-size:17px; line-height:1.6; color:rgba(11,11,12,.75)">Tell us what is slow, ugly or manual. We will tell you what we would do first and what it costs.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:30px">
+          <a href="#contact" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:19px 34px; border-radius:999px; background:#0B0B0C; color:#A39CE0; font-size:16.5px; font-weight:600; transition:transform 160ms ease-out" style-hover="color:#A39CE0">Start a project</a>
+          <button onClick="{{ copyEmail }}" style="padding:19px 28px; border-radius:999px; border:1px solid rgba(11,11,12,.32); background:transparent; color:#0B0B0C; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.06em; transition:background 200ms ease" style-hover="background:rgba(11,11,12,.08)">info@sitechs.co — {{ copyLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Services</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs AI Automations.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">AI Automations</a>
+          <a href="Sitechs Website Design.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Design</a>
+          <a href="Sitechs Website Development.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Development</a>
+          <a href="Sitechs Chrome Extensions.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Chrome Extensions</a>
+          <a href="Sitechs Website Care Plans.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Care Plans</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Start a project</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Office</div>
+        <div style="font-size:14px; line-height:1.72; color:rgba(244,242,238,.58)">B-238, Block 6<br>Gulshan-e-Iqbal, Karachi<br>+92 342 3543100<br>info@sitechs.co</div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { copied: false, now: "--:--:--", filter: "All", cmp: 50, cmpDrag: false };
+
+  navRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  navCallRef = React.createRef();
+  barRef = React.createRef();
+  cmpRef = React.createRef();
+
+  caseData = [
+    { tag: "AI Automation", title: "AI Calling Agent", body: "A service agency was calling every lead by hand from a spreadsheet. The agent now calls, qualifies and books straight into the calendar.", metric: "Bookings up 3×", img: "", slot: "Calling agent flow", href: "Sitechs AI Automations.dc.html" },
+    { tag: "AI Automation", title: "AI Email Automation", body: "A Google Sheet of enquiries, an AI triage step, and a drafted reply in Gmail before anyone opens their laptop.", metric: "Replies in minutes", img: "uploads/1.jpg", href: "Sitechs AI Automations.dc.html" },
+    { tag: "Website Development", title: "Hiller Media Group", body: "Creator-economy agency site rebuilt around a single campaign CTA, with a CMS the team runs themselves.", metric: "+38% enquiries", img: "uploads/2.jpg", href: "Sitechs Website Development.dc.html" },
+    { tag: "AI Automation", title: "WhatsApp CRM Bot", body: "Customers raise invoices and check orders by messaging an agent on WhatsApp — no CRM login anywhere.", metric: "70% faster replies", img: "uploads/5.jpg", href: "Sitechs Case WhatsApp CRM Bot.dc.html" },
+    { tag: "Website Development", title: "Vezyon Dashboard", body: "A centralised platform for employee attendance, shifts and HR operations, replacing four spreadsheets.", metric: "One source of truth", img: "uploads/3.jpg", href: "Sitechs Website Development.dc.html" },
+    { tag: "AI Automation", title: "Upfeeds", body: "A custom tool that simplifies Upwork job filtering, so the team reviews the right briefs instead of all of them.", metric: "Hours back weekly", img: "uploads/4.jpg", href: "Sitechs AI Automations.dc.html" },
+    { tag: "Website Development", title: "Custom Patch Hats Store", body: "A fully functional storefront for custom patch hats, built for configuration-heavy products.", metric: "Commerce, live", img: "", slot: "Storefront screens", href: "Sitechs Website Development.dc.html" },
+    { tag: "Website Development", title: "Creative Triplet", body: "High-end animated explainer agency whose site had to carry the craft. Designed and built end to end.", metric: "Design + build", img: "uploads/ct.webp", href: "Sitechs Website Design.dc.html" },
+    { tag: "Branding", title: "EventsHub Dubai Logo", body: "A brand identity that captures the energy and grandeur of Dubai's events scene without the cliché skyline.", metric: "Identity system", img: "uploads/3.png", href: "Sitechs Website Design.dc.html" },
+    { tag: "Website Development", title: "Inizio Solutions", body: "A professional, high-performance website for a consultancy that sells on credibility first.", metric: "Sub-second LCP", img: "", slot: "Consultancy website", href: "Sitechs Website Development.dc.html" },
+    { tag: "Branding", title: "Your Friend Infertility Logo", body: "A brand identity that felt warm, trustworthy and deeply human for a sensitive category.", metric: "Identity system", img: "uploads/2.png", href: "Sitechs Website Design.dc.html" },
+    { tag: "Website Development", title: "Your Friend Infertility", body: "A warm, faith-filled online presence for a growing community — built on the identity above.", metric: "Brand to build", img: "", slot: "Community website", href: "Sitechs Website Development.dc.html" }
+  ];
+
+  componentDidMount() {
+    this.onScroll = () => { if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); }); };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+    this.demoT = setTimeout(() => {
+      if (this.state.cmpDrag) return;
+      const t0 = performance.now(), dur = 1700;
+      const run = (t) => {
+        if (this.state.cmpDrag) return;
+        const p = Math.min(1, (t - t0) / dur);
+        const e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        this.setState({ cmp: 50 + Math.sin(e * Math.PI) * 26 });
+        if (p < 1) requestAnimationFrame(run);
+      };
+      requestAnimationFrame(run);
+    }, 1600);
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId].forEach(clearInterval);
+    clearTimeout(this.copyT);
+    clearTimeout(this.demoT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const on = y > 20;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    if (shell) {
+      shell.style.maxWidth = on ? "760px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const links = this.navLinksRef.current, clk = this.navClockRef.current, call = this.navCallRef.current;
+    if (links) { links.style.maxWidth = on ? "0px" : "520px"; links.style.opacity = on ? "0" : "1"; }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    if (call) {
+      call.style.maxWidth = on ? "180px" : "0px";
+      call.style.opacity = on ? "1" : "0";
+      call.style.paddingLeft = on ? "20px" : "0px";
+      call.style.paddingRight = on ? "20px" : "0px";
+      call.style.borderColor = on ? "rgba(244,242,238,.18)" : "rgba(244,242,238,0)";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      el.style.transform = "translate3d(0," + (y * (parseFloat(el.dataset.parallax) || 0)).toFixed(1) + "px,0)";
+    });
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }
+
+  setCmp(e) {
+    const el = this.cmpRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const pct = ((e.clientX - r.left) / r.width) * 100;
+    this.setState({ cmp: Math.max(4, Math.min(96, pct)) });
+  }
+
+  renderVals() {
+    const f = this.state.filter;
+    const names = ["All", "AI Automation", "Website Development", "Branding"];
+    return {
+      navRef: this.navRef, navShellRef: this.navShellRef, navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef, navCallRef: this.navCallRef, barRef: this.barRef,
+      clock: this.state.now,
+      cmpRef: this.cmpRef,
+      cmpPct: this.state.cmp.toFixed(2) + "%",
+      cmpInner: (10000 / Math.max(1, this.state.cmp)).toFixed(2) + "%",
+      cmpDown: (e) => { e.currentTarget.setPointerCapture(e.pointerId); this.setState({ cmpDrag: true }); this.setCmp(e); },
+      cmpMove: (e) => { if (this.state.cmpDrag) this.setCmp(e); },
+      cmpUp: () => { if (this.state.cmpDrag) this.setState({ cmpDrag: false }); },
+      facts: [
+        { label: "Projects shipped", value: "235 and counting" },
+        { label: "Automations live", value: "60+ in production" },
+        { label: "Studio age", value: "5 years" },
+        { label: "Where", value: "Karachi, global clients" }
+      ],
+      strip: [...Array(2)].flatMap(() => ["AI automation", "Website development", "Website design", "Branding", "Chrome extensions", "Shipped, not concepted"]),
+      featureTags: ["WhatsApp API", "AI agent", "CRM integration"],
+      filters: names.map((label) => {
+        const active = f === label;
+        return {
+          label,
+          count: label === "All" ? this.caseData.length : this.caseData.filter((c) => c.tag === label).length,
+          pick: () => this.setState({ filter: label }),
+          bg: active ? "#A39CE0" : "transparent",
+          ink: active ? "#0B0B0C" : "rgba(244,242,238,.72)",
+          border: active ? "#A39CE0" : "rgba(244,242,238,.18)"
+        };
+      }),
+      cases: this.caseData
+        .filter((c) => f === "All" || c.tag === f)
+        .map((c) => Object.assign({}, c, {
+          hasImage: !!c.img, noImage: !c.img, slot: c.slot || "",
+          fit: c.tag === "Branding" ? "contain" : "cover",
+          pos: c.tag === "Branding" ? "center" : "top center",
+          pad: c.tag === "Branding" ? "34px" : "0px",
+          tile: c.tag === "Branding" ? "rgba(244,242,238,.04)" : "transparent"
+        })),
+      copyLabel: this.state.copied ? "copied" : "copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        el.style.transform = "translate(" + ((e.clientX - (r.left + r.width / 2)) * 0.16).toFixed(1) + "px," + ((e.clientY - (r.top + r.height / 2)) * 0.24).toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      navLinks: [
+        { href: "#all", label: "Work", color: "#F4F2EE", bg: "rgba(163,156,224,.16)" },
+        { href: "Sitechs Services.dc.html", label: "Services", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Homepage v3.dc.html", label: "Home", color: "rgba(244,242,238,.72)", bg: "transparent" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

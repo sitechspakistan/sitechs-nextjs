@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0B0B0C; }
+  body { -webkit-font-smoothing:antialiased; }
+  a { color:#A39CE0; text-decoration:none; }
+  a:hover { color:#C9C4F2; }
+  ::selection { background:#A39CE0; color:#0B0B0C; }
+  input[type=range] { accent-color:#A39CE0; }
+  @keyframes wordUp { from { opacity:0; transform:translateY(105%) rotate(2deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes answerIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes ringPulse { 0%,100% { box-shadow:0 0 0 0 rgba(163,156,224,.22); } 50% { box-shadow:0 0 0 9px rgba(163,156,224,0); } }
+  @keyframes msgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</helmet>
+<div style="background:#0B0B0C; color:#F4F2EE; font-family:'Bricolage Grotesque', Helvetica, sans-serif; width:100%; overflow-x:clip">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:90; background:rgba(244,242,238,.08)">
+    <div ref="{{ barRef }}" style="height:100%; width:0%; background:#A39CE0"></div>
+  </div>
+
+  <!-- NAV -->
+  <div ref="{{ navRef }}" style="position:sticky; top:0; z-index:70; padding:14px 22px; transition:padding 300ms ease">
+    <div ref="{{ navShellRef }}" style="max-width:1300px; margin:0 auto; border:1px solid rgba(244,242,238,.07); border-radius:999px; background:transparent; transition:max-width 420ms cubic-bezier(.22,1,.36,1), background 320ms ease, backdrop-filter 320ms ease, border-color 320ms ease, box-shadow 320ms ease">
+      <div style="padding:10px 12px 10px 20px; display:flex; align-items:center; gap:26px">
+        <a href="Sitechs Homepage v3.dc.html" style="display:flex; align-items:center; flex:none">
+          <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:32px; width:auto; display:block">
+        </a>
+        <div ref="{{ navLinksRef }}" style="display:flex; align-items:center; gap:4px; font-size:14px; overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 260ms ease">
+          <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+            <a href="{{ l.href }}" style="padding:9px 15px; border-radius:999px; font-weight:500; letter-spacing:-.005em; transition:color 220ms ease, background 220ms ease; color:{{ l.color }}; background:{{ l.bg }}" style-hover="color:#F4F2EE; background:rgba(244,242,238,.07)">{{ l.label }}</a>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div ref="{{ navClockRef }}" style="flex:none; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(244,242,238,.1); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.6); overflow:hidden; white-space:nowrap; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, border-color 240ms ease">
+          <span style="width:6px; height:6px; border-radius:50%; background:#6ED396; box-shadow:0 0 0 3px rgba(110,211,150,.18)"></span>{{ clock }} PKT
+        </div>
+        <a ref="{{ navCallRef }}" href="Sitechs Start a Project.dc.html" style="flex:none; overflow:hidden; white-space:nowrap; max-width:0; opacity:0; padding:12px 0; border-radius:999px; border:1px solid rgba(244,242,238,0); color:#F4F2EE; font-size:14px; font-weight:500; transition:max-width 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, padding 380ms ease, background 220ms ease, border-color 240ms ease" style-hover="color:#F4F2EE; background:rgba(244,242,238,.08)">Book a call</a>
+        <a href="Sitechs Start a Project.dc.html" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 14px 12px 22px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14px; font-weight:600; transition:transform 160ms ease-out, box-shadow 220ms ease; box-shadow:0 8px 26px -14px rgba(163,156,224,.9)" style-hover="color:#0B0B0C">
+          Start a project
+          <span style="width:24px; height:24px; border-radius:50%; background:rgba(11,11,12,.12); display:flex; align-items:center; justify-content:center; font-size:12px">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative; padding:44px 34px 0; overflow:hidden">
+    <div data-parallax=".12" style="position:absolute; left:50%; top:-26%; width:60vw; height:60vw; margin-left:-30vw; border-radius:50%; background:radial-gradient(circle, rgba(163,156,224,.12), rgba(163,156,224,0) 62%); filter:blur(24px); pointer-events:none"></div>
+    <div style="position:relative; max-width:1360px; margin:0 auto">
+      <div style="display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,238,.55); opacity:0; animation:fadeUp 360ms ease-out forwards">
+        <a href="Sitechs Services.dc.html" style="color:rgba(244,242,238,.55)" style-hover="color:#A39CE0">Services</a>
+        <span>/</span>
+        <span style="color:#A39CE0">AI Automations</span>
+        <span style="width:22px; height:1px; background:rgba(244,242,238,.2)"></span>
+        <span>Service 01 — Flagship</span>
+      </div>
+      <div style="margin-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr)); gap:44px; align-items:center">
+        <div style="min-width:0">
+          <h1 style="margin:0; max-width:15ch; font-size:clamp(38px,5.6vw,82px); line-height:.92; letter-spacing:-.045em; font-weight:800; text-transform:uppercase">
+            <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 60ms both">Work smarter.</span></span>
+            <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 520ms cubic-bezier(.22,1,.36,1) 150ms both">Scale</span></span>
+            <span style="display:block; overflow:hidden"><span style="display:inline-block; animation:wordUp 560ms cubic-bezier(.22,1,.36,1) 250ms both; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#A39CE0">without hiring.</span></span>
+          </h1>
+          <p style="margin:26px 0 0; max-width:46ch; font-size:17px; line-height:1.62; color:rgba(244,242,238,.72); opacity:0; animation:fadeUp 380ms ease-out 340ms forwards">We find the decisions your team repeats — qualifying, chasing, filing, reporting — and hand them to AI systems that run day and night. Built on your data, inside your tools, with a human in the loop wherever it matters.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; opacity:0; animation:fadeUp 380ms ease-out 400ms forwards">
+            <a href="#audit" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:17px 30px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:15.5px; font-weight:600; transition:transform 160ms ease-out; box-shadow:0 16px 44px -16px rgba(163,156,224,.9); animation:ringPulse 3.2s ease-out 1.4s infinite" style-hover="color:#0B0B0C">Get a free automation audit</a>
+            <a href="#savings" style="padding:17px 30px; border-radius:999px; border:1px solid rgba(244,242,238,.2); color:#F4F2EE; font-size:15.5px; font-weight:500; transition:background 220ms ease, border-color 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.08)">Calculate your savings</a>
+          </div>
+        </div>
+
+        <div style="min-width:0; opacity:0; animation:fadeUp 480ms ease-out 360ms forwards">
+          <div style="position:relative; border-radius:16px; overflow:hidden; border:1px solid rgba(244,242,238,.12); background:#131317; box-shadow:0 60px 120px -70px rgba(0,0,0,.95)">
+            <div style="display:flex; align-items:center; gap:10px; padding:13px 16px; border-bottom:1px solid rgba(244,242,238,.1)">
+              <span style="width:28px; height:28px; border-radius:50%; background:#A39CE0; color:#0B0B0C; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800">S</span>
+              <span style="font-size:14px; font-weight:600; letter-spacing:-.02em">Sitechs AI Agent</span>
+              <div style="flex:1"></div>
+              <span style="display:inline-flex; align-items:center; gap:7px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:#6ED396"><span style="width:6px; height:6px; border-radius:50%; background:#6ED396"></span>02:14 local</span>
+            </div>
+            <div style="padding:18px; display:flex; flex-direction:column; gap:12px; min-height:270px">
+              <sc-for list="{{ chat }}" as="m" hint-placeholder-count="5">
+                <div style="display:flex; justify-content:{{ m.justify }}; opacity:{{ m.op }}; transition:opacity 320ms ease">
+                  <div style="max-width:78%; padding:12px 15px; border-radius:{{ m.radius }}; background:{{ m.bg }}; color:{{ m.ink }}; font-size:14px; line-height:1.5; letter-spacing:-.012em; animation:msgIn 320ms ease-out both">{{ m.text }}</div>
+                </div>
+              </sc-for>
+              <div style="display:flex; gap:5px; align-items:center; padding-left:4px; opacity:{{ typingOp }}; transition:opacity 260ms ease">
+                <span style="width:6px; height:6px; border-radius:50%; background:rgba(244,242,238,.45)"></span>
+                <span style="width:6px; height:6px; border-radius:50%; background:rgba(244,242,238,.3)"></span>
+                <span style="width:6px; height:6px; border-radius:50%; background:rgba(244,242,238,.2)"></span>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:rgba(244,242,238,.1); border-top:1px solid rgba(244,242,238,.1)">
+              <sc-for list="{{ miniStats }}" as="m" hint-placeholder-count="3">
+                <div style="background:#131317; padding:16px 12px 18px; text-align:center">
+                  <div style="font-size:clamp(19px,2.2vw,25px); font-weight:800; letter-spacing:-.04em">{{ m.value }}</div>
+                  <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.5)">{{ m.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
+            <sc-for list="{{ heroChips }}" as="c" hint-placeholder-count="3">
+              <span style="padding:7px 13px; border:1px solid rgba(244,242,238,.14); border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.6)">{{ c }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:1px; background:rgba(244,242,238,.1); border:1px solid rgba(244,242,238,.1); border-radius:14px; overflow:hidden; opacity:0; animation:fadeUp 380ms ease-out 450ms forwards">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+          <div style="background:#0B0B0C; padding:22px 20px 24px">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ f.label }}</div>
+            <div style="margin-top:10px; font-size:21px; font-weight:600; letter-spacing:-.028em">{{ f.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRIP -->
+  <div style="margin-top:44px; background:#A39CE0; color:#0B0B0C; padding:14px 0; overflow:hidden; transform:rotate(-1.1deg) scale(1.03)">
+    <div style="display:flex; width:max-content; animation:marquee 30s linear infinite">
+      <sc-for list="{{ strip }}" as="s" hint-placeholder-count="12">
+        <div style="display:flex; align-items:center; gap:20px; padding:0 20px; font-size:16px; font-weight:600; letter-spacing:-.01em; text-transform:uppercase; white-space:nowrap">{{ s }}<span style="font-size:10px">◆</span></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM (light) -->
+  <div style="background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:80px 34px 84px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">01 — Why automate</div>
+        <div style="margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); gap:18px 56px; align-items:end">
+          <h2 style="margin:0; font-size:clamp(34px,4.6vw,62px); line-height:.94; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; text-wrap:balance">Your team is the bottleneck by design.</h2>
+          <p style="margin:0 0 6px; font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-size:clamp(21px,2.2vw,30px); line-height:1.22; letter-spacing:-.018em; color:#4A3F8C; max-width:22ch">Not because they are slow — because they are the only ones who can act.</p>
+        </div>
+      </div>
+
+      <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out; margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:40px 56px; align-items:end; padding-bottom:30px">
+        <p style="margin:0; max-width:52ch; font-size:16.5px; line-height:1.68; color:rgba(20,19,26,.7)">Leads go cold overnight. Approvals wait for someone to open their laptop. Data is retyped between four systems that never agreed to talk. None of that needs a bigger headcount.</p>
+        <div style="display:flex; gap:48px; flex-wrap:wrap">
+          <div>
+            <div style="font-size:clamp(28px,3vw,40px); font-weight:800; letter-spacing:-.045em; line-height:1">70%</div>
+            <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,19,26,.55)">Faster response times</div>
+          </div>
+          <div>
+            <div style="font-size:clamp(28px,3vw,40px); font-weight:800; letter-spacing:-.045em; line-height:1">60+</div>
+            <div style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,19,26,.55)">Automations in production</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; border-top:1px solid rgba(20,19,26,.18)">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:18px; padding:20px 0 14px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(20,19,26,.45)">
+          <span>The friction we find</span>
+          <span style="color:#4A3F8C">What the system does instead</span>
+        </div>
+        <sc-for list="{{ problems }}" as="p" hint-placeholder-count="6">
+          <div data-reveal="1" data-delay="{{ p.delay }}" style="opacity:0; transform:translateY(14px); transition:opacity 480ms ease-out, transform 480ms ease-out, background 240ms ease, padding 240ms ease; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:18px; align-items:baseline; padding:24px 16px; margin:0 -16px; border-top:1px solid rgba(20,19,26,.14)" style-hover="background:rgba(74,63,140,.05)">
+            <div style="display:flex; gap:14px; align-items:baseline; min-width:0">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; color:rgba(20,19,26,.4)">{{ p.n }}</span>
+              <span style="font-size:17px; font-weight:500; letter-spacing:-.022em; line-height:1.3; color:rgba(20,19,26,.55); text-decoration:line-through; text-decoration-color:rgba(20,19,26,.28); text-decoration-thickness:1px">{{ p.bad }}</span>
+            </div>
+            <div style="display:flex; gap:12px; align-items:baseline; min-width:0">
+              <span style="color:#4A3F8C; font-size:15px; line-height:1.4">→</span>
+              <span style="font-size:17px; font-weight:500; letter-spacing:-.022em; line-height:1.36; color:#14131A">{{ p.good }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT WE BUILD -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">02 — What we build</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">Six systems, built to your business.</h2>
+      </div>
+      <p style="margin:0; max-width:30ch; font-size:15.5px; line-height:1.62; color:rgba(244,242,238,.66)">Purpose-built automation, not a template workflow with your logo on it.</p>
+    </div>
+    <div style="margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:16px">
+      <sc-for list="{{ builds }}" as="b" hint-placeholder-count="6">
+        <div data-reveal="1" data-delay="{{ b.delay }}" style="opacity:0; transform:translateY(20px); transition:opacity 500ms ease-out, transform 500ms ease-out, border-color 240ms ease, background 240ms ease; border:1px solid rgba(244,242,238,.12); border-radius:14px; padding:26px; background:rgba(244,242,238,.015)" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; color:#A39CE0">{{ b.n }}</div>
+          <div style="margin-top:14px; font-size:18px; font-weight:600; letter-spacing:-.024em">{{ b.title }}</div>
+          <div style="margin-top:10px; font-size:14.5px; line-height:1.6; color:rgba(244,242,238,.68)">{{ b.body }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- FEATURED CASE -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(20px); transition:opacity 520ms ease-out, transform 520ms ease-out; border:1px solid rgba(163,156,224,.32); border-radius:18px; background:rgba(163,156,224,.06); padding:38px 34px 34px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:#A39CE0">03 — Featured automation</div>
+      <h2 style="margin:18px 0 0; font-size:clamp(26px,3.4vw,44px); line-height:1.02; letter-spacing:-.038em; font-weight:800; max-width:22ch">WhatsApp CRM bot: from manual logins to one-line commands.</h2>
+      <div style="margin-top:30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:16px">
+        <div style="border:1px solid rgba(244,242,238,.12); border-radius:14px; padding:24px; background:rgba(11,11,12,.5)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,238,.5)">Before</div>
+          <p style="margin:12px 0 0; font-size:15px; line-height:1.66; color:rgba(244,242,238,.72)">The sales team logged into the CRM by hand for every task — creating invoices, checking payments, adding notes. Follow-ups slipped through the cracks.</p>
+        </div>
+        <div style="border:1px solid rgba(163,156,224,.36); border-radius:14px; padding:24px; background:rgba(163,156,224,.08)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:#A39CE0">After</div>
+          <p style="margin:12px 0 0; font-size:15px; line-height:1.66; color:rgba(244,242,238,.82)">They message a WhatsApp-based AI agent directly: "Invoice Nayy Raas, create an invoice for order #1234" — and it is done. No login required.</p>
+        </div>
+      </div>
+      <div style="margin-top:28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr)); gap:24px; align-items:end">
+        <sc-for list="{{ caseStats }}" as="cs" hint-placeholder-count="3">
+          <div>
+            <div style="font-size:clamp(30px,3.4vw,46px); font-weight:800; letter-spacing:-.045em; line-height:1; color:#A39CE0">{{ cs.value }}</div>
+            <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ cs.label }}</div>
+          </div>
+        </sc-for>
+        <a href="Sitechs Case WhatsApp CRM Bot.dc.html" style="justify-self:end; padding:15px 26px; border-radius:999px; border:1px solid rgba(244,242,238,.24); color:#F4F2EE; font-size:14.5px; font-weight:600; white-space:nowrap; transition:border-color 220ms ease, background 220ms ease" style-hover="color:#F4F2EE; border-color:#A39CE0; background:rgba(163,156,224,.1)">View full case study ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div id="process" style="margin-top:76px; background:#EFEBE4; color:#14131A">
+    <div style="max-width:1360px; margin:0 auto; padding:72px 34px 80px">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:56px; align-items:start">
+        <div style="position:sticky; top:112px; align-self:start; padding-bottom:20px">
+          <div data-reveal="1" style="opacity:0; transform:translateY(16px); transition:opacity 460ms ease-out, transform 460ms ease-out">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(20,19,26,.5)">04 — How it works</div>
+            <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,56px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:14ch">Six steps, pilot live in <span style="font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:-.02em; color:#4A3F8C">weeks.</span></h2>
+            <p style="margin:22px 0 0; max-width:32ch; font-size:15.5px; line-height:1.64; color:rgba(20,19,26,.68)">One workflow goes live before we scope the next, so value arrives before the invoice does.</p>
+            <div style="margin-top:28px; display:flex; align-items:center; gap:14px">
+              <span ref="{{ procCountRef }}" style="font-family:'Instrument Serif',Georgia,serif; font-size:44px; line-height:1">01</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,19,26,.5)">of 06</span>
+              <div style="flex:1; min-width:60px; height:2px; background:rgba(20,19,26,.14); border-radius:2px; overflow:hidden">
+                <div ref="{{ procLineRef }}" style="height:100%; width:0%; background:#4A3F8C; transition:width 520ms cubic-bezier(.22,1,.36,1)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:relative; min-width:0">
+          <div style="position:absolute; left:22px; top:12px; bottom:12px; width:1px; background:rgba(20,19,26,.14)"></div>
+          <div ref="{{ procRailRef }}" style="position:absolute; left:22px; top:12px; width:1px; height:0%; background:#4A3F8C; transition:height 620ms cubic-bezier(.22,1,.36,1)"></div>
+          <sc-for list="{{ phases }}" as="ph" hint-placeholder-count="6">
+            <div data-reveal="1" data-proc="1" data-delay="{{ ph.delay }}" style="opacity:0; transform:translateY(20px); transition:opacity 520ms ease-out, transform 520ms ease-out; position:relative; padding:0 0 36px 62px">
+              <span style="position:absolute; left:11px; top:6px; width:23px; height:23px; border-radius:50%; background:#EFEBE4; border:1px solid rgba(20,19,26,.28); display:flex; align-items:center; justify-content:center">
+                <span style="width:7px; height:7px; border-radius:50%; background:#4A3F8C"></span>
+              </span>
+              <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(20,19,26,.5)">{{ ph.n }}</span>
+                <h3 style="margin:0; font-size:clamp(21px,2.5vw,31px); font-weight:600; letter-spacing:-.034em; line-height:1.05">{{ ph.title }}</h3>
+              </div>
+              <p style="margin:13px 0 0; font-size:16px; line-height:1.66; color:rgba(20,19,26,.7); max-width:48ch">{{ ph.body }}</p>
+              <div style="margin-top:16px; display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#4A3F8C">
+                <span style="width:16px; height:1px; background:#4A3F8C"></span>{{ ph.out }}
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVINGS CALCULATOR -->
+  <div id="savings" style="max-width:1360px; margin:0 auto; padding:76px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">05 — Do the math</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">What the manual version costs you.</h2>
+      </div>
+      <p style="margin:0; max-width:30ch; font-size:15.5px; line-height:1.62; color:rgba(244,242,238,.66)">Move the sliders. These are your numbers, not an industry average.</p>
+    </div>
+    <div data-reveal="1" data-delay="80" style="opacity:0; transform:translateY(20px); transition:opacity 520ms ease-out, transform 520ms ease-out; margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:1px; background:rgba(244,242,238,.1); border:1px solid rgba(244,242,238,.1); border-radius:16px; overflow:hidden">
+      <div style="background:#0B0B0C; padding:32px 30px 34px; display:flex; flex-direction:column; gap:26px">
+        <sc-for list="{{ sliders }}" as="sl" hint-placeholder-count="3">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:16px">
+              <span style="font-size:14.5px; letter-spacing:-.015em; color:rgba(244,242,238,.72)">{{ sl.label }}</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:15px; color:#A39CE0">{{ sl.display }}</span>
+            </div>
+            <input type="range" min="{{ sl.min }}" max="{{ sl.max }}" step="{{ sl.step }}" value="{{ sl.value }}" onChange="{{ sl.onChange }}" onInput="{{ sl.onChange }}" style="margin-top:12px; width:100%; height:4px; cursor:pointer">
+          </div>
+        </sc-for>
+        <p style="margin:0; font-size:13px; line-height:1.6; color:rgba(244,242,238,.5)">Assumes automation absorbs the repetitive share of that work. Results are a directional estimate, not a quote.</p>
+      </div>
+      <div style="background:#0B0B0C; padding:32px 30px 34px; display:flex; flex-direction:column; justify-content:center; gap:22px">
+        <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:20px; border-bottom:1px solid rgba(244,242,238,.1); padding-bottom:16px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55); max-width:18ch">{{ r.label }}</span>
+            <span style="font-size:clamp(26px,3.4vw,42px); font-weight:800; letter-spacing:-.045em; line-height:1; color:{{ r.ink }}">{{ r.value }}</span>
+          </div>
+        </sc-for>
+        <a href="#contact" style="margin-top:4px; align-self:flex-start; padding:15px 26px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-size:14.5px; font-weight:600; transition:transform 180ms ease-out" style-hover="color:#0B0B0C; transform:translateY(-1px)">Check these numbers with us</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGES -->
+  <div id="plans" style="max-width:1360px; margin:0 auto; padding:76px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:flex; justify-content:space-between; align-items:flex-end; gap:36px; flex-wrap:wrap">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">06 — Investment</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(30px,4.2vw,58px); line-height:.96; letter-spacing:-.042em; font-weight:800; text-transform:uppercase; max-width:18ch">Pricing that scales with you.</h2>
+      </div>
+      <p style="margin:0; max-width:30ch; font-size:15.5px; line-height:1.62; color:rgba(244,242,238,.66)">A ballpark before we talk. Every project gets a custom quote after the free audit.</p>
+    </div>
+    <div style="margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr)); gap:18px">
+      <sc-for list="{{ packages }}" as="p" hint-placeholder-count="3">
+        <div data-reveal="1" data-delay="{{ p.delay }}" style="opacity:0; transform:translateY(22px); transition:opacity 520ms ease-out, transform 520ms ease-out, border-color 260ms ease, background 260ms ease; border:1px solid {{ p.border }}; border-radius:16px; padding:30px; background:{{ p.bg }}; display:flex; flex-direction:column; gap:14px" style-hover="border-color:rgba(163,156,224,.6)">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+            <h3 style="margin:0; font-size:20px; font-weight:600; letter-spacing:-.026em">{{ p.name }}</h3>
+            <sc-if value="{{ p.popular }}" hint-placeholder-val="{{ false }}">
+              <span style="padding:5px 11px; border-radius:999px; background:#A39CE0; color:#0B0B0C; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase">Most popular</span>
+            </sc-if>
+          </div>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:rgba(244,242,238,.6)">{{ p.for }}</p>
+          <div style="font-size:clamp(25px,2.9vw,35px); font-weight:800; letter-spacing:-.04em; line-height:1.05">{{ p.price }}</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:{{ p.unitInk }}">{{ p.unit }}</div>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px">
+            <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="4">
+              <div style="display:flex; gap:10px; font-size:14.5px; line-height:1.5; color:rgba(244,242,238,.78)"><span style="color:#A39CE0">—</span>{{ it }}</div>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <a href="#contact" style="margin-top:10px; padding:14px 22px; border-radius:999px; background:{{ p.ctaBg }}; color:{{ p.ctaFg }}; border:1px solid {{ p.ctaBorder }}; font-size:14.5px; font-weight:600; text-align:center; transition:transform 180ms ease-out" style-hover="color:{{ p.ctaFg }}; transform:translateY(-1px)">{{ p.cta }}</a>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq" style="max-width:1360px; margin:0 auto; padding:76px 34px 0">
+    <div data-reveal="1" style="opacity:0; transition:opacity 460ms ease-out; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:52px; align-items:start">
+      <div style="position:sticky; top:112px; align-self:start; padding-bottom:24px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(244,242,238,.6)">07 — FAQ</div>
+        <h2 style="margin:18px 0 0; font-size:clamp(28px,3.6vw,50px); line-height:.98; letter-spacing:-.04em; font-weight:800; text-transform:uppercase; max-width:16ch">Automation questions.</h2>
+        <p style="margin:20px 0 0; max-width:30ch; font-size:15px; line-height:1.62; color:rgba(244,242,238,.66)">Anything not covered here, ask on the audit call — data and security questions especially.</p>
+      </div>
+      <div style="border-top:1px solid rgba(244,242,238,.14)">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+          <div style="border-bottom:1px solid rgba(244,242,238,.14)">
+            <button onClick="{{ f.toggle }}" style="width:100%; display:flex; gap:18px; align-items:flex-start; text-align:left; padding:24px 0; border:0; background:transparent; cursor:pointer; font-family:'Bricolage Grotesque',sans-serif">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(244,242,238,.5); padding-top:5px">{{ f.n }}</span>
+              <span style="flex:1; font-size:18px; font-weight:500; letter-spacing:-.02em; color:#F4F2EE">{{ f.q }}</span>
+              <span style="font-size:20px; color:#A39CE0; line-height:1">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0; padding:0 0 26px 42px; max-width:60ch; font-size:15.5px; line-height:1.7; color:rgba(244,242,238,.7); animation:answerIn 300ms ease-out both">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT SERVICE -->
+  <div style="max-width:1360px; margin:0 auto; padding:72px 34px 0">
+    <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px">
+      <sc-for list="{{ nextUp }}" as="nx" hint-placeholder-count="3">
+        <a href="{{ nx.href }}" style="border:1px solid rgba(244,242,238,.12); border-radius:14px; padding:26px; display:flex; flex-direction:column; gap:10px; transition:border-color 240ms ease, background 240ms ease, transform 240ms ease" style-hover="border-color:rgba(163,156,224,.5); background:rgba(163,156,224,.05); transform:translateY(-3px)">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(244,242,238,.55)">{{ nx.n }}</span>
+          <span style="font-size:19px; font-weight:600; letter-spacing:-.026em; color:#F4F2EE">{{ nx.title }}</span>
+          <span style="font-size:14px; line-height:1.55; color:rgba(244,242,238,.66)">{{ nx.tag }}</span>
+          <span style="margin-top:4px; font-size:14px; font-weight:600; color:#A39CE0">View service ↗</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div id="audit" style="margin-top:80px; background:#A39CE0; color:#0B0B0C">
+    <div id="contact" style="max-width:1360px; margin:0 auto; padding:68px 34px 60px">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity 460ms ease-out, transform 460ms ease-out; max-width:900px; margin:0 auto; text-align:center">
+        <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 16px; border-radius:999px; border:1px solid rgba(11,11,12,.28); font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(11,11,12,.75)">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0B0B0C"></span>Free audit, 30 minutes, no deck
+        </div>
+        <h2 style="margin:22px auto 0; font-size:clamp(32px,5.4vw,74px); line-height:.94; letter-spacing:-.045em; font-weight:800; text-transform:uppercase; max-width:17ch">Tell us the task nobody wants to do.</h2>
+        <p style="margin:20px auto 0; max-width:50ch; font-size:17px; line-height:1.6; color:rgba(11,11,12,.75)">We will map where automation pays off first, what it would cost and what it would save — whether or not you hire us.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:30px">
+          <a href="#audit" onMouseMove="{{ magnet }}" onMouseLeave="{{ demagnet }}" style="padding:19px 34px; border-radius:999px; background:#0B0B0C; color:#A39CE0; font-size:16.5px; font-weight:600; transition:transform 160ms ease-out" style-hover="color:#A39CE0">Get your free audit</a>
+          <button onClick="{{ copyEmail }}" style="padding:19px 28px; border-radius:999px; border:1px solid rgba(11,11,12,.32); background:transparent; color:#0B0B0C; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.06em; transition:background 200ms ease" style-hover="background:rgba(11,11,12,.08)">info@sitechs.co — {{ copyLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B0B0C">
+    <div style="max-width:1360px; margin:0 auto; padding:46px 34px 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:44px">
+      <div>
+        <img src="sitechs-logo-light.svg" alt="Sitechs" style="height:34px; width:auto">
+        <p style="margin:18px 0 0; max-width:32ch; font-size:14px; line-height:1.66; color:rgba(244,242,238,.64)">AI automation and digital product studio. Karachi, working globally.</p>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Services</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="Sitechs AI Automations.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">AI Automations</a>
+          <a href="Sitechs Website Design.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Design</a>
+          <a href="Sitechs Website Development.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Development</a>
+          <a href="Sitechs Chrome Extensions.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Chrome Extensions</a>
+          <a href="Sitechs Website Care Plans.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Website Care Plans</a>
+          <a href="Sitechs Start a Project.dc.html" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Start a project</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Office</div>
+        <div style="font-size:14px; line-height:1.72; color:rgba(244,242,238,.58)">B-238, Block 6<br>Gulshan-e-Iqbal, Karachi<br>+92 342 3543100<br>info@sitechs.co</div>
+      </div>
+      <div>
+        <div style="font-size:13.5px; font-weight:600; margin-bottom:14px">Elsewhere</div>
+        <div style="display:flex; flex-direction:column; gap:9px; font-size:14px">
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">LinkedIn</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Behance</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Dribbble</a>
+          <a href="#contact" style="color:rgba(244,242,238,.58)" style-hover="color:#A39CE0">Upwork</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:0 auto; padding:34px 34px 0"><div style="border-top:1px solid rgba(244,242,238,.1); padding:22px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:13px; color:rgba(244,242,238,.64)"><span>© Sitechs 2026. All rights reserved.</span><span style="font-family:'JetBrains Mono',monospace">Accepting Q4 builds</span></div></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { faq: 0, copied: false, now: "--:--:--", msg: 0, people: 10, hours: 10, rate: 25 };
+
+  navRef = React.createRef();
+  navShellRef = React.createRef();
+  navLinksRef = React.createRef();
+  navClockRef = React.createRef();
+  navCallRef = React.createRef();
+  barRef = React.createRef();
+  procLineRef = React.createRef();
+  procRailRef = React.createRef();
+  procCountRef = React.createRef();
+
+  chatData = [
+    { who: "them", text: "Hi, do you have any 2-bedroom units available for October?" },
+    { who: "us", text: "Hi! Yes — we have two left on the third floor. Both are open-plan. Want me to check pricing and send a live tour?" },
+    { who: "them", text: "Yes please, Saturday afternoon works." },
+    { who: "us", text: "Booked — Sat 2:00 PM with our leasing agent. Confirmation sent to your email, and I'll follow up the morning of." }
+  ];
+
+  faqData = [
+    { q: "Where does our data go?", a: "Into your systems, and nowhere else by default. We run models through business-tier APIs with training disabled, and where policy requires it we deploy in your own cloud account so nothing leaves your tenancy." },
+    { q: "What if the AI gets something wrong?", a: "Every workflow has a confidence threshold and an escalation path. Below it, the task lands in a human review queue instead of acting — and every action is logged so you can see exactly what happened and why." },
+    { q: "Do we need to replace our current tools?", a: "No. We build around the CRM, inbox, spreadsheets and portals you already use. Replacing the stack is a much bigger project and almost never the thing that pays back first." },
+    { q: "How quickly do we see something working?", a: "The first workflow is usually live in two to four weeks. We deliberately start with one painful, well-bounded task so you can judge the result before committing to more." },
+    { q: "What does it cost to run?", a: "Model and infrastructure usage is typically $50 to $400 a month depending on volume, billed to your accounts directly so you see the real number. Our care plan is separate and optional." },
+    { q: "Who maintains it after launch?", a: "You can, and we document it so that is realistic. Most clients keep us on the Growth care plan for monitoring, model updates and monthly optimisation instead." }
+  ];
+
+  componentDidMount() {
+    this.onScroll = () => { if (!this.tick) this.tick = requestAnimationFrame(() => { this.tick = 0; this.frame(); }); };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onScroll);
+    this.io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) this.reveal(e.target); }); }, { threshold: 0 });
+    this.frame();
+    this.rescan = setInterval(() => this.frame(), 600);
+    const tickClock = () => this.setState({ now: new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Karachi", hour12: false }) });
+    tickClock();
+    this.clockId = setInterval(tickClock, 1000);
+    this.msgT = setTimeout(() => {
+      this.msgId = setInterval(() => {
+        this.setState((s) => {
+          if (s.msg >= this.chatData.length) { clearInterval(this.msgId); return null; }
+          return { msg: s.msg + 1 };
+        });
+      }, 900);
+    }, 900);
+  }
+
+  componentDidUpdate() { this.frame(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onScroll);
+    [this.rescan, this.clockId, this.msgId].forEach(clearInterval);
+    clearTimeout(this.copyT);
+    clearTimeout(this.msgT);
+    if (this.io) this.io.disconnect();
+  }
+
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const on = y > 20;
+    const n = this.navRef.current, shell = this.navShellRef.current;
+    if (n) n.style.padding = on ? "10px 22px" : "14px 22px";
+    if (shell) {
+      shell.style.maxWidth = on ? "760px" : "1300px";
+      shell.style.background = on ? "rgba(16,16,19,.72)" : "transparent";
+      shell.style.backdropFilter = on ? "blur(18px) saturate(140%)" : "none";
+      shell.style.borderColor = on ? "rgba(244,242,238,.12)" : "rgba(244,242,238,.07)";
+      shell.style.boxShadow = on ? "0 20px 50px -30px rgba(0,0,0,.9)" : "none";
+    }
+    const links = this.navLinksRef.current, clk = this.navClockRef.current, call = this.navCallRef.current;
+    if (links) { links.style.maxWidth = on ? "0px" : "520px"; links.style.opacity = on ? "0" : "1"; }
+    if (clk) {
+      clk.style.maxWidth = on ? "0px" : "220px";
+      clk.style.opacity = on ? "0" : "1";
+      clk.style.paddingLeft = on ? "0px" : "14px";
+      clk.style.paddingRight = on ? "0px" : "14px";
+      clk.style.borderColor = on ? "rgba(244,242,238,0)" : "rgba(244,242,238,.1)";
+    }
+    if (call) {
+      call.style.maxWidth = on ? "180px" : "0px";
+      call.style.opacity = on ? "1" : "0";
+      call.style.paddingLeft = on ? "20px" : "0px";
+      call.style.paddingRight = on ? "20px" : "0px";
+      call.style.borderColor = on ? "rgba(244,242,238,.18)" : "rgba(244,242,238,0)";
+    }
+    const bar = this.barRef.current;
+    if (bar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - vh);
+      bar.style.width = Math.min(100, (y / max) * 100).toFixed(2) + "%";
+    }
+    document.querySelectorAll("[data-parallax]").forEach((el) => {
+      el.style.transform = "translate3d(0," + (y * (parseFloat(el.dataset.parallax) || 0)).toFixed(1) + "px,0)";
+    });
+    const steps = document.querySelectorAll("[data-proc]");
+    if (steps.length) {
+      let active = 0;
+      steps.forEach((el, i) => { if (el.getBoundingClientRect().top < vh * 0.55) active = i; });
+      const pct = ((active + 1) / steps.length) * 100;
+      if (this.procLineRef.current) this.procLineRef.current.style.width = pct + "%";
+      if (this.procRailRef.current) this.procRailRef.current.style.height = pct + "%";
+      if (this.procCountRef.current) this.procCountRef.current.textContent = String(active + 1).padStart(2, "0");
+    }
+    this.scan();
+  }
+
+  scan() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      if (el.dataset.revealDone) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.94) this.reveal(el);
+      else this.io.observe(el);
+    });
+  }
+
+  reveal(el) {
+    if (el.dataset.revealDone) return;
+    el.dataset.revealDone = "1";
+    this.io.unobserve(el);
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }
+
+  money(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
+
+  renderVals() {
+    const { people, hours, rate } = this.state;
+    const monthlyHours = people * hours * 4.3;
+    const monthly = monthlyHours * rate;
+    return {
+      navRef: this.navRef, navShellRef: this.navShellRef, navLinksRef: this.navLinksRef,
+      navClockRef: this.navClockRef, navCallRef: this.navCallRef, barRef: this.barRef,
+      procLineRef: this.procLineRef, procRailRef: this.procRailRef, procCountRef: this.procCountRef,
+      clock: this.state.now,
+      chat: this.chatData.map((m, i) => ({
+        text: m.text,
+        op: i < this.state.msg ? "1" : "0",
+        justify: m.who === "us" ? "flex-end" : "flex-start",
+        bg: m.who === "us" ? "#A39CE0" : "rgba(244,242,238,.07)",
+        ink: m.who === "us" ? "#0B0B0C" : "rgba(244,242,238,.86)",
+        radius: m.who === "us" ? "14px 14px 4px 14px" : "14px 14px 14px 4px"
+      })),
+      typingOp: this.state.msg >= this.chatData.length ? "0" : "1",
+      miniStats: [
+        { value: "13s", label: "Avg. reply time" },
+        { value: "24/7", label: "Coverage" },
+        { value: "60+", label: "Automations live" }
+      ],
+      heroChips: ["Your data, your tenancy", "Human in the loop", "Pilot in 2–4 weeks"],
+      facts: [
+        { label: "First workflow", value: "Live in 2–4 weeks" },
+        { label: "From", value: "$1,500 fixed" },
+        { label: "Deliverable", value: "Running system + docs" },
+        { label: "Support", value: "30 days included" }
+      ],
+      strip: [...Array(2)].flatMap(() => ["AI agents", "Chatbots", "Workflow automation", "CRM automation", "Document processing", "Data & reporting"]),
+      problems: [
+        { delay: 0, n: "01", bad: "Repetitive tasks eating whole days", good: "The repeatable share runs unattended, overnight included" },
+        { delay: 60, n: "02", bad: "Leads going cold before the follow-up", good: "Qualified and answered in seconds, at any hour" },
+        { delay: 120, n: "03", bad: "Data scattered across four disconnected tools", good: "One flow of record, synced both ways" },
+        { delay: 180, n: "04", bad: "Approvals waiting on someone's inbox", good: "Routed, chased and escalated automatically" },
+        { delay: 240, n: "05", bad: "Manual entry introducing quiet errors", good: "Validated writes with an audit trail per action" },
+        { delay: 300, n: "06", bad: "No visibility until month end", good: "Live dashboards and reports that build themselves" }
+      ],
+      builds: [
+        { delay: 0, n: "01", title: "AI agents", body: "Agents that converse, decide and take action inside your systems — not just answer questions." },
+        { delay: 60, n: "02", title: "AI chatbots", body: "24/7 support, lead qualification and customer engagement on your site, WhatsApp or inbox." },
+        { delay: 120, n: "03", title: "Workflow automation", body: "Approvals, notifications and data sync across the tools your team already works in." },
+        { delay: 180, n: "04", title: "CRM automation", body: "Follow-ups, email sequences and customer journeys that run without anyone remembering to." },
+        { delay: 240, n: "05", title: "Document processing", body: "Extract, analyse and organise data from invoices, contracts and forms of any shape." },
+        { delay: 300, n: "06", title: "Data & reporting", body: "Real-time dashboards and automated reports that answer questions instead of counting rows." }
+      ],
+      caseStats: [
+        { value: "70%", label: "Faster response times" },
+        { value: "Zero", label: "Repetitive logins needed" },
+        { value: "24/7", label: "Customer self-service" }
+      ],
+      phases: [
+        { delay: 0, n: "Step 01", title: "Discovery call", body: "We map your business and the tasks that hurt, then say plainly which of them automation pays back on.", out: "Output: opportunity map" },
+        { delay: 60, n: "Step 02", title: "Workflow audit", body: "We watch the current process end to end and time it, so the business case is measured rather than assumed.", out: "Output: costed baseline" },
+        { delay: 120, n: "Step 03", title: "Solution design", body: "The architecture, the models, the guardrails and the human checkpoints — agreed before anything is built.", out: "Output: signed design" },
+        { delay: 180, n: "Step 04", title: "Development & integration", body: "Built and wired into your existing tools, with staging credentials so nothing touches live data early.", out: "Output: working pilot" },
+        { delay: 240, n: "Step 05", title: "Testing & launch", body: "Run in parallel with the manual process until the numbers agree, then switched over.", out: "Output: live automation" },
+        { delay: 300, n: "Step 06", title: "Ongoing optimisation", body: "Monitoring, prompt and model updates, and new workflows added as the obvious ones prove out.", out: "Output: compounding returns" }
+      ],
+      sliders: [
+        { label: "Employees involved in manual work", display: String(people), min: 1, max: 50, step: 1, value: people, onChange: (e) => this.setState({ people: +e.target.value }) },
+        { label: "Hours wasted per week (each)", display: hours + " hrs", min: 1, max: 30, step: 1, value: hours, onChange: (e) => this.setState({ hours: +e.target.value }) },
+        { label: "Average hourly cost", display: "$" + rate, min: 5, max: 120, step: 5, value: rate, onChange: (e) => this.setState({ rate: +e.target.value }) }
+      ],
+      results: [
+        { label: "Hours / month", value: Math.round(monthlyHours).toLocaleString("en-US"), ink: "#F4F2EE" },
+        { label: "Potential saving / month", value: this.money(monthly), ink: "#F4F2EE" },
+        { label: "Potential saving / year", value: this.money(monthly * 12), ink: "#A39CE0" }
+      ],
+      packages: [
+        { delay: 0, name: "Starter Build", price: "$1,500 – $3,000", unit: "One-time", unitInk: "rgba(244,242,238,.5)", popular: false, for: "One business automation, done right.", items: ["1 automation workflow", "Integration with your tools", "1–2 week delivery", "30 days of support included"], cta: "Get started", border: "rgba(244,242,238,.12)", bg: "rgba(244,242,238,.015)", ctaBg: "transparent", ctaFg: "#F4F2EE", ctaBorder: "rgba(244,242,238,.24)" },
+        { delay: 80, name: "Growth Build + Care", price: "$3,000 – $8,000", unit: "+ $800 – $1,200 / month", unitInk: "#A39CE0", popular: true, for: "Multi-step systems, monitored monthly.", items: ["3–5 automations, fully connected", "Integration across CRM, email and ops", "Monthly monitoring and optimisation", "Priority support channel"], cta: "Book a call", border: "rgba(163,156,224,.45)", bg: "rgba(163,156,224,.1)", ctaBg: "#A39CE0", ctaFg: "#0B0B0C", ctaBorder: "#A39CE0" },
+        { delay: 160, name: "Scale / Custom", price: "Custom quote", unit: "Scoped after the audit", unitInk: "rgba(244,242,238,.5)", popular: false, for: "Multi-department, company-wide rollout.", items: ["Multiple AI agents and orchestration", "Custom integrations and API work", "Dedicated automation strategist", "SLA-backed support"], cta: "Talk to us", border: "rgba(244,242,238,.12)", bg: "rgba(244,242,238,.015)", ctaBg: "transparent", ctaFg: "#F4F2EE", ctaBorder: "rgba(244,242,238,.24)" }
+      ],
+      nextUp: [
+        { href: "Sitechs Website Design.dc.html", n: "Service 02", title: "Website Design", tag: "The argument your site makes before the agent takes over." },
+        { href: "Sitechs Website Development.dc.html", n: "Service 03", title: "Website Development", tag: "The Next.js build these systems plug into." },
+        { href: "Sitechs Chrome Extensions.dc.html", n: "Service 04", title: "Chrome Extensions", tag: "Automation inside the tools your team already uses." }
+      ],
+      copyLabel: this.state.copied ? "copied" : "copy",
+      copyEmail: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText("info@sitechs.co").catch(() => {});
+        this.setState({ copied: true });
+        clearTimeout(this.copyT);
+        this.copyT = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      magnet: (e) => {
+        const el = e.currentTarget, r = el.getBoundingClientRect();
+        el.style.transform = "translate(" + ((e.clientX - (r.left + r.width / 2)) * 0.16).toFixed(1) + "px," + ((e.clientY - (r.top + r.height / 2)) * 0.24).toFixed(1) + "px)";
+      },
+      demagnet: (e) => { e.currentTarget.style.transform = "translate(0,0)"; },
+      navLinks: [
+        { href: "Sitechs Work.dc.html", label: "Work", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "Sitechs Services.dc.html", label: "Services", color: "#F4F2EE", bg: "rgba(163,156,224,.16)" },
+        { href: "Sitechs Website Care Plans.dc.html", label: "Care Plans", color: "rgba(244,242,238,.72)", bg: "transparent" },
+        { href: "#faq", label: "FAQ", color: "rgba(244,242,238,.72)", bg: "transparent" }
+      ],
+      faqs: this.faqData.map((f, i) => ({
+        n: String(i + 1).padStart(2, "0"), q: f.q, a: f.a,
+        open: this.state.faq === i,
+        sign: this.state.faq === i ? "−" : "+",
+        toggle: () => this.setState((s) => ({ faq: s.faq === i ? -1 : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
