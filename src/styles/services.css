@@ -403,11 +403,8 @@
 
 @media (max-width: 640px) {
   .problem-row {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr;
     row-gap: 6px;
-  }
-  .problem-row__arrow {
-    display: none;
   }
   .problem-table__head {
     display: none;
