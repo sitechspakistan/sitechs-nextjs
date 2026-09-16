@@ -9,7 +9,7 @@ export default function ConvoLeadPromo() {
   const magnetic = useMagnetic();
 
   return (
-    <section id="convolead" className="convolead-section">
+    <section id="convolead" className="convolead-section" style={{display: "none"}}>
       <div className="convolead-section__inner">
         <div className="convolead-glow" />
         <div ref={ref} className={`convolead-grid reveal reveal--up${revealed ? " is-visible" : ""}`}>
